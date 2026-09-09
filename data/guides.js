@@ -349,3 +349,107 @@ for (const [word, meaning, english, russian] of AddedExamples) {
     }
   }
 }
+
+// Дополнительные разборы для новой коллекции (не заявления о содержимом исходника).
+Lessons.push(...[
+  {
+    "id": "sentences-A1",
+    "title": "A1 · Be и простое предложение",
+    "source": "Предложения A1–C1",
+    "sourceId": "english_sentences_3000",
+    "added": true,
+    "lines": [
+      "Правило:",
+      "Для состояния и местонахождения используйте am, is или are. Отрицание образуется с not; в вопросе be ставится перед подлежащим.",
+      "Формула:",
+      "I am / he is / you are + состояние или место",
+      "Пример правила:",
+      "She is at home. — Она дома.",
+      "Предложения из файла:",
+      "I'm ready. — Я готов.",
+      "I'm a little tired. — Я немного устал.",
+      "I'm really hungry. — Я очень голоден.",
+      "I'm not busy right now. — Я сейчас не занят."
+    ]
+  },
+  {
+    "id": "sentences-A2",
+    "title": "A2 · Опыт и результат: Present Perfect",
+    "source": "Предложения A1–C1",
+    "sourceId": "english_sentences_3000",
+    "added": true,
+    "lines": [
+      "Правило:",
+      "Have/has + третья форма глагола связывает действие с настоящим. Already часто обозначает «уже», yet в вопросах и отрицаниях — «уже/ещё». Для законченного времени вроде yesterday обычно нужен Past Simple.",
+      "Формула:",
+      "Подлежащее + have / has + V3",
+      "Пример правила:",
+      "I have already finished. — Я уже закончил.",
+      "Предложения из файла:",
+      "I won't think about it. — Я не подумаю об этом.",
+      "Will you think about it? — Ты подумаю об этом?",
+      "I'll wait for you. — Я подожду тебя.",
+      "I won't wait for you. — Я не подожду тебя."
+    ]
+  },
+  {
+    "id": "sentences-B1",
+    "title": "B1 · Связываем мысли",
+    "source": "Предложения A1–C1",
+    "sourceId": "english_sentences_3000",
+    "added": true,
+    "lines": [
+      "Правило:",
+      "Because объясняет причину, although вводит уступку, а if — условие. В реальном условии о будущем после if обычно используют Present Simple: If it rains, I will stay home.",
+      "Формула:",
+      "If + Present Simple, will + глагол",
+      "Пример правила:",
+      "If it rains, I will stay home. — Если пойдёт дождь, я останусь дома.",
+      "Предложения из файла:",
+      "I find this question important. — Я считаю этот вопрос важным.",
+      "Do you find this question important? — Ты считаешь этот вопрос важным?",
+      "I find this question helpful. — Я считаю этот вопрос полезным.",
+      "Do you find this question helpful? — Ты считаешь этот вопрос полезным?"
+    ]
+  },
+  {
+    "id": "sentences-B2",
+    "title": "B2 · Гипотетические ситуации",
+    "source": "Предложения A1–C1",
+    "sourceId": "english_sentences_3000",
+    "added": true,
+    "lines": [
+      "Правило:",
+      "Для нереального или маловероятного условия в настоящем используйте if + Past Simple и would + глагол. Здесь прошедшая форма показывает условность.",
+      "Формула:",
+      "If I had more time, I would study more.",
+      "Пример правила:",
+      "If I had more time, I would study more. — Если бы у меня было больше времени, я бы учился больше.",
+      "Предложения из файла:",
+      "I can see both sides of the argument. — Я могу понять обе стороны этого спора.",
+      "I agree with you to some extent. — Я в некоторой степени с тобой согласен.",
+      "I'm not entirely convinced by that argument. — Я не полностью убеждён этим аргументом.",
+      "That's a reasonable point, although I see it differently. — Это разумная точка зрения, хотя я смотрю на это иначе."
+    ]
+  },
+  {
+    "id": "sentences-C1",
+    "title": "C1 · Длительность: Perfect Continuous",
+    "source": "Предложения A1–C1",
+    "sourceId": "english_sentences_3000",
+    "added": true,
+    "lines": [
+      "Правило:",
+      "Have/has been + глагол-ing подчёркивает процесс, который начался раньше и связан с настоящим. For обозначает период, since — начальную точку. Глаголы состояния вроде know обычно употребляются в Perfect Simple.",
+      "Формула:",
+      "I have been studying for two hours.",
+      "Пример правила:",
+      "I have been studying for two hours. — Я учусь уже два часа.",
+      "Предложения из файла:",
+      "I can appreciate why people might see it that way. — Я могу понять, почему люди могут видеть это именно так.",
+      "That interpretation seems reasonable, but it's not the only one. — Такое толкование кажется разумным, но оно не единственное.",
+      "I wouldn't go so far as to say that it's completely wrong. — Я бы не стал утверждать, что это полностью неправильно.",
+      "There is some truth to that argument, although it overlooks a few details. — В этом аргументе есть доля правды, хотя он упускает несколько деталей."
+    ]
+  }
+]);

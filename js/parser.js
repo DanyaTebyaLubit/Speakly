@@ -24,13 +24,23 @@ function isHeading(lines, index, source) {
 }
 
 /** Принимает «слово - перевод - пример», а также длинное тире и сленг. */
-function parseText(text, source = 'Мои слова') {
+function parseText(text, source = 'Мои слова', adapted = false) {
+  if (!adapted && source === 'Диалоги') {
+    const converted = parseDialogues(text).map((item, index) => `${index + 1}. ${item.level} · ${item.topic}\n----------------\n${item.turns.map(turn => `${turn.word} — ${turn.translation}`).join('\n')}`).join('\n');
+    return parseText(converted, source, true);
+  }
+  if (!adapted && source === 'Песни') {
+    const converted = parseSongs(text).map((item, index) => `${index + 1}. ${item.title}\n----------------\n${(SongNotes[item.id]?.words || []).map(word => `${word[0]} — ${word[1]} — ${word[2]}`).join('\n')}`).join('\n');
+    return parseText(converted, source, true);
+  }
   let topic = source;
   const result = [];
   const lines = normalizeLines(text);
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (!line || /^[=\-–—_\s]+$/.test(line)) continue;
+    if (/^[ABC][12]\s+[—–-]/.test(line)) { topic = line; continue; }
+    if (source === 'Предложения A1–C1' && !/^\d+\.\s/.test(line)) continue;
     if (isHeading(lines, i, source)) {
       topic = line.replace(/^\d+[.)]\s+/, '');
       continue;

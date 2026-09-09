@@ -45,7 +45,7 @@ test('all script and stylesheet references exist; all nine source texts survive 
   for (const script of scripts) assert(fs.existsSync(path.join(root, script)));
   const app = setup();
   const sources = app.evaluate('SOURCES');
-  assert.equal(sources.length, 9);
+  assert.equal(sources.length, 12);
   for (const source of sources) assert.equal(fs.readFileSync(path.join(root, 'materials', source.filename), 'utf8'), source.text);
   for (const file of ['style.css', 'css/study.css', 'css/responsive.css']) assert(fs.readFileSync(path.join(root, file), 'utf8').includes('{'));
 });
@@ -66,7 +66,7 @@ test('parser supports examples, slang, multiline translations and excludes mista
 test('lesson parser retains 100 sections and does not turn numbered exercises into lessons', () => {
   const { evaluate } = setup();
   assert.equal(evaluate('Lessons.filter(lesson => !lesson.added).length'), 100);
-  assert.equal(evaluate('Lessons.filter(lesson => lesson.added).length'), 7);
+  assert.equal(evaluate('Lessons.filter(lesson => lesson.added).length'), 12);
   const simple = evaluate("Lessons.find(lesson => lesson.id === 'english_practice-1')");
   assert(simple.lines.includes('Ответы:'));
   assert(simple.lines.includes('1. I play every day.'));
@@ -179,7 +179,7 @@ test('all styles load directly without nested imports or cascade layers', () => 
 test('mobile lesson picker opens the selected lesson', () => {
   const app = setup({}, true); app.navigate('rules');
   const picker = app.nodes['lesson-picker'];
-  assert.equal(picker.children.length, 107);
+  assert.equal(picker.children.length, 112);
   picker.value = 'english_practice-3'; picker.fire('change');
   assert(app.nodes['lesson-reader'].textContent.includes('PAST SIMPLE'));
   assert.equal(picker.value, 'english_practice-3');
@@ -213,4 +213,134 @@ test('terminal theme can be selected, restored and cycled', () => {
   assert.equal(restored.document.documentElement.dataset.theme, 'terminal');
   restored.nodes.theme.fire('click');
   assert.equal(restored.document.documentElement.dataset.theme, 'light');
+});
+
+test('new source has 3000 sentences and five level filters without metadata entries', () => {
+  const app = setup();
+  assert.equal(app.evaluate("parseText(SOURCES.find(s => s.id === 'english_sentences_3000').text, 'Предложения A1–C1').length"), 3000);
+  assert.equal(app.evaluate("new Set(Vocabulary.filter(e => e.sources.includes('Предложения A1–C1')).flatMap(e => e.memberships.filter(m => m.source === 'Предложения A1–C1').map(m => m.topic))).size"), 5);
+});
+
+test('gap exercise validates input, records once and moves to next question', () => {
+  const app = setup(); app.navigate('quiz');
+  app.nodes['mode-gap'].fire('click');
+  assert.equal(app.nodes['quiz-content'].hidden, true);
+  const input = byClass(app.nodes['training-content'], 'gap-input')[0];
+  input.value = 'zzzzzzzz';
+  const check = byClass(app.nodes['training-content'], 'primary')[0];
+  check.fire('click'); check.fire('click');
+  assert.equal(JSON.parse(app.stored['speakly.lastQuiz']).practiceStats.attempts, 1);
+  assert(byClass(app.nodes['training-content'], 'training-solution').length);
+  byClass(app.nodes['training-content'], 'primary')[0].fire('click');
+  assert(byClass(app.nodes['training-content'], 'gap-input').length);
+  app.nodes['mode-test'].fire('click');
+  assert.equal(app.nodes['quiz-content'].hidden, false);
+});
+
+test('sentence assembly uses tokens once and permits undo', () => {
+  const app = setup(); app.navigate('quiz'); app.nodes['mode-order'].fire('click');
+  byClass(app.nodes['training-content'], 'word-bank')[0].children[0].fire('click');
+  assert.equal(byClass(app.nodes['training-content'], 'sentence-answer')[0].children[0].tagName, 'button');
+  assert.equal(byClass(app.nodes['training-content'], 'word-bank')[0].children.filter(child => child.disabled).length, 1);
+  byClass(app.nodes['training-content'], 'sentence-answer')[0].children[0].fire('click');
+  assert.equal(byClass(app.nodes['training-content'], 'word-bank')[0].children.filter(child => child.disabled).length, 0);
+  app.nodes.search.value = 'no-such-sentence-123'; app.nodes.search.fire('input');
+  assert(app.nodes['training-content'].textContent.includes('нет подходящих предложений'));
+});
+
+test('spaced repetition has deterministic intervals and imports old known words as due', () => {
+  const app = setup();
+  const schedule = app.evaluate('Learning.schedule');
+  assert.equal(schedule(null, 'again', 0).due, 600000);
+  assert.equal(schedule(null, 'hard', 0).due, 86400000);
+  assert.equal(schedule(null, 'easy', 0).due, 3 * 86400000);
+  assert.equal(schedule({interval: 4}, 'easy', 0).interval, 10);
+  app.evaluate("Storage.write('known', [Vocabulary[0].id])");
+  assert.equal(app.evaluate('Learning.due().length'), 1);
+});
+
+test('mistake is rehearsed now and verified again tomorrow', () => {
+  const app = setup();
+  app.evaluate('Learning.record(Vocabulary[0], false, 1000)');
+  assert.equal(app.evaluate('Learning.errors(1000).length'), 1);
+  app.evaluate('Learning.record(Vocabulary[0], true, 2000)');
+  assert.equal(app.evaluate('Learning.errors(2000).length'), 0);
+  assert.equal(app.evaluate('Learning.errors(86401000).length'), 1);
+  app.evaluate('Learning.record(Vocabulary[0], true, 86401000)');
+  assert.equal(app.evaluate('Object.keys(Learning.state().errors).length'), 0);
+});
+
+test('answer checking accepts safe variants but rejects meaning-changing changes', () => {
+  const accept = setup().evaluate('Learning.accepts');
+  assert(accept("I'm ready!", 'I am ready.'));
+  assert(accept('Yesterday, I worked.', 'I worked yesterday.'));
+  assert(!accept('I am not ready', 'I am ready'));
+  assert(!accept('He likes me', 'I like him'));
+});
+
+test('curated course runs from rule to five checked tasks and persists score', () => {
+  const app = setup(); app.nodes['open-courses'].fire('click');
+  byClass(app.nodes['learning-content'], 'course-tile')[0].fire('click');
+  assert(app.nodes['learning-content'].textContent.includes('В настоящем времени'));
+  byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+  for (const answer of ['am', 'is', 'are', 'Are', 'is']) {
+    byClass(app.nodes['learning-content'], 'gap-input')[0].value = answer;
+    byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+    const controls = byClass(app.nodes['learning-content'], 'primary');
+    controls[controls.length - 1].fire('click');
+  }
+  assert.equal(app.evaluate('Learning.state().courses.be.score'), 5);
+  assert(app.nodes['learning-content'].textContent.includes('Урок пройден'));
+  assert.equal(setup(app.stored).evaluate('Learning.state().courses.be.score'), 5);
+});
+
+test('quality removes repetitive templates and flags unnatural translations without deleting IDs', () => {
+  const app = setup();
+  assert(app.evaluate('Quality.corrections.length') > 0);
+  assert(app.evaluate('Quality.excluded.length') > 0);
+  assert(app.evaluate('Learning.cleanEntries(Vocabulary).length < Vocabulary.length'));
+  assert(app.evaluate('Learning.cleanEntries(Vocabulary).every(e => !e.qualityIssue)'));
+});
+
+test('errors open a standalone screen and return to the originating section', () => {
+  const app = setup();
+  byClass(app.nodes['learning-dashboard'], 'secondary')[0].fire('click');
+  assert.equal(app.nodes.learning.hidden, false);
+  assert.equal(app.nodes.quiz.hidden, true);
+  app.nodes['learning-back'].fire('click');
+  assert.equal(app.nodes.dictionary.hidden, false);
+  app.navigate('quiz'); app.nodes['open-courses'].fire('click');
+  app.nodes['learning-back'].fire('click');
+  assert.equal(app.nodes.quiz.hidden, false);
+});
+
+test('dialogues preserve levels and bilingual turns, and filter by level', () => {
+  const app = setup();
+  assert.equal(app.evaluate('MediaLibrary.dialogues.length'), 150);
+  assert(app.evaluate('MediaLibrary.dialogues.every(d => d.turns.every(t => t.word && t.translation))'));
+  app.navigate('materials'); app.nodes['media-level'].value = 'A1'; app.nodes['media-level'].fire('change');
+  assert.equal(byClass(app.nodes['media-content'], 'media-tile').length, 30);
+  byClass(app.nodes['media-content'], 'media-tile')[0].fire('click');
+  assert.equal(byClass(app.nodes['media-content'], 'dialogue-turn').length, 4);
+  byClass(app.nodes['media-content'], 'primary')[0].fire('click');
+  assert.equal(byClass(app.nodes['media-content'], 'answer').length, 4);
+  byClass(app.nodes['media-content'], 'answer')[0].fire('click');
+  assert.equal(JSON.parse(app.stored['speakly.lastQuiz']).mediaResult.answered, 1);
+});
+
+test('songs distinguish source excerpts and have vocabulary practice without invented lyrics', () => {
+  const app = setup(); app.navigate('materials'); app.nodes['media-songs'].fire('click');
+  assert.equal(byClass(app.nodes['media-content'], 'media-tile').length, 9);
+  assert.equal(app.evaluate('MediaLibrary.songs.filter(s => s.excerpt).length'), 8);
+  byClass(app.nodes['media-content'], 'media-tile')[0].fire('click');
+  assert.equal(byClass(app.nodes['media-content'], 'song-word').length, 7);
+  assert(app.nodes['media-content'].textContent.includes('новые учебные примеры'));
+});
+
+test('level and direction filters compose on vocabulary without inventing A3', () => {
+  const app = setup(); app.nodes.level.value = 'A1'; app.nodes.level.fire('change');
+  assert(app.nodes['word-list'].children.length > 0);
+  app.nodes.track.value = 'Английский по песням'; app.nodes.track.fire('change');
+  assert(app.nodes['word-list'].textContent.includes('Ничего не найдено'));
+  assert(!html.includes('<option>A3</option>'));
 });

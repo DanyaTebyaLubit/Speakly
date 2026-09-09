@@ -1,0 +1,1669 @@
+ENGLISH DIALOGUES
+=================
+
+Speakly — примеры живых английских диалогов
+Всего диалогов: 150
+Формат: English + перевод каждой реплики
+
+A1 — ДИАЛОГИ
+============
+
+1. Знакомство
+-------------
+A: Hi! What's your name?
+   Привет! Как тебя зовут?
+B: My name is Alex. And you?
+   Меня зовут Алекс. А тебя?
+A: I'm Dan. Nice to meet you.
+   Я Дан. Приятно познакомиться.
+B: Nice to meet you too.
+   Мне тоже приятно познакомиться.
+
+2. Как дела
+-----------
+A: How are you?
+   Как ты?
+B: I'm fine, thanks. And you?
+   Я в порядке, спасибо. А ты?
+A: I'm good.
+   У меня всё хорошо.
+
+3. Где ты живёшь
+----------------
+A: Where do you live?
+   Где ты живёшь?
+B: I live in Kazakhstan.
+   Я живу в Казахстане.
+A: Do you like it there?
+   Тебе там нравится?
+B: Yes, I do.
+   Да.
+
+4. Английский
+-------------
+A: Do you speak English?
+   Ты говоришь по-английски?
+B: A little.
+   Немного.
+A: Do you practice every day?
+   Ты практикуешься каждый день?
+B: Yes, I try to.
+   Да, стараюсь.
+
+5. Помощь
+---------
+A: Can you help me?
+   Можешь мне помочь?
+B: Of course. What do you need?
+   Конечно. Что тебе нужно?
+A: I can't open this file.
+   Я не могу открыть этот файл.
+B: Let me see.
+   Дай посмотреть.
+
+6. Школа — пример 6
+-------------------
+A: Do you like school?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+7. Работа — пример 7
+--------------------
+A: Do you like work?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+8. Проект — пример 8
+--------------------
+A: Do you like a project?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+9. Английский — пример 9
+------------------------
+A: Do you like English?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+10. Программирование — пример 10
+--------------------------------
+A: Do you like programming?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+11. Путешествия — пример 11
+---------------------------
+A: Do you like traveling?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+12. Покупки — пример 12
+-----------------------
+A: Do you like shopping?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+13. Музыка — пример 13
+----------------------
+A: Do you like music?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+14. Игры — пример 14
+--------------------
+A: Do you like games?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+15. Технологии — пример 15
+--------------------------
+A: Do you like technology?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+16. Школа — пример 16
+---------------------
+A: Do you like school?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+17. Работа — пример 17
+----------------------
+A: Do you like work?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+18. Проект — пример 18
+----------------------
+A: Do you like a project?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+19. Английский — пример 19
+--------------------------
+A: Do you like English?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+20. Программирование — пример 20
+--------------------------------
+A: Do you like programming?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+21. Путешествия — пример 21
+---------------------------
+A: Do you like traveling?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+22. Покупки — пример 22
+-----------------------
+A: Do you like shopping?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+23. Музыка — пример 23
+----------------------
+A: Do you like music?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+24. Игры — пример 24
+--------------------
+A: Do you like games?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+25. Технологии — пример 25
+--------------------------
+A: Do you like technology?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+26. Школа — пример 26
+---------------------
+A: Do you like school?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+27. Работа — пример 27
+----------------------
+A: Do you like work?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+28. Проект — пример 28
+----------------------
+A: Do you like a project?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+29. Английский — пример 29
+--------------------------
+A: Do you like English?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+30. Программирование — пример 30
+--------------------------------
+A: Do you like programming?
+   Тебе это нравится?
+B: Yes, I do.
+   Да.
+A: Why?
+   Почему?
+B: Because it's interesting.
+   Потому что это интересно.
+
+A2 — ДИАЛОГИ
+============
+
+31. Планы на вечер
+------------------
+A: What are you doing tonight?
+   Что ты делаешь сегодня вечером?
+B: I'm going to watch a movie.
+   Я собираюсь посмотреть фильм.
+A: Can I join you?
+   Можно с тобой?
+B: Sure, why not?
+   Конечно, почему бы и нет?
+
+32. Выходные
+------------
+A: What did you do last weekend?
+   Что ты делал на прошлых выходных?
+B: I stayed home and played games.
+   Я был дома и играл в игры.
+A: Did you have fun?
+   Тебе было весело?
+B: Yeah, it was relaxing.
+   Да, я хорошо отдохнул.
+
+33. Компьютер
+-------------
+A: Why isn't the computer working?
+   Почему компьютер не работает?
+B: I don't know. It just stopped.
+   Не знаю. Он просто перестал работать.
+A: Did you restart it?
+   Ты его перезагрузил?
+B: Not yet.
+   Ещё нет.
+
+34. Новый сайт
+--------------
+A: I made a new website.
+   Я сделал новый сайт.
+B: Really? Can I see it?
+   Правда? Можно посмотреть?
+A: Sure, I'll send you the link.
+   Конечно, я отправлю ссылку.
+B: Nice, I'll check it out.
+   Отлично, я посмотрю.
+
+35. Школа — пример 5
+--------------------
+A: How often do you think about school?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+36. Работа — пример 6
+---------------------
+A: How often do you think about work?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+37. Проект — пример 7
+---------------------
+A: How often do you think about a project?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+38. Английский — пример 8
+-------------------------
+A: How often do you think about English?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+39. Программирование — пример 9
+-------------------------------
+A: How often do you think about programming?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+40. Путешествия — пример 10
+---------------------------
+A: How often do you think about traveling?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+41. Покупки — пример 11
+-----------------------
+A: How often do you think about shopping?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+42. Музыка — пример 12
+----------------------
+A: How often do you think about music?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+43. Игры — пример 13
+--------------------
+A: How often do you think about games?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+44. Технологии — пример 14
+--------------------------
+A: How often do you think about technology?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+45. Школа — пример 15
+---------------------
+A: How often do you think about school?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+46. Работа — пример 16
+----------------------
+A: How often do you think about work?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+47. Проект — пример 17
+----------------------
+A: How often do you think about a project?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+48. Английский — пример 18
+--------------------------
+A: How often do you think about English?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+49. Программирование — пример 19
+--------------------------------
+A: How often do you think about programming?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+50. Путешествия — пример 20
+---------------------------
+A: How often do you think about traveling?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+51. Покупки — пример 21
+-----------------------
+A: How often do you think about shopping?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+52. Музыка — пример 22
+----------------------
+A: How often do you think about music?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+53. Игры — пример 23
+--------------------
+A: How often do you think about games?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+54. Технологии — пример 24
+--------------------------
+A: How often do you think about technology?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+55. Школа — пример 25
+---------------------
+A: How often do you think about school?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+56. Работа — пример 26
+----------------------
+A: How often do you think about work?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+57. Проект — пример 27
+----------------------
+A: How often do you think about a project?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+58. Английский — пример 28
+--------------------------
+A: How often do you think about English?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+59. Программирование — пример 29
+--------------------------------
+A: How often do you think about programming?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+60. Путешествия — пример 30
+---------------------------
+A: How often do you think about traveling?
+   Как часто ты думаешь об этом?
+B: Pretty often, actually.
+   На самом деле довольно часто.
+A: Is it important to you?
+   Это важно для тебя?
+B: Yes, especially right now.
+   Да, особенно сейчас.
+
+B1 — ДИАЛОГИ
+============
+
+61. Мнение
+----------
+A: What do you think about this idea?
+   Что ты думаешь об этой идее?
+B: I think it could work, but we need more details.
+   Я думаю, это может сработать, но нам нужно больше деталей.
+A: That's fair.
+   Согласен.
+B: Let's think it through.
+   Давай всё обдумаем.
+
+62. Ошибка в коде
+-----------------
+A: I can't figure out what's causing this error.
+   Я не могу понять, что вызывает эту ошибку.
+B: Have you checked the logs?
+   Ты проверял логи?
+A: Not yet. Good point.
+   Ещё нет. Хорошая мысль.
+B: Start there.
+   Начни с этого.
+
+63. Совет
+---------
+A: I'm not sure what to do.
+   Я не уверен, что делать.
+B: If I were you, I'd wait a little.
+   На твоём месте я бы немного подождал.
+A: Why?
+   Почему?
+B: You might get more information tomorrow.
+   Завтра у тебя может появиться больше информации.
+
+64. Будущее
+-----------
+A: What do you want to do in the future?
+   Чем ты хочешь заниматься в будущем?
+B: I'd like to work in technology.
+   Я хотел бы работать в сфере технологий.
+A: As a programmer?
+   Программистом?
+B: Probably. I'm still deciding.
+   Наверное. Я ещё решаю.
+
+65. Школа — пример 5
+--------------------
+A: What do you find difficult about school?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+66. Работа — пример 6
+---------------------
+A: What do you find difficult about work?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+67. Проект — пример 7
+---------------------
+A: What do you find difficult about a project?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+68. Английский — пример 8
+-------------------------
+A: What do you find difficult about English?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+69. Программирование — пример 9
+-------------------------------
+A: What do you find difficult about programming?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+70. Путешествия — пример 10
+---------------------------
+A: What do you find difficult about traveling?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+71. Покупки — пример 11
+-----------------------
+A: What do you find difficult about shopping?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+72. Музыка — пример 12
+----------------------
+A: What do you find difficult about music?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+73. Игры — пример 13
+--------------------
+A: What do you find difficult about games?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+74. Технологии — пример 14
+--------------------------
+A: What do you find difficult about technology?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+75. Школа — пример 15
+---------------------
+A: What do you find difficult about school?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+76. Работа — пример 16
+----------------------
+A: What do you find difficult about work?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+77. Проект — пример 17
+----------------------
+A: What do you find difficult about a project?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+78. Английский — пример 18
+--------------------------
+A: What do you find difficult about English?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+79. Программирование — пример 19
+--------------------------------
+A: What do you find difficult about programming?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+80. Путешествия — пример 20
+---------------------------
+A: What do you find difficult about traveling?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+81. Покупки — пример 21
+-----------------------
+A: What do you find difficult about shopping?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+82. Музыка — пример 22
+----------------------
+A: What do you find difficult about music?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+83. Игры — пример 23
+--------------------
+A: What do you find difficult about games?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+84. Технологии — пример 24
+--------------------------
+A: What do you find difficult about technology?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+85. Школа — пример 25
+---------------------
+A: What do you find difficult about school?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+86. Работа — пример 26
+----------------------
+A: What do you find difficult about work?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+87. Проект — пример 27
+----------------------
+A: What do you find difficult about a project?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+88. Английский — пример 28
+--------------------------
+A: What do you find difficult about English?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+89. Программирование — пример 29
+--------------------------------
+A: What do you find difficult about programming?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+90. Путешествия — пример 30
+---------------------------
+A: What do you find difficult about traveling?
+   Что тебе кажется сложным в этой теме?
+B: Mostly staying consistent.
+   В основном сохранять регулярность.
+A: What helps you?
+   Что тебе помогает?
+B: Breaking things into smaller steps.
+   Разбивать всё на более маленькие шаги.
+
+B2 — ДИАЛОГИ
+============
+
+91. Аргументация
+----------------
+A: I understand your point, but I'm not completely convinced.
+   Я понимаю твою точку зрения, но не полностью убеждён.
+B: Which part do you disagree with?
+   С какой частью ты не согласен?
+A: I think we're underestimating the risks.
+   Я думаю, мы недооцениваем риски.
+B: That's worth considering.
+   Это стоит учесть.
+
+92. Техническое решение
+-----------------------
+A: The fix works, but I'm worried about side effects.
+   Исправление работает, но я переживаю о побочных эффектах.
+B: Did you test the other features?
+   Ты проверил другие функции?
+A: Not all of them yet.
+   Пока не все.
+B: Then let's not release it yet.
+   Тогда давай пока не выпускать это.
+
+93. Изменение мнения
+--------------------
+A: You used to disagree with this idea.
+   Раньше ты был против этой идеи.
+B: I did, but I've changed my mind.
+   Да, но я изменил мнение.
+A: What changed?
+   Что изменилось?
+B: I saw more evidence that it could work.
+   Я увидел больше доказательств, что это может сработать.
+
+94. Школа — пример 4
+--------------------
+A: What do you think is the biggest challenge with school?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+95. Работа — пример 5
+---------------------
+A: What do you think is the biggest challenge with work?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+96. Проект — пример 6
+---------------------
+A: What do you think is the biggest challenge with a project?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+97. Английский — пример 7
+-------------------------
+A: What do you think is the biggest challenge with English?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+98. Программирование — пример 8
+-------------------------------
+A: What do you think is the biggest challenge with programming?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+99. Путешествия — пример 9
+--------------------------
+A: What do you think is the biggest challenge with traveling?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+100. Покупки — пример 10
+------------------------
+A: What do you think is the biggest challenge with shopping?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+101. Музыка — пример 11
+-----------------------
+A: What do you think is the biggest challenge with music?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+102. Игры — пример 12
+---------------------
+A: What do you think is the biggest challenge with games?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+103. Технологии — пример 13
+---------------------------
+A: What do you think is the biggest challenge with technology?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+104. Школа — пример 14
+----------------------
+A: What do you think is the biggest challenge with school?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+105. Работа — пример 15
+-----------------------
+A: What do you think is the biggest challenge with work?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+106. Проект — пример 16
+-----------------------
+A: What do you think is the biggest challenge with a project?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+107. Английский — пример 17
+---------------------------
+A: What do you think is the biggest challenge with English?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+108. Программирование — пример 18
+---------------------------------
+A: What do you think is the biggest challenge with programming?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+109. Путешествия — пример 19
+----------------------------
+A: What do you think is the biggest challenge with traveling?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+110. Покупки — пример 20
+------------------------
+A: What do you think is the biggest challenge with shopping?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+111. Музыка — пример 21
+-----------------------
+A: What do you think is the biggest challenge with music?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+112. Игры — пример 22
+---------------------
+A: What do you think is the biggest challenge with games?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+113. Технологии — пример 23
+---------------------------
+A: What do you think is the biggest challenge with technology?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+114. Школа — пример 24
+----------------------
+A: What do you think is the biggest challenge with school?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+115. Работа — пример 25
+-----------------------
+A: What do you think is the biggest challenge with work?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+116. Проект — пример 26
+-----------------------
+A: What do you think is the biggest challenge with a project?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+117. Английский — пример 27
+---------------------------
+A: What do you think is the biggest challenge with English?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+118. Программирование — пример 28
+---------------------------------
+A: What do you think is the biggest challenge with programming?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+119. Путешествия — пример 29
+----------------------------
+A: What do you think is the biggest challenge with traveling?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+120. Покупки — пример 30
+------------------------
+A: What do you think is the biggest challenge with shopping?
+   Как думаешь, какая самая большая сложность в этой теме?
+B: Probably balancing speed and quality.
+   Наверное, баланс между скоростью и качеством.
+A: Which one matters more?
+   Что важнее?
+B: It depends on the situation.
+   Это зависит от ситуации.
+
+C1 — ДИАЛОГИ
+============
+
+121. Критическое мышление
+-------------------------
+A: The argument sounds convincing at first, but it relies on several assumptions.
+   Сначала аргумент звучит убедительно, но он опирается на несколько предположений.
+B: Which assumptions concern you most?
+   Какие предположения беспокоят тебя больше всего?
+A: The idea that the same solution will work in every context.
+   Идея о том, что одно и то же решение будет работать в любом контексте.
+B: That's a fair criticism.
+   Это справедливая критика.
+
+122. Архитектура проекта
+------------------------
+A: The current architecture works, but I'm not sure it will scale well.
+   Текущая архитектура работает, но я не уверен, что она хорошо масштабируется.
+B: What would become the main bottleneck?
+   Что станет главным узким местом?
+A: Probably the way the components depend on each other.
+   Вероятно, то, как компоненты зависят друг от друга.
+B: Then we should reduce that coupling before the project grows.
+   Тогда нам стоит уменьшить эту связанность до того, как проект вырастет.
+
+123. Школа — пример 3
+---------------------
+A: Do you think people's approach to school has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+124. Работа — пример 4
+----------------------
+A: Do you think people's approach to work has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+125. Проект — пример 5
+----------------------
+A: Do you think people's approach to a project has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+126. Английский — пример 6
+--------------------------
+A: Do you think people's approach to English has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+127. Программирование — пример 7
+--------------------------------
+A: Do you think people's approach to programming has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+128. Путешествия — пример 8
+---------------------------
+A: Do you think people's approach to traveling has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+129. Покупки — пример 9
+-----------------------
+A: Do you think people's approach to shopping has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+130. Музыка — пример 10
+-----------------------
+A: Do you think people's approach to music has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+131. Игры — пример 11
+---------------------
+A: Do you think people's approach to games has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+132. Технологии — пример 12
+---------------------------
+A: Do you think people's approach to technology has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+133. Школа — пример 13
+----------------------
+A: Do you think people's approach to school has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+134. Работа — пример 14
+-----------------------
+A: Do you think people's approach to work has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+135. Проект — пример 15
+-----------------------
+A: Do you think people's approach to a project has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+136. Английский — пример 16
+---------------------------
+A: Do you think people's approach to English has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+137. Программирование — пример 17
+---------------------------------
+A: Do you think people's approach to programming has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+138. Путешествия — пример 18
+----------------------------
+A: Do you think people's approach to traveling has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+139. Покупки — пример 19
+------------------------
+A: Do you think people's approach to shopping has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+140. Музыка — пример 20
+-----------------------
+A: Do you think people's approach to music has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+141. Игры — пример 21
+---------------------
+A: Do you think people's approach to games has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+142. Технологии — пример 22
+---------------------------
+A: Do you think people's approach to technology has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+143. Школа — пример 23
+----------------------
+A: Do you think people's approach to school has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+144. Работа — пример 24
+-----------------------
+A: Do you think people's approach to work has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+145. Проект — пример 25
+-----------------------
+A: Do you think people's approach to a project has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+146. Английский — пример 26
+---------------------------
+A: Do you think people's approach to English has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+147. Программирование — пример 27
+---------------------------------
+A: Do you think people's approach to programming has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+148. Путешествия — пример 28
+----------------------------
+A: Do you think people's approach to traveling has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+149. Покупки — пример 29
+------------------------
+A: Do you think people's approach to shopping has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.
+
+150. Музыка — пример 30
+-----------------------
+A: Do you think people's approach to music has changed?
+   Как думаешь, подход людей к этой теме изменился?
+B: Definitely. Expectations are much higher now.
+   Определённо. Сейчас ожидания намного выше.
+A: Do you think that's a good thing?
+   Как думаешь, это хорошо?
+B: In some ways, yes, but it also creates new pressures.
+   В каком-то смысле да, но это также создаёт новое давление.

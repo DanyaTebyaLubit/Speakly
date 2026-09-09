@@ -191,3 +191,46 @@
 .account-panel p { font-size: 14px; color: var(--muted); }
 .account-panel button { width: 100%; margin-top: 9px; }
 @media (max-width: 700px) { .header-actions { gap: 8px; } .account-menu > summary { padding: 10px; font-size: 13px; } .account-panel { position: fixed; top: 78px; right: 16px; } }
+
+/* Контекстные материалы: фильтры, сцены по ролям и словарь песен. */
+.catalog-filters { display: flex; flex: 1 1 100%; gap: 10px; min-width: 0; }
+.catalog-filters select { min-width: 0; flex: 1; }
+.media-tabs, .media-filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.media-tabs button { flex: 1; }
+.media-tabs [aria-pressed='true'] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.media-filters input { border: 1px solid var(--border); background: var(--surface); padding: 12px 16px; border-radius: 12px; flex: 2 1 240px; }
+.media-filters select { flex: 1 1 150px; width: auto; min-width: 0; }
+.media-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+.media-tile { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 24px; min-width: 0; text-align: left; border: 1px solid var(--border); background: var(--surface); border-radius: 16px; }
+.media-tile strong { font-size: 19px; font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
+.media-tile .eyebrow { margin: 0; font-size: 10px; }
+.media-reader { margin: 20px auto; padding: 32px; border: 1px solid var(--border); border-radius: 18px; background: var(--surface); max-width: 840px; }
+.dialogue-turn { display: flex; gap: 14px; align-items: flex-start; margin: 18px 35px 18px 0; }
+.dialogue-turn > div { min-width: 0; flex: 1; border: 1px solid var(--border); border-radius: 0 14px 14px 14px; background: var(--soft); padding: 16px 20px; }
+.dialogue-turn p { margin: 0; line-height: 1.7; }
+.dialogue-turn .example-translation { margin-top: 8px; }
+.speaker { display: grid; place-items: center; flex: 0 0 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border); font-size: 13px; background: var(--surface); }
+.speaker-b { margin-left: 35px; margin-right: 0; }
+.speaker-b > div { background: var(--surface); }
+.song-word { border-top: 1px solid var(--border); padding: 20px 0; }
+.song-word > strong { font-size: 20px; }
+.song-word > p { line-height: 1.7; margin: 6px 0; }
+.lyrics { border: 1px solid var(--border); padding: 0 18px; border-radius: 12px; margin: 20px 0; }
+.lyrics summary { padding: 16px 0; cursor: pointer; }
+.lyrics-text { white-space: pre-wrap; overflow-wrap: anywhere; padding: 12px 0 24px; line-height: 1.9; font-size: 15px; }
+.vocab-pair { padding: 12px 0; border-bottom: 1px solid var(--border); }
+#learning-back { margin-bottom: 12px; }
+@media(max-width:1150px) { .nav button { padding-left: 11px; padding-right: 11px; } }
+@media(max-width:700px) {
+  .nav { grid-template-columns: repeat(5,minmax(0,1fr)); }
+  .nav button { font-size: 10px; padding: 5px 2px; overflow-wrap: normal; }
+  .catalog-filters { flex-wrap: wrap; }
+  .catalog-filters select { flex-basis: 100%; }
+  .media-grid { grid-template-columns: minmax(0,1fr); }
+  .media-tile { padding: 20px; }
+  .media-reader { padding: 22px 16px; }
+  .dialogue-turn { margin: 16px 12px 16px 0; gap: 8px; }
+  .speaker-b { margin-left: 12px; margin-right: 0; }
+  .dialogue-turn > div { padding: 14px 12px; }
+  .speaker { flex-basis: 24px; height: 24px; font-size: 11px; }
+}

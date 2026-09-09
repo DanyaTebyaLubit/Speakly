@@ -18,6 +18,6 @@ const Storage = (() => {
     if (!available) document.getElementById('notice').textContent = 'Хранилище браузера недоступно. Прогресс сохранится только до закрытия страницы.';
     for (const listener of listeners) listener(key, value, previous);
   }
-  return { read, write, subscribe(fn) { listeners.add(fn); }, setAccount(id) { account = id; }, get available() { return available; } };
+  return { read, write, subscribe(fn) { listeners.add(fn); }, setAccount(id) { account = id; }, get accountId() { return account; }, get available() { return available; } };
 })();
 

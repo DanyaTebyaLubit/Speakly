@@ -9,6 +9,8 @@ const sources = [
   ['english_practice', 'Практика'], ['english_reactions', 'Реакции'],
   ['english_sentences_and_grammar', 'Конструкции'], ['english_slang', 'Сленг'],
   ['english_vocabulary_all_topics', 'По темам'],
+  ['english_sentences_3000', 'Предложения A1–C1'],
+  ['english_dialogues', 'Диалоги'], ['english_songs', 'Песни'],
 ];
 for (const [index, [id, name]] of sources.entries()) {
   const text = fs.readFileSync(path.join(root, 'materials', `${id}.txt`), 'utf8').replace(/^\uFEFF/, '');
