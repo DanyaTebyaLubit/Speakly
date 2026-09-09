@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Английский по вашим материалам: слова, правила, примеры и практика.">
+  <meta name="color-scheme" content="light dark">
+  <title>Speakly — ваш английский</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/study.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/terminal.css">
+  <script src="data/ENG.js" defer></script>
+  <script src="data/english_conversation_words.js" defer></script>
+  <script src="data/english_people_description.js" defer></script>
+  <script src="data/english_phrasal_verbs.js" defer></script>
+  <script src="data/english_practice.js" defer></script>
+  <script src="data/english_reactions.js" defer></script>
+  <script src="data/english_sentences_and_grammar.js" defer></script>
+  <script src="data/english_slang.js" defer></script>
+  <script src="data/english_vocabulary_all_topics.js" defer></script>
+  <script src="js/parser.js" defer></script>
+  <script src="data/guides.js" defer></script>
+  <script src="js/storage.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="supabase-config.js" defer></script>
+  <script src="js/account.js" defer></script>
+</head>
+<body>
+  <button class="skip-link" id="skip-content" type="button">К содержимому</button>
+  <header class="header">
+    <button id="home" type="button" class="brand" aria-label="Speakly, словарь"><span class="brand-icon">s<span>·</span></span> speakly<span class="brand-dot">.</span></button>
+    <nav aria-label="Разделы" class="nav">
+      <button data-view="dictionary" class="active" aria-current="page"><span aria-hidden="true">▤</span>Словарь</button>
+      <button data-view="rules"><span aria-hidden="true">≡</span>Правила</button>
+      <button data-view="cards"><span aria-hidden="true">▱</span>Карточки</button>
+      <button data-view="quiz"><span aria-hidden="true">✓</span>Тест</button>
+    </nav>
+    <div class="header-actions">
+    <details class="account-menu">
+      <summary>Аккаунт</summary>
+      <div class="account-panel">
+        <label class="theme-label" for="theme-select">Оформление</label>
+        <select id="theme-select"><option value="light">Светлая</option><option value="dark">Тёмная</option><option value="terminal">Моно / Терминал</option></select>
+        <strong id="account-name">Гостевой режим</strong>
+        <p id="account-status" role="status">Прогресс сохраняется на этом устройстве.</p>
+        <button id="google-login" class="primary" type="button">Войти через Google</button>
+        <button id="sync-retry" class="secondary" type="button" hidden>Синхронизировать</button>
+        <button id="import-progress" class="secondary" type="button" hidden>Перенести гостевой прогресс</button>
+        <button id="logout" class="secondary" type="button" hidden>Выйти</button>
+      </div>
+    </details>
+    <button id="theme" class="icon-button" aria-label="Переключить тему" title="Переключить тему">◐</button>
+    </div>
+  </header>
+  <div class="workspace">
+    <aside class="library" aria-label="Учебные файлы">
+      <div class="library-heading"><p class="eyebrow">МОЯ БИБЛИОТЕКА</p><span>09</span></div>
+      <div id="source-list" class="source-list"></div>
+      <div class="library-note"><span>Понять. Запомнить.<br>Использовать.</span><p>Читайте правило, разбирайте примеры и переходите к практике.</p></div>
+    </aside>
+    <main id="main" tabindex="-1">
+      <div class="intro"><div><p class="eyebrow">НЕМНОГО АНГЛИЙСКОГО КАЖДЫЙ ДЕНЬ</p><h1>Всё начинается<br><span>с одного слова.</span></h1><p class="subtitle">Ваша коллекция. Понятные правила. Живая практика.</p></div></div>
+      <section class="stats" aria-label="Прогресс обучения">
+        <div><span class="stat-icon">▤</span><div><strong id="total">0</strong><span>слов и выражений</span></div></div>
+        <div><span class="stat-icon green">✓</span><div><strong id="known">0</strong><span>уже выучено</span></div></div>
+        <div class="progress-stat"><div><strong id="percent">0%</strong><span>вашей коллекции</span></div><progress id="progress" max="100" value="0" aria-label="Доля выученных слов"></progress></div>
+      </section>
+      <div class="section-heading"><div><p class="eyebrow" id="section-kicker">ВАША КОЛЛЕКЦИЯ</p><h2 id="section-title">Словарь</h2></div><span class="local-label"><i></i> Сохраняется на устройстве</span></div>
+      <div id="source-summary" class="source-summary"></div>
+      <details id="study-filters" class="study-filters" open>
+        <summary>Файл и фильтры <span aria-hidden="true">⌄</span></summary>
+      <div class="mobile-source"><label for="source-select">Учебный файл</label><select id="source-select"><option value="">Вся библиотека</option></select></div>
+      <div class="toolbar">
+        <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Найти слово или перевод…" aria-label="Поиск слова или перевода"></label>
+        <label class="select-label" id="topic-filter"><select id="category" aria-label="Тема"><option value="">Все темы</option></select></label>
+        <label class="select-label" id="status-filter"><select id="status" aria-label="Статус изучения"><option value="all">Все слова</option><option value="new">Ещё учу</option><option value="known">Выучено</option></select></label>
+      </div>
+      </details>
+      <section id="dictionary" aria-label="Словарь"><div class="list-meta"><span id="count" role="status"></span><span>ENGLISH <span class="meta-arrow">↔</span> РУССКИЙ</span></div><div id="word-list" class="word-list"></div><button id="more" class="secondary more" hidden>Показать ещё</button></section>
+      <section id="rules" aria-label="Правила и примеры" hidden><div class="rules-layout"><div class="lesson-index"><label class="lesson-picker-label" for="lesson-picker">Выберите урок</label><select id="lesson-picker" aria-label="Урок"></select><div id="lesson-count" class="list-meta" role="status"></div><div id="lesson-list"></div></div><article id="lesson-reader" class="lesson-reader" aria-label="Учебный урок"></article></div></section>
+      <section id="cards" aria-label="Флеш-карточки" hidden><div id="card-content"></div></section>
+      <section id="quiz" aria-label="Тест" hidden><div id="quiz-content"></div></section>
+      <p id="notice" class="notice" role="status" aria-live="polite"></p>
+      <footer><span class="footer-brand">speakly.</span><span>По одному слову ближе к цели.</span></footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,537 @@
+1. Местоимения
+
+I — я
+you — ты / вы
+he — он
+she — она
+it — оно / это
+we — мы
+they — они
+
+me — меня / мне
+you — тебя / тебе
+him — его / ему
+her — её / ей
+us — нас / нам
+them — их / им
+
+my — мой
+your — твой / ваш
+his — его
+her — её
+our — наш
+their — их
+
+this — это / этот
+that — то / тот
+these — эти
+those — те
+
+2. Вопросительные слова
+
+what — что / какой
+where — где
+when — когда
+why — почему
+who — кто
+how — как
+which — который
+whose — чей
+
+how much — сколько
+how many — сколько
+how long — как долго
+how often — как часто
+how old — сколько лет
+what time — во сколько / какое время
+
+3. Самые важные глаголы
+
+be — быть
+have — иметь
+do — делать
+go — идти / ехать
+come — приходить
+get — получать
+make — делать / создавать
+take — брать
+give — давать
+bring — приносить
+put — класть
+keep — держать / сохранять
+
+want — хотеть
+need — нуждаться / нужно
+like — нравиться
+love — любить
+hate — ненавидеть
+know — знать
+think — думать
+understand — понимать
+remember — помнить
+forget — забывать
+
+see — видеть
+look — смотреть
+watch — смотреть
+hear — слышать
+listen — слушать
+speak — говорить
+say — сказать
+tell — рассказывать / говорить кому-то
+ask — спрашивать
+answer — отвечать
+
+read — читать
+write — писать
+learn — учить
+study — учиться
+teach — учить кого-то
+
+work — работать
+play — играть
+help — помогать
+try — пытаться
+use — использовать
+find — находить
+lose — терять
+show — показывать
+call — звонить / называть
+wait — ждать
+
+4. Бытовые действия
+
+eat — есть
+drink — пить
+sleep — спать
+wake up — просыпаться
+get up — вставать
+sit — сидеть
+stand — стоять
+walk — ходить пешком
+run — бегать
+stop — останавливаться
+start — начинать
+
+open — открывать
+close — закрывать
+turn on — включать
+turn off — выключать
+wash — мыть
+clean — чистить
+cook — готовить
+buy — покупать
+sell — продавать
+pay — платить
+
+wear — носить одежду
+change — менять
+move — двигаться / переезжать
+leave — уходить
+stay — оставаться
+live — жить
+meet — встречать / встречаться
+visit — посещать
+
+5. Модальные глаголы
+
+can — мочь
+can’t — не мочь
+could — мог / мог бы
+should — следует / стоит
+shouldn’t — не следует
+must — должен
+mustn’t — нельзя
+will — буду / будет
+would — бы
+may — можно / возможно
+might — возможно
+
+6. Время
+
+now — сейчас
+today — сегодня
+tonight — сегодня вечером / ночью
+tomorrow — завтра
+yesterday — вчера
+
+morning — утро
+afternoon — день / после обеда
+evening — вечер
+night — ночь
+day — день
+week — неделя
+month — месяц
+year — год
+
+hour — час
+minute — минута
+second — секунда
+time — время
+
+early — рано
+late — поздно
+soon — скоро
+later — позже
+before — до / раньше
+after — после
+then — потом / тогда
+already — уже
+still — всё ещё
+yet — ещё / уже
+again — снова
+
+first — сначала / первый
+last — последний / прошлый
+next — следующий
+
+7. Частота
+
+always — всегда
+usually — обычно
+often — часто
+sometimes — иногда
+rarely — редко
+never — никогда
+
+every day — каждый день
+every week — каждую неделю
+once — один раз
+twice — два раза
+
+8. Место и направление
+
+here — здесь
+there — там
+inside — внутри
+outside — снаружи
+near — рядом
+far — далеко
+
+up — вверх
+down — вниз
+left — налево
+right — направо
+straight — прямо
+back — назад
+forward — вперёд
+
+in — в
+on — на
+at — в / у
+under — под
+over — над
+behind — позади
+in front of — перед
+between — между
+next to — рядом с
+with — с
+without — без
+from — из / от
+to — к / в
+for — для
+
+9. Дом
+
+home — дом
+house — дом
+room — комната
+bedroom — спальня
+kitchen — кухня
+bathroom — ванная
+door — дверь
+window — окно
+wall — стена
+floor — пол
+table — стол
+chair — стул
+bed — кровать
+sofa — диван
+light — свет
+key — ключ
+
+10. Техника
+
+phone — телефон
+computer — компьютер
+laptop — ноутбук
+screen — экран
+keyboard — клавиатура
+mouse — мышь
+internet — интернет
+website — сайт
+app — приложение
+game — игра
+message — сообщение
+photo — фото
+video — видео
+music — музыка
+file — файл
+password — пароль
+
+11. Люди и семья
+
+person — человек
+people — люди
+man — мужчина
+woman — женщина
+boy — мальчик
+girl — девочка
+child — ребёнок
+children — дети
+
+friend — друг
+family — семья
+mother — мама
+father — папа
+mom — мама
+dad — папа
+brother — брат
+sister — сестра
+son — сын
+daughter — дочь
+parents — родители
+
+12. Еда и напитки
+
+food — еда
+water — вода
+tea — чай
+coffee — кофе
+milk — молоко
+juice — сок
+
+bread — хлеб
+meat — мясо
+chicken — курица
+fish — рыба
+egg — яйцо
+cheese — сыр
+rice — рис
+fruit — фрукты
+apple — яблоко
+banana — банан
+vegetable — овощ
+potato — картошка
+
+breakfast — завтрак
+lunch — обед
+dinner — ужин
+
+hungry — голодный
+thirsty — хочется пить
+
+13. Одежда
+
+clothes — одежда
+shirt — рубашка / футболка
+T-shirt — футболка
+pants — штаны
+jeans — джинсы
+shoes — обувь
+jacket — куртка
+coat — пальто
+hat — шапка / шляпа
+dress — платье
+
+14. Места
+
+school — школа
+work — работа
+office — офис
+shop — магазин
+store — магазин
+street — улица
+road — дорога
+city — город
+country — страна
+park — парк
+hospital — больница
+restaurant — ресторан
+cafe — кафе
+station — станция / вокзал
+airport — аэропорт
+hotel — отель
+lake — озеро
+river — река
+sea — море
+
+15. Транспорт
+
+car — машина
+bus — автобус
+train — поезд
+plane — самолёт
+taxi — такси
+bike — велосипед
+
+drive — водить
+ride — ехать
+fly — лететь
+travel — путешествовать
+
+16. Состояния и эмоции
+
+good — хороший
+bad — плохой
+fine — нормально
+okay — хорошо
+happy — счастливый
+sad — грустный
+angry — злой
+tired — уставший
+busy — занятый
+free — свободный
+ready — готов
+afraid — испуганный
+worried — обеспокоенный
+excited — взволнованный
+bored — скучающий
+sick — больной
+
+17. Размер и количество
+
+big — большой
+small — маленький
+long — длинный
+short — короткий
+high — высокий
+low — низкий
+
+more — больше
+less — меньше
+much — много
+many — много
+a lot — много
+little — мало
+few — мало
+enough — достаточно
+all — всё / все
+some — некоторые / немного
+any — какие-нибудь
+nothing — ничего
+something — что-то
+everything — всё
+
+18. Качества
+
+new — новый
+old — старый
+young — молодой
+easy — лёгкий
+hard — сложный / твёрдый
+fast — быстрый
+slow — медленный
+hot — горячий
+cold — холодный
+warm — тёплый
+clean — чистый
+dirty — грязный
+beautiful — красивый
+nice — приятный
+important — важный
+interesting — интересный
+different — другой / разный
+same — одинаковый
+right — правильный
+wrong — неправильный
+
+19. Связки
+
+and — и
+but — но
+or — или
+because — потому что
+so — поэтому / так что
+if — если
+then — тогда / потом
+also — тоже
+only — только
+even — даже
+maybe — может быть
+probably — наверное
+really — правда / очень
+actually — на самом деле
+of course — конечно
+sure — конечно / уверен
+
+20. Короткие разговорные слова
+
+yes — да
+no — нет
+yeah — да
+nope — нет
+okay — хорошо
+well — ну / хорошо
+please — пожалуйста
+thanks — спасибо
+thank you — спасибо
+sorry — извини
+excuse me — извините
+hello — привет
+hi — привет
+bye — пока
+goodbye — до свидания
+
+21. Полезные наречия
+
+very — очень
+too — слишком / тоже
+quite — довольно
+almost — почти
+just — просто / только что
+really — действительно
+maybe — может быть
+together — вместе
+alone — один
+again — снова
+
+22. Самые нужные фразы
+
+How are you? — Как дела?
+I’m fine. — Я в порядке.
+What are you doing? — Что ты делаешь?
+Where are you? — Где ты?
+Where are you going? — Куда ты идёшь?
+What happened? — Что случилось?
+What do you mean? — Что ты имеешь в виду?
+What do you think? — Что ты думаешь?
+
+I know. — Я знаю.
+I don’t know. — Я не знаю.
+I understand. — Я понимаю.
+I don’t understand. — Я не понимаю.
+I remember. — Я помню.
+I forgot. — Я забыл.
+
+I want this. — Я хочу это.
+I need this. — Мне это нужно.
+I need help. — Мне нужна помощь.
+I like it. — Мне это нравится.
+I don’t like it. — Мне это не нравится.
+
+Can you help me? — Можешь мне помочь?
+Can you repeat? — Можешь повторить?
+Can you hear me? — Ты меня слышишь?
+Can you see it? — Ты это видишь?
+Can I come in? — Можно войти?
+
+Wait. — Подожди.
+Come here. — Иди сюда.
+Let’s go. — Пойдём.
+Come on. — Давай / ну же.
+Be careful. — Будь осторожен.
+Don’t worry. — Не переживай.
+
+I’m ready. — Я готов.
+I’m tired. — Я устал.
+I’m hungry. — Я голодный.
+I’m busy. — Я занят.
+I’m free. — Я свободен.
+
+See you later. — Увидимся позже.
+See you tomorrow. — Увидимся завтра.
+Good morning. — Доброе утро.
+Good afternoon. — Добрый день.
+Good evening. — Добрый вечер.
+Good night. — Спокойной ночи.

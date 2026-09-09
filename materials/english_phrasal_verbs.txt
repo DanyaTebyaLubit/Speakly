@@ -1,0 +1,100 @@
+get up — вставать
+wake up — просыпаться
+sit down — садиться
+stand up — вставать
+come in — входить
+go out — выходить / гулять
+come back — возвращаться
+go back — возвращаться
+get back — возвращаться
+go away — уходить
+come over — зайти в гости
+go on — продолжать
+carry on — продолжать
+hurry up — поторопиться
+slow down — замедлиться
+calm down — успокоиться
+
+turn on — включать
+turn off — выключать
+turn up — сделать громче / увеличить
+turn down — сделать тише / уменьшить
+log in — войти в аккаунт
+log out — выйти из аккаунта
+sign up — зарегистрироваться
+sign in — войти
+shut down — выключить компьютер / систему
+start up — запустить
+
+pick up — поднять / забрать
+put down — положить
+put on — надеть
+take off — снять / взлететь
+take out — вынести / достать
+put away — убрать на место
+throw away — выбросить
+give back — вернуть
+take back — забрать обратно / взять свои слова назад
+bring back — принести обратно / вернуть
+
+look at — смотреть на
+look for — искать
+look after — присматривать за
+look around — осматриваться
+look back — оглянуться / вспоминать прошлое
+look up — искать информацию
+watch out — осторожно
+check out — проверить / посмотреть
+
+find out — узнать
+figure out — разобраться
+work out — разобраться / тренироваться
+think about — думать о
+think of — думать о / придумать
+make up — придумать / помириться
+give up — сдаться
+try out — попробовать
+learn about — узнать о чём-то
+
+call back — перезвонить
+hang up — положить трубку
+speak up — говорить громче
+write down — записать
+read out — прочитать вслух
+talk about — говорить о
+talk to — разговаривать с
+
+eat out — есть вне дома
+clean up — убрать
+wash up — помыть посуду
+dress up — нарядиться
+lie down — лечь
+stay up — не ложиться спать
+go to bed — ложиться спать
+
+run away — убежать
+run out — закончиться
+get in — войти / сесть в машину
+get out — выйти
+get on — сесть в транспорт
+get off — выйти из транспорта
+move on — двигаться дальше
+
+hang out — тусоваться / проводить время
+get along — ладить
+break up — расстаться
+make friends — подружиться
+grow up — вырасти
+cheer up — взбодриться / не грусти
+
+set up — настроить / установить
+back up — сделать резервную копию
+plug in — подключить
+unplug — отключить из розетки
+scroll down — прокрутить вниз
+scroll up — прокрутить вверх
+click on — нажать на
+type in — ввести текст
+fill in — заполнить
+download — скачать
+upload — загрузить

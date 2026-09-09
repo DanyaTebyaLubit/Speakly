@@ -1,0 +1,60 @@
+/* Монохромная тема по палитре предоставленного main.css. */
+.theme-label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 7px; }
+#theme-select { margin-bottom: 20px; }
+:root[data-theme='terminal'] {
+  --bg: #070707;
+  --surface: #101010;
+  --soft: #191919;
+  --border: #343434;
+  --text: #efefef;
+  --muted: #a0a0a0;
+  --accent: #ededed;
+  --accent-ink: #101010;
+  --error: #dedede;
+  --shadow: 0 16px 40px #0005, 0 0 24px #91919109;
+  --radius: 12px;
+  color-scheme: dark;
+  font-family: 'Cascadia Code', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
+[data-theme='terminal'] body {
+  background: radial-gradient(circle at 55% 20%, #7575750d, transparent 34rem), var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+[data-theme='terminal'] .header { background: #090909f5; border-bottom-color: #343434; }
+[data-theme='terminal'] .brand { font-weight: 500; letter-spacing: -.8px; }
+[data-theme='terminal'] .brand-dot { color: #a8a8a8; }
+[data-theme='terminal'] .brand-icon { background: #181818; color: #f4f4f4; border: 1px solid #494949; border-radius: 8px; }
+[data-theme='terminal'] #theme { font-family: inherit; font-size: 16px; border-radius: 10px; }
+[data-theme='terminal'] h1 { font-weight: 500; letter-spacing: -1.5px; }
+[data-theme='terminal'] .eyebrow { color: #aaa; letter-spacing: 1.4px; }
+[data-theme='terminal'] .intro .eyebrow::before { content: '> '; color: #f4f4f4; }
+[data-theme='terminal'] .nav { border: 1px solid var(--border); background: #111; border-radius: 11px; }
+[data-theme='terminal'] .nav .active { background: #efefef; color: #101010; box-shadow: none; }
+[data-theme='terminal'] .nav button { border-radius: 7px; }
+[data-theme='terminal'] .source-button[aria-pressed='true'] { background: #1d1d1d; border-color: #626262; }
+[data-theme='terminal'] .local-label i { background: #d0d0d0; box-shadow: 0 0 8px #ffffff25; }
+[data-theme='terminal'] progress::-webkit-progress-value { background: #d7d7d7; }
+[data-theme='terminal'] progress::-moz-progress-bar { background: #d7d7d7; }
+[data-theme='terminal'] .search:focus-within { outline-color: #c0c0c0; }
+[data-theme='terminal'] :is(button, a, input, select, summary):focus-visible { outline-color: #dedede; }
+[data-theme='terminal'] :is(.word-list, .lesson-reader, .lesson-index, .quiz-box, .face) { border-color: #393939; border-radius: 12px; }
+[data-theme='terminal'] .word-row + .word-row { border-top-color: #292929; }
+[data-theme='terminal'] .word { font-weight: 500; }
+[data-theme='terminal'] .translation { color: #d4d4d4; }
+[data-theme='terminal'] .primary { box-shadow: inset 0 1px 0 #fff, 0 0 18px #ffffff0a; }
+[data-theme='terminal'] :is(.primary, .secondary, .answer, .formula, .lesson-button) { border-radius: 8px; }
+[data-theme='terminal'] .lesson-number { background: #242424; }
+[data-theme='terminal'] .lesson-button[aria-current] .lesson-number { background: #d0d0d0; }
+[data-theme='terminal'] .example-pair { border-left-color: #888; background: #171717; }
+[data-theme='terminal'] .answer.correct { border-color: #fff; background: #ececec; color: #111; }
+[data-theme='terminal'] .answer.wrong { border: 2px dashed #b1b1b1; background: #252525; color: #eee; }
+[data-theme='terminal'] .account-panel { border-color: #555; }
+@media (max-width: 700px) {
+  [data-theme='terminal'] .nav { border-radius: 0; border-width: 1px 0 0; background: #101010; }
+  [data-theme='terminal'] h1 { font-size: clamp(25px, 6.6vw, 32px); }
+  [data-theme='terminal'] .header { gap: 10px; }
+  [data-theme='terminal'] .brand { font-size: 22px; }
+  [data-theme='terminal'] .brand-icon { width: 30px; height: 32px; }
+  [data-theme='terminal'] .word-row + .word-row { border-color: #393939; }
+  [data-theme='terminal'] .nav button { font-size: 11px; }
+}

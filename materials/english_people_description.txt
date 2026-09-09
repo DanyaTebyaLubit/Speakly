@@ -1,0 +1,82 @@
+kind — добрый
+nice — приятный / милый
+friendly — дружелюбный
+funny — смешной
+smart — умный
+clever — сообразительный
+stupid — глупый
+quiet — тихий
+loud — громкий
+shy — застенчивый
+brave — смелый
+calm — спокойный
+serious — серьёзный
+honest — честный
+helpful — отзывчивый / готовый помочь
+polite — вежливый
+rude — грубый
+lazy — ленивый
+active — активный
+careful — осторожный / внимательный
+careless — неосторожный
+strange — странный
+weird — странный / чудной
+normal — обычный / нормальный
+cool — классный
+boring — скучный
+interesting — интересный
+happy — счастливый
+sad — грустный
+angry — злой
+nervous — нервный
+worried — обеспокоенный
+tired — уставший
+busy — занятый
+free — свободный
+ready — готовый
+
+tall — высокий
+short — низкий / невысокий
+thin — худой
+slim — стройный
+fat — толстый
+strong — сильный
+weak — слабый
+young — молодой
+old — старый
+beautiful — красивый
+pretty — красивый / симпатичный
+handsome — красивый, обычно о мужчине
+cute — милый
+ugly — некрасивый
+
+hair — волосы
+eyes — глаза
+face — лицо
+head — голова
+hand — рука / кисть
+arm — рука
+leg — нога
+foot — ступня
+body — тело
+height — рост
+weight — вес
+
+blond — светловолосый
+dark-haired — темноволосый
+long hair — длинные волосы
+short hair — короткие волосы
+blue eyes — голубые глаза
+green eyes — зелёные глаза
+brown eyes — карие глаза
+
+He is kind. — Он добрый.
+She is funny. — Она смешная.
+He is very quiet. — Он очень тихий.
+She is friendly. — Она дружелюбная.
+He looks tired. — Он выглядит уставшим.
+She looks happy. — Она выглядит счастливой.
+He is tall. — Он высокий.
+She has long hair. — У неё длинные волосы.
+He has blue eyes. — У него голубые глаза.
+He is a good person. — Он хороший человек.
