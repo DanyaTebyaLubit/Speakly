@@ -213,6 +213,7 @@ const LearningUI = (() => {
     box.append(el('p', 'eyebrow', 'ВАШ ОТВЕТ'), el('p', '', item.actual || 'Ответ не был сохранён для этой старой записи.'));
     box.append(el('p', 'eyebrow', 'ПРАВИЛЬНЫЙ ОТВЕТ'), el('p', 'training-solution', entry.exercise?.answer || entry.word), el('p', '', entry.translation));
     box.append(el('h4', '', 'Как разобраться'), el('p', '', Learning.explain(entry)));
+    box.append(button('✎ Заметка об этой ошибке', () => Notebook.open(entry)));
     if (typeof Coach !== 'undefined') Coach.explainMistake(box, item);
     const tokens = new Set(Learning.meaning(entry.word).split(' '));
     const parts = new Map();

@@ -339,6 +339,7 @@ const App = (() => {
   }
   function init() {
     StudyTools.init();
+    Notebook.init();
     Training.init(filtered);
     LearningUI.init(navigate);
     MediaLibrary.init();
@@ -401,6 +402,7 @@ const App = (() => {
     if (progressOwner !== Storage.accountId) {
       progressOwner = Storage.accountId; state.quiz = null; state.deck = []; state.card = 0;
       Training.resetAccount(); LearningUI.resetAccount(); MediaLibrary.resetAccount();
+      Notebook.resetAccount();
       if (state.view === 'learning' || state.view === 'achievements') navigate('dictionary');
     }
     known.clear(); readLessons.clear();

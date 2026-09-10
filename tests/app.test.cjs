@@ -67,6 +67,25 @@ test('mistake list permits selecting a scheduled error and explains before pract
 });
 
 function descendants(node) { return [node, ...node.children.flatMap(descendants)]; }
+test('notebook saves across reload without leaving current exercise',()=>{
+  let app=setup();app.navigate('quiz');app.nodes['notebook-toggle'].fire('click');
+  assert.equal(app.nodes.quiz.hidden,false);assert.equal(app.nodes['notebook-panel'].hidden,false);
+  app.nodes['notebook-text'].value='Remember: she works';app.nodes['notebook-text'].fire('input');
+  app=setup(app.stored);app.nodes['notebook-toggle'].fire('click');
+  assert.equal(app.nodes['notebook-text'].value,'Remember: she works');
+  assert(app.evaluate('StudyTools.backup().lastQuiz.notebook.scratch.text').includes('she works'));
+});
+test('error notes are linked, independent from scratchpad and account scoped',()=>{
+  const app=setup();app.evaluate('Notebook.open({id:"note-error",word:"She works",translation:"Она работает"})');
+  app.nodes['notebook-text'].value='Add -s';app.nodes['notebook-text'].fire('input');
+  app.evaluate('Notebook.open({id:"other-error",word:"I am",translation:"Я"})');
+  assert.equal(app.nodes['notebook-text'].value,'');
+  app.evaluate('Notebook.open({id:"note-error",word:"She works",translation:"Она работает"})');
+  assert.equal(app.nodes['notebook-text'].value,'Add -s');
+  app.evaluate("Storage.setAccount('b'); Notebook.resetAccount();Notebook.open();");
+  assert.equal(app.nodes['notebook-text'].value,'');
+  assert.equal(app.evaluate("Storage.read('lastQuiz',{}).notebook['error:note-error']"),undefined);
+});
 test('placement resumes and applies its provisional recommendation',()=>{
   let app=setup();app.evaluate('StudyTools.placement()');
   let input=byClass(app.nodes['learning-content'],'gap-input')[0];input.value='is';input.fire('input');

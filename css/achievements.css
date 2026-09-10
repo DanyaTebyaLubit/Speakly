@@ -1,4 +1,11 @@
 .achievements-screen { display: grid; gap: 24px; padding: 8px 0 24px; min-width: 0; }
+.notebook-toggle { position:fixed; right:20px; bottom:20px; z-index:42; box-shadow:var(--shadow); }
+.notebook-panel { position:fixed; right:20px; top:100px; bottom:82px; width:min(400px,calc(100vw - 40px)); z-index:41; display:flex; flex-direction:column; gap:10px; padding:20px; background:var(--surface); color:var(--text); border:1px solid var(--border); border-radius:20px; box-shadow:0 14px 60px #0003; overflow:auto; }
+.notebook-panel[hidden] { display:none; }
+.notebook-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; }.notebook-heading h2 { font-size:20px; margin:0; }
+.notebook-panel label { font-size:12px; color:var(--muted); }.notebook-panel input,.notebook-panel select,.notebook-panel textarea { width:100%; min-width:0; border:1px solid var(--border); background:var(--soft); color:var(--text); border-radius:10px; padding:12px; font:inherit; }
+.notebook-panel textarea { flex:1; min-height:150px; resize:vertical; line-height:1.6; }.notebook-panel p { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; }
+@media(max-width:700px) { .notebook-toggle { bottom:calc(130px + env(safe-area-inset-bottom)); right:12px; }.notebook-panel { top:80px; bottom:calc(184px + env(safe-area-inset-bottom)); right:12px; width:calc(100vw - 24px); padding:16px; }.notebook-panel input,.notebook-panel textarea,.notebook-panel select { font-size:16px; } .workspace main { padding-bottom:calc(196px + env(safe-area-inset-bottom)); } }
 .save-strip { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 0; margin-bottom:16px; border-bottom:1px solid var(--border); color:var(--muted); font-size:12px; }
 .save-strip span { min-width:0; overflow-wrap:anywhere; }
 .word-row .translation > button { display:block; margin-top:10px; font-size:12px; }

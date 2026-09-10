@@ -35,6 +35,7 @@
   <script src="js/coach.js" defer></script>
   <script src="js/achievements.js" defer></script>
   <script src="js/study-tools.js" defer></script>
+  <script src="js/notebook.js" defer></script>
   <script src="script.js" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="js/account.js" defer></script>
@@ -106,5 +107,15 @@
       <footer><span class="footer-brand">speakly.</span><span>По одному слову ближе к цели.</span></footer>
     </main>
   </div>
+  <button id="notebook-toggle" class="primary notebook-toggle" type="button" aria-controls="notebook-panel" aria-expanded="false">✎ Блокнот</button>
+  <aside id="notebook-panel" class="notebook-panel" aria-label="Учебный блокнот" hidden>
+    <div class="notebook-heading"><h2>Блокнот</h2><button id="notebook-close" class="secondary" type="button" aria-label="Закрыть блокнот">✕</button></div>
+    <div class="notebook-heading"><label for="notebook-select">Мои заметки</label><button id="notebook-new" class="secondary" type="button">+ Новая</button></div>
+    <select id="notebook-select" aria-label="Выбрать заметку"></select>
+    <label for="notebook-title">Название</label><input id="notebook-title" maxlength="160" placeholder="Название заметки">
+    <p id="notebook-context" class="hint"></p>
+    <label for="notebook-text">Заметка</label><textarea id="notebook-text" placeholder="Правило, пример или то, что хочется запомнить…"></textarea>
+    <p id="notebook-status" class="hint" role="status">Изменения сохраняются автоматически.</p>
+  </aside>
 </body>
 </html>
