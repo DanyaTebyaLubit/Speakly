@@ -47,11 +47,11 @@ const Learning = (() => {
     if (typeof Coach !== 'undefined') Coach.track(data, entry, correct, now, evidence);
     if (typeof Achievements !== 'undefined') Achievements.record(data, entry, correct, now, actual, evidence);
     data.reviews[entry.id] = { ...schedule(data.reviews[entry.id], correct ? 'good' : 'again', now), entry };
-    if (!correct) data.errors[entry.id] = { entry, actual, wrongAt: now, due: now, attempts: (data.errors[entry.id]?.attempts || 0) + 1 };
+    if (!correct) data.errors[entry.id] = { entry, actual, wrongAt: now, due: now, lastResult: 'wrong', lastAttemptAt: now, attempts: (data.errors[entry.id]?.attempts || 0) + 1 };
     else if (data.errors[entry.id]) {
       const error = data.errors[entry.id];
       if (now >= error.wrongAt + DAY) delete data.errors[entry.id];
-      else { error.due = error.wrongAt + DAY; data.reviews[entry.id].due = error.due; }
+      else { error.due = error.wrongAt + DAY; error.lastResult = 'correct'; error.lastAttemptAt = now; error.correctedAnswer = actual; data.reviews[entry.id].due = error.due; }
     }
     save(data); refresh();
   }
@@ -63,7 +63,7 @@ const Learning = (() => {
     if (rating !== 'again' && data.errors[entry.id]) {
       const error = data.errors[entry.id];
       if (now >= error.wrongAt + DAY) delete data.errors[entry.id];
-      else { error.due = error.wrongAt + DAY; data.reviews[entry.id].due = error.due; }
+      else { error.due = error.wrongAt + DAY; error.lastResult = 'self-rated'; error.lastAttemptAt = now; data.reviews[entry.id].due = error.due; }
     }
     save(data); refresh();
   }
@@ -154,7 +154,7 @@ const LearningUI = (() => {
       const alternatives = Vocabulary.filter(e => e.translation === entry.translation).map(e => e.word);
       const correct = entry.exercise ? Learning.accepts(input.value, entry.exercise.answer, entry.exercise.alternatives || []) : Learning.accepts(input.value, entry.word, alternatives);
       Learning.record(entry, correct, Date.now(), input.value);
-      feedback.textContent = correct ? 'Верно!' : 'Сравните с примером. Если ваш вариант тоже верен, отметьте это ниже.';
+      feedback.textContent = correct ? (Storage.available ? 'Верно. Исправление сохранено. Повторная проверка — в другой день.' : 'Верно. Исправление осталось в памяти вкладки: хранилище браузера недоступно.') : 'Сравните с примером. Если ваш вариант тоже верен, отметьте это ниже.';
       box.append(el('p', 'training-solution', entry.word), el('p', 'hint', Learning.explain(entry)));
       if (!correct) { const accept = button('Мой вариант тоже верен', () => { accept.disabled = true; Learning.record(entry, true); feedback.textContent = 'Принято по вашей оценке. Проверим ещё раз завтра.'; }); box.append(accept); }
       box.append(button('Дальше →', () => { index++; errorQuestion(); }, 'primary'));
@@ -163,13 +163,16 @@ const LearningUI = (() => {
   function errorList() {
     const box = surface();
     const errors = Object.values(Learning.state().errors).sort((a, b) => b.wrongAt - a.wrongAt);
+    const corrected = errors.filter(item => item.lastResult === 'correct' || item.lastResult === 'self-rated' || (!item.lastResult && item.due > item.wrongAt)).length;
     box.append(el('h3', 'training-title', `Мои ошибки · ${errors.length}`), el('p', 'hint', 'Выберите ошибку: сначала разбор и пример, затем тренировка. Повторения на завтра тоже остаются в списке.'));
+    if (errors.length) box.append(el('p', 'error-status-summary', `Нужно исправить: ${errors.length - corrected}. Исправлено, ожидает проверки памяти: ${corrected}.`));
     if (!errors.length) box.append(el('p', '', 'Ошибок пока нет. Здесь появятся ошибки из ваших заданий.'));
     const list = el('div', 'mistake-list');
     for (const item of errors) {
       const entry = item.entry;
       const tile = button('', () => errorDetail(item), 'course-tile mistake-tile');
-      tile.append(el('strong', '', entry.exercise?.prompt || entry.word), el('span', '', entry.translation), el('small', 'hint', item.due > Date.now() ? 'Повторение позже · можно разобрать сейчас' : 'Готово к повторению'));
+      const fixed = item.lastResult === 'correct' || item.lastResult === 'self-rated' || (!item.lastResult && item.due > item.wrongAt);
+      tile.append(el('strong', '', entry.exercise?.prompt || entry.word), el('span', '', entry.translation), el('small', 'hint', fixed ? `✓ Исправлено · ${item.due > Date.now() ? 'проверка памяти позже' : 'пора проверить память'}` : 'Нужно исправить'));
       list.append(tile);
     }
     box.append(list);
@@ -178,6 +181,7 @@ const LearningUI = (() => {
     const box = surface(), entry = item.entry;
     const original = Vocabulary.find(word => word.id === entry.id) || entry;
     box.append(button('← Все ошибки', errorList), el('h3', 'training-title', entry.exercise?.prompt || entry.word));
+    if (item.lastResult === 'correct' || item.lastResult === 'self-rated') box.append(el('p', 'training-solution', `✓ Исправление сохранено. Повторная проверка: ${new Date(item.due).toLocaleString('ru-RU')}.`));
     box.append(el('p', 'eyebrow', 'ВАШ ОТВЕТ'), el('p', '', item.actual || 'Ответ не был сохранён для этой старой записи.'));
     box.append(el('p', 'eyebrow', 'ПРАВИЛЬНЫЙ ОТВЕТ'), el('p', 'training-solution', entry.exercise?.answer || entry.word), el('p', '', entry.translation));
     box.append(el('h4', '', 'Как разобраться'), el('p', '', Learning.explain(entry)));

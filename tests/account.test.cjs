@@ -3,8 +3,8 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
-async function harness() {
-  const stored = {}, rows = new Map(), nodes = new Map();
+async function harness(initial = {}, serverRows = []) {
+  const stored = { ...initial }, rows = new Map(serverRows.map((row,i)=>[String(i),row])), nodes = new Map();
   const node = id => { if (!nodes.has(id)) nodes.set(id, { textContent: '', addEventListener() {} }); return nodes.get(id); };
   let offline = false;
   const client = {
@@ -38,6 +38,19 @@ test('sync persists both a learned word and its removal', async () => {
   app.evaluate("Storage.write('known', [])"); await app.settle();
   assert.equal([...app.rows.values()][0].value, false);
   assert.equal(app.evaluate("Object.keys(Storage.read('pending', {})).length"), 0);
+});
+test('reload restores cached account progress when cloud rows are absent', async () => {
+  const progress = { learning: { daily: { index: 2 }, errors: { one: { lastResult: 'correct' } } } };
+  const app = await harness({ 'speakly.account.a.known': JSON.stringify(['hello']), 'speakly.account.a.lastQuiz': JSON.stringify(progress) });
+  assert.equal(app.evaluate("Storage.read('known',[])[0]"), 'hello');
+  assert.equal(app.evaluate("Storage.read('lastQuiz',{}).learning.daily.index"), 2);
+  assert.equal(app.evaluate("Storage.read('lastQuiz',{}).learning.errors.one.lastResult"), 'correct');
+  assert([...app.rows.values()].some(row=>row.kind==='lastQuiz'));
+});
+test('recovery respects explicit cloud removals and does not import guest data', async () => {
+  const app = await harness({ 'speakly.account.a.known': JSON.stringify(['hello']), 'speakly.known': JSON.stringify(['guest']) }, [{user_id:'a',kind:'known',item_id:'hello',value:false}]);
+  assert.equal(app.evaluate("Storage.read('known',[]).length"),0);
+  assert(![...app.rows.values()].some(row=>row.item_id==='guest'||row.value===true));
 });
 
 test('offline changes remain queued and upload when connection returns', async () => {

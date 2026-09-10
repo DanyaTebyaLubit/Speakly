@@ -67,6 +67,23 @@ test('mistake list permits selecting a scheduled error and explains before pract
 });
 
 function descendants(node) { return [node, ...node.children.flatMap(descendants)]; }
+test('corrected errors retain their status after reload', () => {
+  const app = setup();
+  app.evaluate(`Learning.record({id:'persist-error',word:'hello',translation:'привет'},false); Learning.record({id:'persist-error',word:'hello',translation:'привет'},true,Date.now(),'hello');`);
+  const reloaded = setup(app.stored); reloaded.evaluate("LearningUI.open('errors')");
+  assert(reloaded.nodes['learning-content'].textContent.includes('Нужно исправить: 0'));
+  assert(reloaded.nodes['learning-content'].textContent.includes('✓ Исправлено'));
+  assert.equal(reloaded.evaluate("Learning.state().errors['persist-error'].correctedAnswer"),'hello');
+});
+test('denied browser writes keep a scoped in-memory copy and display a warning', () => {
+  const app = setup();
+  app.evaluate(`localStorage.setItem = () => { throw new Error('quota'); }; Storage.write('known',['memory']);`);
+  assert.equal(app.evaluate("Storage.read('known',[])[0]"),'memory');
+  assert.equal(app.evaluate('Storage.available'),false);
+  assert(app.nodes.notice.textContent.includes('до закрытия страницы'));
+  app.evaluate("Storage.setAccount('other');");
+  assert.equal(app.evaluate("Storage.read('known',[]).length"),0);
+});
 test('error session summary distinguishes remaining, deferred and cleared mistakes', () => {
   for (const scenario of ['wrong', 'deferred', 'cleared']) {
     const app = setup();

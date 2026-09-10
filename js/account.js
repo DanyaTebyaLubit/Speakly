@@ -50,6 +50,23 @@ const Account = (() => {
     finally { applying = false; }
     App.reloadProgress();
   }
+  function recoverMissingRows(rows) {
+    // Отсутствующая запись не равна удалению: снятые отметки сервер хранит как false.
+    // Восстанавливаем только кеш текущего аккаунта, не гостевые данные.
+    const present = new Set(rows.map(row => `${row.kind}:${row.item_id}`));
+    const queue = pending();
+    for (const kind of ['known', 'lessons']) {
+      const cached = Storage.read(kind, []);
+      if (!Array.isArray(cached)) continue;
+      for (const id of cached) {
+        const key = `${kind}:${id}`;
+        if (!present.has(key) && !queue[key]) queue[key] = { kind, item_id: id, value: true };
+      }
+    }
+    const cached = Storage.read('lastQuiz', null);
+    if (cached && !present.has('lastQuiz:latest') && !queue['lastQuiz:latest']) queue['lastQuiz:latest'] = { kind: 'lastQuiz', item_id: 'latest', value: cached };
+    Storage.write('pending', queue);
+  }
   async function sync() {
     if (!client || !user) return;
     if (running) { again = true; return; }
@@ -81,6 +98,7 @@ const Account = (() => {
           rows.push(...data);
           if (data.length < 500) break;
         }
+        recoverMissingRows(rows);
         applyRows(rows);
         if (Object.keys(pending()).length) again = true;
       } while (again && version === epoch);
