@@ -59,6 +59,7 @@ const MediaLibrary = (() => {
     }
     const actions=el('div','learning-actions');actions.append(button(tab==='songs'?'Проверить слова →':'Практика по репликам →',()=>start('meaning'),'primary'));
     if(tab==='songs')actions.append(button('Вставить слово в пример →',()=>start('gap')));
+    if(tab==='dialogues')actions.append(button('Ответить за собеседника →',()=>Coach.dialogue(selected)));
     box.append(actions);
   }
   function start(mode) {
@@ -81,10 +82,10 @@ const MediaLibrary = (() => {
     const feedback=el('p','feedback',training.checked ? training.feedback : '');feedback.setAttribute('role','status');
     let controls=[];
     const next=button(training.index+1===training.entries.length?'Результат →':'Следующее →',()=>{training.index++;training.checked=false;practice();},'primary');next.hidden=!training.checked;
-    function answer(correct) {
+    function answer(correct, actual) {
       if(training.checked)return;training.checked=true;for(const control of controls)control.disabled=true;
       if(correct)training.correct++;else training.wrong.push(entry);
-      Learning.record(entry,correct);
+      Learning.record(entry,correct,Date.now(),actual);
       const result=Storage.read('lastQuiz',{})||{};Storage.write('lastQuiz',{...result, mediaResult:{id:selected.id,correct:training.correct,answered:training.index+1,total:training.entries.length}});
       feedback.textContent=(correct?'Верно. ':`Ответ: ${training.mode==='gap'?entry.word:entry.translation}. `)+Learning.explain(entry);training.feedback=feedback.textContent;next.hidden=false;
     }
@@ -93,13 +94,13 @@ const MediaLibrary = (() => {
       const all=tab==='songs'?Object.values(SongNotes).flatMap(n=>n.words.map(w=>w[1])):dialogues.flatMap(d=>d.turns.map(t=>t.translation));
       const distractors=shuffle([...new Set(all)].filter(t=>Learning.meaning(t)!==Learning.meaning(entry.translation))).slice(0,3);
       const answers=el('div','answers');
-      for(const text of shuffle([entry.translation,...distractors])){const b=button(text,()=>answer(text===entry.translation),'answer');b.disabled=training.checked;controls.push(b);answers.append(b);}box.append(answers);
+      for(const text of shuffle([entry.translation,...distractors])){const b=button(text,()=>answer(text===entry.translation,text),'answer');b.disabled=training.checked;controls.push(b);answers.append(b);}box.append(answers);
     }else{
       const escaped=entry.word.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
       const prompt=entry.example.replace(new RegExp('\\b'+escaped+'\\b','i'),'_____');
       box.append(el('h3','training-title',prompt),el('p','',entry.exampleTranslation),el('p','hint',`Используйте выражение из разбора: ${entry.translation}.`));
       const input=el('input','gap-input');input.setAttribute('aria-label','Пропущенное выражение');
-      const check=button('Проверить',()=>{if(!input.value.trim()){feedback.textContent='Введите слово.';return;}answer(Learning.accepts(input.value,entry.word));},'primary');controls=[input,check];input.disabled=training.checked;check.disabled=training.checked;box.append(input,check);
+      const check=button('Проверить',()=>{if(!input.value.trim()){feedback.textContent='Введите слово.';return;}answer(Learning.accepts(input.value,entry.word),input.value);},'primary');controls=[input,check];input.disabled=training.checked;check.disabled=training.checked;box.append(input,check);
     }
     box.append(feedback,next);
   }

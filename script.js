@@ -36,7 +36,17 @@ const App = (() => {
       && (!$('#level').value || ($('#level').value === 'ungraded' ? !Catalog.levels(entry).length : Catalog.levels(entry).includes($('#level').value)))
       && (!$('#track').value || entry.sources.some(source => Catalog.tracks[source] === $('#track').value))
       && ($('#status').value === 'all' || known.has(entry.id) === ($('#status').value === 'known'))
-      && `${entry.word} ${entry.translation} ${entry.example} ${entry.expansion}`.toLocaleLowerCase().includes(query)));
+      && matchesSearch(entry, query)));
+  }
+  function matchesSearch(entry, query) {
+    if (!query) return true;
+    const normalize = Learning.meaning;
+    const fields = [entry.word, entry.translation].map(normalize);
+    const term = normalize(query);
+    const mode = $('#search-mode').value;
+    if (mode === 'all') return `${entry.word} ${entry.translation} ${entry.example} ${entry.expansion}`.toLocaleLowerCase().includes(query);
+    if (mode === 'words') return fields.some(text => ` ${text} `.includes(` ${term} `));
+    return fields.some(text => text === term) || [entry.word, entry.translation].some(text => String(text).split(/[,;/]/).some(part => normalize(part) === term));
   }
   function updateStats() {
     $('#total').textContent = Vocabulary.length.toLocaleString('ru');
@@ -48,6 +58,7 @@ const App = (() => {
   function setKnown(entry, value, schedule = true) {
     if (value) known.add(entry.id); else known.delete(entry.id);
     Storage.write('known', [...known]);
+    Achievements.reconcile();
     if (schedule) Learning.rate(entry, value ? 'hard' : 'again');
     updateStats();
   }
@@ -143,6 +154,7 @@ const App = (() => {
     const read = button(readLessons.has(lesson.id) ? '✓ Прочитано' : 'Отметить прочитанным', 'primary', () => {
       if (readLessons.has(lesson.id)) readLessons.delete(lesson.id); else readLessons.add(lesson.id);
       Storage.write('lessons', [...readLessons]);
+      Achievements.reconcile();
       const scrollPosition = $('#lesson-list').scrollTop;
       rules(); $('#lesson-list').scrollTop = scrollPosition;
     });
@@ -266,7 +278,7 @@ const App = (() => {
       const answerButton = button(option, 'answer', () => {
         const correct = option === question.entry.translation;
         session.answers.push({ entry: question.entry, selected: option, correct });
-        Learning.record(question.entry, correct);
+        Learning.record(question.entry, correct, Date.now(), option);
         for (const control of answers.children) {
           control.disabled = true;
           if (control.textContent === question.entry.translation) control.classList.add('correct');
@@ -309,6 +321,7 @@ const App = (() => {
     $('#catalog-filters').hidden = state.view === 'rules';
     $('#learning-back').textContent = '← Назад: ' + (labels[learningOrigin]?.[1] || 'Словарь');
     $('#topic-filter').hidden = state.view === 'rules'; $('#status-filter').hidden = state.view === 'rules';
+    $('#search-mode').hidden = state.view === 'rules';
     $('#search').placeholder = state.view === 'rules' ? 'Найти правило или пример…' : 'Найти слово или перевод…';
     $('#search').setAttribute('aria-label', state.view === 'rules' ? 'Поиск правила или примера' : 'Поиск слова или перевода');
     if (state.view === 'dictionary') dictionary();
@@ -369,6 +382,7 @@ const App = (() => {
     mobile.addEventListener?.('change', adaptFilters);
     function filterChanged() { Training.reset(); state.limit = 40; state.deck = []; state.quiz = null; navigate(state.view); }
     $('#search').addEventListener('input', filterChanged);
+    $('#search-mode').addEventListener('change', filterChanged);
     $('#level').addEventListener('change', filterChanged); $('#track').addEventListener('change', filterChanged);
     $('#category').addEventListener('change', filterChanged); $('#status').addEventListener('change', filterChanged);
     $('#more').addEventListener('click', () => { state.limit += 40; dictionary(); });
@@ -393,6 +407,6 @@ const App = (() => {
     Training.refresh();
     if (state.view === 'quiz' && !state.quiz) { startQuiz(); }
   }
-  return { init, reloadProgress };
+  return { init, reloadProgress, navigate };
 })();
 App.init();

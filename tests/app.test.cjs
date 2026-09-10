@@ -38,7 +38,163 @@ function setup(saved = {}, mobile = false) {
   const navigate = view => { context.location.hash = '#' + view; events.hashchange(); };
   return { nodes, stored, document, evaluate, navigate, nav, context };
 }
+test('exact search excludes sentences and examples, broad search is opt-in', () => {
+  const app = setup();
+  // Exercise the real corpus through UI: broad results must contain more entries.
+  app.nodes.search.value = 'time'; app.nodes.search.fire('input');
+  const exact = app.nodes['word-list'].textContent;
+  app.nodes['search-mode'].value = 'all'; app.nodes['search-mode'].fire('change');
+  assert.notEqual(app.nodes['word-list'].textContent, exact);
+  app.nodes['search-mode'].value = 'exact'; app.nodes.search.fire('input');
+  assert.equal(app.nodes['word-list'].textContent, exact);
+});
+
+test('mistake list permits selecting a scheduled error and explains before practice', () => {
+  const app = setup();
+  app.evaluate(`Learning.record({id:'chosen',word:'I can swim',translation:'Я умею плавать'}, false, Date.now(), 'I can swimming');
+    Learning.record({id:'another',word:'hello',translation:'привет'}, false);
+    const data = Learning.state(); data.errors.chosen.due = Date.now() + 86400000; Learning.save(data);
+    LearningUI.open('errors');`);
+  const tiles = byClass(app.nodes['learning-content'], 'mistake-tile');
+  assert.equal(tiles.length, 2);
+  tiles.find(tile => tile.textContent.includes('I can swim')).fire('click');
+  assert(app.nodes['learning-content'].textContent.includes('I can swimming'));
+  assert(app.nodes['learning-content'].textContent.includes('начальная форма'));
+  assert.equal(byClass(app.nodes['learning-content'], 'gap-input').length, 0);
+  byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+  assert.equal(byClass(app.nodes['learning-content'], 'gap-input').length, 1);
+  assert(app.nodes['learning-content'].textContent.includes('Я умею плавать'));
+});
+
 function descendants(node) { return [node, ...node.children.flatMap(descendants)]; }
+test('achievement counters deduplicate same-day answers and exclude self assessment', () => {
+  const app = setup();
+  app.evaluate(`const atime = new Date(2026,8,10,12).getTime();
+    Learning.record({id:'reply:test:0',word:'Hello',translation:'Привет'},true,atime,'Hello',{independent:true});
+    Learning.record({id:'reply:test:0',word:'Hello',translation:'Привет'},true,atime,'Hello',{independent:true});
+    Learning.record({id:'reply:test:1',word:'Hi',translation:'Привет'},true,atime);
+  `);
+  assert.equal(app.evaluate('Achievements.metrics(Learning.state(),atime).answers'),1);
+  assert.equal(app.evaluate('Achievements.metrics(Learning.state(),atime).independent'),1);
+  assert.equal(app.evaluate('Achievements.metrics(Learning.state(),atime).replies'),1);
+  assert(app.evaluate('Learning.state().achievements.earned.first'));
+  assert.equal(setup(app.stored).evaluate('Achievements.metrics(Learning.state()).answers'),1);
+});
+
+test('streak spans local calendar dates, expires, and earned badges remain', () => {
+  const app = setup();
+  app.evaluate(`const stime = new Date(2026,8,10,12).getTime();
+    for(let i=0;i<3;i++) Learning.record({id:'streak',word:'Hi',translation:'Привет'},true,stime+i*86400000,'Hi');`);
+  assert.equal(app.evaluate('Achievements.metrics(Learning.state(),stime+2*86400000).streak'),3);
+  assert.equal(app.evaluate('Achievements.metrics(Learning.state(),stime+3*86400000).streak'),3);
+  assert.equal(app.evaluate('Achievements.metrics(Learning.state(),stime+4*86400000).streak'),0);
+  assert(app.evaluate('Learning.state().achievements.earned.streak3'));
+  app.evaluate("Storage.setAccount('different');");
+  assert.equal(app.evaluate('Achievements.metrics(Learning.state()).answers'),0);
+  assert.equal(app.evaluate('Object.keys(Learning.state().achievements.earned).length'),0);
+});
+
+test('progress screen renders real empty charts, badges, and interactive days', () => {
+  const app = setup();app.evaluate('Achievements.open()');
+  assert.equal(byClass(app.nodes['learning-content'],'activity-day').length,28);
+  assert.equal(byClass(app.nodes['learning-content'],'week-column').length,7);
+  assert.equal(byClass(app.nodes['learning-content'],'badge-card').length,12);
+  assert(app.nodes['learning-content'].textContent.includes('0/12'));
+  byClass(app.nodes['learning-content'],'activity-day')[0].fire('click');
+  assert(app.nodes['learning-content'].textContent.includes('0 заданий, 0 верных'));
+  descendants(app.nodes['learning-content']).find(n=>n.tagName==='button' && n.textContent==='Открытые').fire('click');
+  assert.equal(byClass(app.nodes['learning-content'],'badge-card').length,0);
+  app.evaluate("Storage.write('known',Array.from({length:10},(_,i)=>'word'+i)); Achievements.open();");
+  assert.equal(byClass(app.nodes['learning-content'],'is-earned').length,1);
+  app.evaluate("Storage.write('known',[]); Achievements.open();");
+  assert.equal(byClass(app.nodes['learning-content'],'is-earned').length,1);
+});
+test('daily plan finishes all stages, stays completed, and is isolated by account', () => {
+  const app = setup(); app.evaluate('Coach.daily()');
+  byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+  const count = app.evaluate('Learning.state().daily.tasks.length');
+  for (let i = 0; i < count; i++) {
+    if (!byClass(app.nodes['learning-content'], 'gap-input').length) byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+    byClass(app.nodes['learning-content'], 'gap-input')[0].value = app.evaluate(`Learning.state().daily.tasks[${i}].answer`);
+    byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+    byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+  }
+  assert.equal(app.evaluate('Learning.state().daily.index'), count);
+  assert.equal(app.evaluate('Achievements.metrics(Learning.state()).plans'), 1);
+  app.evaluate('const completed = Learning.state(); Achievements.completePlan(completed); Learning.save(completed);');
+  assert.equal(app.evaluate('Achievements.metrics(Learning.state()).plans'), 1);
+  assert(app.evaluate('Learning.state().achievements.earned.plan1'));
+  app.evaluate('Coach.daily()'); assert(app.nodes['learning-content'].textContent.includes('на сегодня завершено'));
+  app.evaluate("Storage.setAccount('other');");
+  assert.equal(app.evaluate('Learning.state().daily'), null);
+  assert.equal(app.evaluate('Object.keys(Learning.state().mastery).length'), 0);
+  app.evaluate("Storage.setAccount(null); const d = Learning.state(); d.daily.date = '2000-01-01'; Learning.save(d); Coach.daily();");
+  assert.equal(app.evaluate('Learning.state().daily.index'), 0);
+});
+test('mastery requires unassisted success across dates and items and resets on failure', () => {
+  const app = setup();
+  app.evaluate(`const mtime = new Date(2026, 8, 10, 12).getTime();
+    for (let i=0;i<3;i++) Learning.record({id:'m'+i,word:'hello',translation:'привет',studyTopic:'Test topic'},true,mtime,'hello',{independent:true});`);
+  assert.equal(app.evaluate('Learning.state().mastery["Test topic"].days.length'), 1);
+  assert.notEqual(app.evaluate('Coach.status(Learning.state().mastery["Test topic"])'), 'Освоено');
+  app.evaluate(`Learning.record({id:'m0',word:'hello',translation:'привет',studyTopic:'Test topic'},true,mtime+86400000,'hello');`);
+  assert.equal(app.evaluate('Learning.state().mastery["Test topic"].days.length'), 1);
+  app.evaluate(`for (let day=1;day<=2;day++) Learning.record({id:'m0',word:'hello',translation:'привет',studyTopic:'Test topic'},true,mtime+day*86400000,'hello',{independent:true});`);
+  assert.equal(app.evaluate('Coach.status(Learning.state().mastery["Test topic"])'), 'Освоено');
+  app.evaluate(`Learning.record({id:'m0',word:'hello',translation:'привет',studyTopic:'Test topic'},false,mtime+3*86400000,'bye');`);
+  assert.equal(app.evaluate('Coach.status(Learning.state().mastery["Test topic"])'), 'Нужно повторить');
+  assert.equal(setup(app.stored).evaluate('Learning.state().mastery["Test topic"].days.length'), 0);
+});
+
+test('daily plan resumes drafts and checked answers without recording twice', () => {
+  let app = setup();
+  app.evaluate('Coach.daily()');
+  assert(app.evaluate('Learning.state().daily.tasks.some(t=>t.stage === "Правило")'));
+  assert(app.evaluate('Learning.state().daily.tasks.some(t=>t.context)'));
+  byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+  byClass(app.nodes['learning-content'], 'primary')[0].fire('click'); // hide new word
+  let input = byClass(app.nodes['learning-content'], 'gap-input')[0];
+  input.value = 'draft'; input.fire('input');
+  app = setup(app.stored); app.evaluate('Coach.daily()');
+  byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+  input = byClass(app.nodes['learning-content'], 'gap-input')[0]; assert.equal(input.value, 'draft');
+  input.value = app.evaluate('Learning.state().daily.tasks[0].answer');
+  const check = byClass(app.nodes['learning-content'], 'primary')[0]; check.fire('click'); check.fire('click');
+  const attempts = app.evaluate('Object.values(Learning.state().mastery).reduce((n,m)=>n+m.attempts,0)');
+  assert.equal(attempts, 1);
+  assert.equal(app.evaluate('Object.values(Learning.state().mastery).reduce((n,m)=>n+m.days.length,0)'), 0);
+  app = setup(app.stored); app.evaluate('Coach.daily()'); byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+  assert(byClass(app.nodes['learning-content'], 'gap-input')[0].disabled);
+  byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+  assert.equal(app.evaluate('Learning.state().daily.index'), 1);
+  assert.equal(app.evaluate('Object.values(Learning.state().mastery).reduce((n,m)=>n+m.attempts,0)'), attempts);
+});
+
+test('dialogue replies expose context, accept a curated alternative, and return to material', () => {
+  const app = setup(); app.navigate('materials');
+  byClass(app.nodes['media-content'], 'media-tile')[1].fire('click');
+  descendants(app.nodes['media-content']).find(n=>n.tagName === 'button' && n.textContent.includes('Ответить за собеседника')).fire('click');
+  assert(app.nodes['learning-content'].textContent.includes('A: How are you?'));
+  const input = byClass(app.nodes['learning-content'], 'gap-input')[0];
+  input.value = "I'm well, thank you. How about you?";
+  byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+  assert(app.nodes['learning-content'].textContent.includes('Верно, самостоятельно'));
+  assert.equal(app.evaluate('Object.values(Learning.state().mastery)[0].days.length'), 1);
+  byClass(app.nodes['learning-content'], 'secondary')[0].fire('click');
+  assert.equal(app.nodes.materials.hidden, false);
+  assert(app.nodes['media-content'].textContent.includes('Как дела'));
+});
+
+test('error reinforcement uses two different questions on the same grammar rule', () => {
+  const app = setup();
+  app.evaluate(`Learning.record(Courses[0].questions[0], false, Date.now(), 'is'); LearningUI.open('errors');`);
+  byClass(app.nodes['learning-content'], 'mistake-tile')[0].fire('click');
+  assert(app.nodes['learning-content'].textContent.includes('В ответе: is'));
+  assert(app.nodes['learning-content'].textContent.includes('В образце: am'));
+  const tasks = app.evaluate('Coach.related(Courses[0].questions[0])');
+  assert.equal(tasks.length, 2); assert.notEqual(tasks[0].entry.id, tasks[1].entry.id);
+  assert(tasks.every(t=>t.entry.id !== 'course:be:0'));
+});
 function byClass(node, name) { return descendants(node).filter(item => item.className.split(' ').includes(name)); }
 
 test('all script and stylesheet references exist; all nine source texts survive unchanged', () => {
@@ -168,7 +324,7 @@ test('phone filters start collapsed, desktop filters start expanded', () => {
 
 test('all styles load directly without nested imports or cascade layers', () => {
   const styles = [...html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(match => match[1]);
-  assert.deepEqual(styles, ['style.css', 'css/study.css', 'css/responsive.css', 'css/terminal.css']);
+  assert.deepEqual(styles, ['style.css', 'css/study.css', 'css/responsive.css', 'css/terminal.css', 'css/achievements.css']);
   for (const file of styles) {
     const css = fs.readFileSync(path.join(root, file), 'utf8');
     assert(!css.includes('@import'));

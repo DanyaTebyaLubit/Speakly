@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/study.css">
   <link rel="stylesheet" href="css/responsive.css">
   <link rel="stylesheet" href="css/terminal.css">
+  <link rel="stylesheet" href="css/achievements.css">
   <script src="data/ENG.js" defer></script>
   <script src="data/english_conversation_words.js" defer></script>
   <script src="data/english_people_description.js" defer></script>
@@ -31,6 +32,8 @@
   <script src="js/learning.js" defer></script>
   <script src="js/training.js" defer></script>
   <script src="js/media.js" defer></script>
+  <script src="js/coach.js" defer></script>
+  <script src="js/achievements.js" defer></script>
   <script src="script.js" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="js/account.js" defer></script>
@@ -83,6 +86,7 @@
       <div class="mobile-source"><label for="source-select">Учебный файл</label><select id="source-select"><option value="">Вся библиотека</option></select></div>
       <div class="toolbar">
         <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Найти слово или перевод…" aria-label="Поиск слова или перевода"></label>
+        <select id="search-mode" aria-label="Режим поиска"><option value="exact">Точное слово / фраза</option><option value="words">Слово внутри фразы</option><option value="all">Везде, включая примеры</option></select>
         <div id="catalog-filters" class="catalog-filters"><select id="level" aria-label="Уровень английского"><option value="">Все уровни</option><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option><option value="ungraded">Без указанного уровня</option></select><select id="track" aria-label="Направление"><option value="">Все направления</option><option>Разговорный английский</option><option>Базовая лексика</option><option>Грамматика</option><option>Повседневные темы</option><option>Английский по песням</option></select></div>
         <label class="select-label" id="topic-filter"><select id="category" aria-label="Тема"><option value="">Все темы</option></select></label>
         <label class="select-label" id="status-filter"><select id="status" aria-label="Статус изучения"><option value="all">Все слова</option><option value="new">Ещё учу</option><option value="known">Выучено</option></select></label>

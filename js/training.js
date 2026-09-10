@@ -35,8 +35,8 @@ const Training = (() => {
     summary(); if (mode !== 'test') start();
   }
   function start() { session = { questions: makeQuestions(pool(), mode), index: 0 }; render(); }
-  function record(correct, entry, exercise) {
-    Learning.record({ ...entry, exercise }, correct);
+  function record(correct, entry, exercise, actual) {
+    Learning.record({ ...entry, exercise }, correct, Date.now(), actual);
     const result = Storage.read('lastQuiz', {}) || {};
     const stats = result.practiceStats || {};
     Storage.write('lastQuiz', { ...result, practiceStats: { attempts: (Number(stats.attempts) || 0) + 1, correct: (Number(stats.correct) || 0) + Number(correct) } });
@@ -81,7 +81,7 @@ const Training = (() => {
         if (q.picked.length !== q.tokens.length) { feedback.textContent = 'Используйте все слова.'; return; }
         q.correct = Learning.accepts(q.picked.map(i => q.tokens[i]).join(' '), q.entry.word);
       }
-      q.checked = true; record(q.correct, q.entry, mode === 'gap' ? { prompt: q.tokens.map((word, i) => i === q.gap ? '___' : word).join(' '), answer: q.tokens[q.gap], hint: `Слово начинается на «${normalize(q.tokens[q.gap])[0]}».` } : undefined); render();
+      q.checked = true; record(q.correct, q.entry, mode === 'gap' ? { prompt: q.tokens.map((word, i) => i === q.gap ? '___' : word).join(' '), answer: q.tokens[q.gap], hint: `Слово начинается на «${normalize(q.tokens[q.gap])[0]}».` } : undefined, mode === 'gap' ? q.typed : q.picked.map(i => q.tokens[i]).join(' ')); render();
     }, 'primary');
     if (!q.checked) box.append(check);
     if (input) input.addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); check.click(); } });

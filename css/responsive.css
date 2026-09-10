@@ -195,6 +195,17 @@
 /* Контекстные материалы: фильтры, сцены по ролям и словарь песен. */
 .catalog-filters { display: flex; flex: 1 1 100%; gap: 10px; min-width: 0; }
 .catalog-filters select { min-width: 0; flex: 1; }
+#search-mode { min-width: 0; max-width: 100%; }
+.mistake-list { display: grid; gap: 12px; margin-top: 20px; }
+.coach-dashboard { display: grid; gap: 12px; margin-top: 20px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; }
+.mastery-card { display: grid; gap: 10px; padding: 18px; margin-top: 14px; border: 1px solid var(--border); border-radius: 16px; }
+.answer-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.answer-comparison p, .coach-rule { padding: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+.training-box > button { margin: 6px 8px 6px 0; white-space: normal; }
+@media (max-width: 700px) { .answer-comparison { grid-template-columns: 1fr; } .coach-dashboard { padding: 14px; } .training-box > button { max-width: 100%; min-height: 44px; } }
+.mistake-tile { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; width: 100%; text-align: left; white-space: normal; overflow-wrap: anywhere; min-height: 64px; }
+.training-box { overflow-wrap: anywhere; }
+@media (max-width: 700px) { #search-mode { width: 100%; min-height: 44px; } }
 .media-tabs, .media-filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
 .media-tabs button { flex: 1; }
 .media-tabs [aria-pressed='true'] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }

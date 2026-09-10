@@ -21,7 +21,7 @@ const Learning = (() => {
   function accepts(actual, expected, alternatives = []) { return [expected, ...alternatives].some(text => forms(text).has(canonical(actual))); }
   function state() {
     const value = Storage.read('lastQuiz', {})?.learning;
-    return { reviews: value?.reviews || {}, errors: value?.errors || {}, courses: value?.courses || {} };
+    return { reviews: value?.reviews || {}, errors: value?.errors || {}, courses: value?.courses || {}, mastery: value?.mastery || {}, daily: value?.daily || null, achievements: value?.achievements || { days: {}, earned: {} } };
   }
   function save(value) { Storage.write('lastQuiz', { ...(Storage.read('lastQuiz', {}) || {}), learning: value }); }
   function schedule(previous, rating, now = Date.now()) {
@@ -41,11 +41,13 @@ const Learning = (() => {
     if (/^(i am|you are|he is|she is|we are|they are)\b/.test(text)) return 'Be связывает подлежащее с состоянием или местом: I am, he/she/it is, you/we/they are.';
     return `Значение в этом контексте: «${entry.translation}». Сопоставьте фразу целиком, а не отдельные слова.`;
   }
-  function record(entry, correct, now = Date.now()) {
-    entry = { id: entry.id, word: entry.word, translation: entry.translation, explanation: entry.explanation, exercise: entry.exercise || (entry.prompt ? { prompt: entry.prompt, answer: entry.answer, hint: entry.hint } : undefined) };
+  function record(entry, correct, now = Date.now(), actual = null, evidence = {}) {
+    entry = { ...entry, exercise: entry.exercise || (entry.prompt ? { prompt: entry.prompt, answer: entry.answer, hint: entry.hint, alternatives: entry.alternatives } : undefined) };
     const data = state();
+    if (typeof Coach !== 'undefined') Coach.track(data, entry, correct, now, evidence);
+    if (typeof Achievements !== 'undefined') Achievements.record(data, entry, correct, now, actual, evidence);
     data.reviews[entry.id] = { ...schedule(data.reviews[entry.id], correct ? 'good' : 'again', now), entry };
-    if (!correct) data.errors[entry.id] = { entry, wrongAt: now, due: now, attempts: (data.errors[entry.id]?.attempts || 0) + 1 };
+    if (!correct) data.errors[entry.id] = { entry, actual, wrongAt: now, due: now, attempts: (data.errors[entry.id]?.attempts || 0) + 1 };
     else if (data.errors[entry.id]) {
       const error = data.errors[entry.id];
       if (now >= error.wrongAt + DAY) delete data.errors[entry.id];
@@ -55,7 +57,7 @@ const Learning = (() => {
   }
   function rate(entry, rating, now = Date.now()) {
     if (rating === 'again') return record(entry, false, now);
-    entry = { id: entry.id, word: entry.word, translation: entry.translation, explanation: entry.explanation, exercise: entry.exercise || (entry.prompt ? { prompt: entry.prompt, answer: entry.answer, hint: entry.hint } : undefined) };
+    entry = { ...entry, exercise: entry.exercise || (entry.prompt ? { prompt: entry.prompt, answer: entry.answer, hint: entry.hint, alternatives: entry.alternatives } : undefined) };
     const data = state();
     data.reviews[entry.id] = { ...schedule(data.reviews[entry.id], rating, now), entry };
     if (rating !== 'again' && data.errors[entry.id]) {
@@ -96,9 +98,10 @@ const LearningUI = (() => {
     host.replaceChildren();
     host.append(el('div', 'learning-heading', 'Ваш следующий шаг'));
     const actions = el('div', 'learning-actions');
-    actions.append(button(`Повторить сегодня · ${Learning.due().length}`, () => open('review'), 'primary'), button(`Разобрать ошибки · ${Learning.errors().length}`, () => open('errors')), button('Короткий урок →', () => open('courses')));
+    actions.append(button(`Повторить сегодня · ${Learning.due().length}`, () => open('review'), 'primary'), button(`Разобрать ошибки · ${Object.keys(Learning.state().errors).length}`, () => open('errors')), button('Короткий урок →', () => open('courses')));
     host.append(actions);
     host.append(el('p', 'hint', 'Ошибки возвращаются завтра. Интервал повторения зависит от того, насколько легко вы вспомнили ответ.'));
+    if (typeof Coach !== 'undefined') Coach.dashboard(host);
   }
   function surface() {
     navigate('learning'); $('learning-content').hidden = false;
@@ -107,6 +110,7 @@ const LearningUI = (() => {
   }
   function open(type) {
     if (type === 'courses') return courses();
+    if (type === 'errors') return errorList();
     questions = (type === 'errors' ? Learning.errors() : Learning.due()).slice(0, 20); index = 0;
     if (type === 'errors') errorQuestion(); else reviewQuestion();
   }
@@ -124,6 +128,7 @@ const LearningUI = (() => {
   }
   function errorQuestion() {
     const box = surface();
+    box.append(button('← Все ошибки', errorList));
     if (index >= questions.length) { box.append(el('h3', 'training-title', questions.length ? 'Ошибки разобраны' : 'Ошибок к разбору нет'), el('p', 'hint', 'Исправленные сегодня ошибки вернутся завтра для проверки памяти.')); return; }
     const entry = questions[index];
     box.append(el('p', 'eyebrow', `РАЗБОР ОШИБОК · ${index + 1} / ${questions.length}`), el('p', '', entry.translation));
@@ -135,13 +140,54 @@ const LearningUI = (() => {
       if (!input.value.trim()) { feedback.textContent = 'Введите ответ.'; return; }
       check.disabled = true; input.disabled = true;
       const alternatives = Vocabulary.filter(e => e.translation === entry.translation).map(e => e.word);
-      const correct = entry.exercise ? Learning.accepts(input.value, entry.exercise.answer) : Learning.accepts(input.value, entry.word, alternatives);
-      Learning.record(entry, correct);
+      const correct = entry.exercise ? Learning.accepts(input.value, entry.exercise.answer, entry.exercise.alternatives || []) : Learning.accepts(input.value, entry.word, alternatives);
+      Learning.record(entry, correct, Date.now(), input.value);
       feedback.textContent = correct ? 'Верно!' : 'Сравните с примером. Если ваш вариант тоже верен, отметьте это ниже.';
       box.append(el('p', 'training-solution', entry.word), el('p', 'hint', Learning.explain(entry)));
       if (!correct) { const accept = button('Мой вариант тоже верен', () => { accept.disabled = true; Learning.record(entry, true); feedback.textContent = 'Принято по вашей оценке. Проверим ещё раз завтра.'; }); box.append(accept); }
       box.append(button('Дальше →', () => { index++; errorQuestion(); }, 'primary'));
     }, 'primary'); box.append(check, feedback);
+  }
+  function errorList() {
+    const box = surface();
+    const errors = Object.values(Learning.state().errors).sort((a, b) => b.wrongAt - a.wrongAt);
+    box.append(el('h3', 'training-title', `Мои ошибки · ${errors.length}`), el('p', 'hint', 'Выберите ошибку: сначала разбор и пример, затем тренировка. Повторения на завтра тоже остаются в списке.'));
+    if (!errors.length) box.append(el('p', '', 'Ошибок пока нет. Здесь появятся ошибки из ваших заданий.'));
+    const list = el('div', 'mistake-list');
+    for (const item of errors) {
+      const entry = item.entry;
+      const tile = button('', () => errorDetail(item), 'course-tile mistake-tile');
+      tile.append(el('strong', '', entry.exercise?.prompt || entry.word), el('span', '', entry.translation), el('small', 'hint', item.due > Date.now() ? 'Повторение позже · можно разобрать сейчас' : 'Готово к повторению'));
+      list.append(tile);
+    }
+    box.append(list);
+  }
+  function errorDetail(item) {
+    const box = surface(), entry = item.entry;
+    const original = Vocabulary.find(word => word.id === entry.id) || entry;
+    box.append(button('← Все ошибки', errorList), el('h3', 'training-title', entry.exercise?.prompt || entry.word));
+    box.append(el('p', 'eyebrow', 'ВАШ ОТВЕТ'), el('p', '', item.actual || 'Ответ не был сохранён для этой старой записи.'));
+    box.append(el('p', 'eyebrow', 'ПРАВИЛЬНЫЙ ОТВЕТ'), el('p', 'training-solution', entry.exercise?.answer || entry.word), el('p', '', entry.translation));
+    box.append(el('h4', '', 'Как разобраться'), el('p', '', Learning.explain(entry)));
+    if (typeof Coach !== 'undefined') Coach.explainMistake(box, item);
+    const tokens = new Set(Learning.meaning(entry.word).split(' '));
+    const parts = new Map();
+    for (const word of Vocabulary) {
+      const key = Learning.meaning(word.word);
+      if (tokens.has(key) && key !== Learning.meaning(entry.word)) {
+        if (!parts.has(key)) parts.set(key, new Set());
+        parts.get(key).add(word.translation);
+      }
+    }
+    const unambiguous = [...parts].filter(([, meanings]) => meanings.size === 1).slice(0, 8);
+    if (unambiguous.length) {
+      box.append(el('h4', '', 'Слова из фразы'), el('p', 'hint', 'Словарные значения для опоры. Перевод всей фразы указан выше.'));
+      for (const [word, meanings] of unambiguous) box.append(el('p', '', `${word} — ${[...meanings][0]}`));
+    }
+    if (entry.exercise?.hint) box.append(el('p', 'hint', entry.exercise.hint));
+    if (original.example) box.append(el('h4', '', 'Пример употребления'), el('p', 'training-solution', original.example));
+    if (!entry.explanation && !original.example && !entry.exercise) box.append(el('p', 'hint', 'Для этой записи пока нет отдельного авторского примера. При тренировке вспомните английское выражение по его переводу.'));
+    box.append(button('Потренировать эту ошибку', () => { questions = [entry]; index = 0; errorQuestion(); }, 'primary'));
   }
   function courses() {
     const box = surface(); box.append(el('p', 'eyebrow', 'ПРАВИЛО → ПРИМЕРЫ → 5 ЗАДАНИЙ'), el('h3', 'training-title', 'Короткие уроки'));
@@ -168,11 +214,11 @@ const LearningUI = (() => {
       if (!input.value.trim()) { feedback.textContent = 'Введите ответ.'; return; }
       check.disabled = true; input.disabled = true;
       const correct = Learning.accepts(input.value, q.answer, q.alternatives || []); if (correct) score++;
-      Learning.record(q, correct); feedback.textContent = correct ? 'Верно!' : `Ответ: ${q.answer}`;
+      Learning.record(q, correct, Date.now(), input.value); feedback.textContent = correct ? 'Верно!' : `Ответ: ${q.answer}`;
       box.append(el('p','training-solution',q.explanation), button(index === 4 ? 'Итоги урока →' : 'Следующее →', () => { index++; courseQuestion(); },'primary'));
     },'primary'); box.append(check,feedback);
   }
   function init(go) { navigate = go; window.addEventListener('focus', dashboard); $('open-errors').addEventListener('click',()=>open('errors')); $('open-review').addEventListener('click',()=>open('review')); $('open-courses').addEventListener('click',courses); dashboard(); }
   function courseFor(title) { const text = title.toLowerCase(); const pairs = [['present perfect','perfect'], ['present continuous','continuous'], ['present simple','present'], ['past simple','past'], ['am /','be'], ['модаль','modals']]; const pair = pairs.find(([name]) => text.includes(name)); return pair ? Courses.find(course => course.id === pair[1]) : null; }
-  return { init, dashboard, open, introduction, courseFor, resetAccount() { currentCourse = null; questions = []; index = 0; score = 0; $('learning-content').hidden = true; } };
+  return { init, dashboard, open, introduction, courseFor, surface, resetAccount() { currentCourse = null; questions = []; index = 0; score = 0; $('learning-content').hidden = true; } };
 })();
