@@ -10,7 +10,9 @@ const MediaLibrary = (() => {
     if (tab === 'songs') return SongNotes[item.id].words.map(([word,translation,example,exampleTranslation], i) => ({ id: `media:${item.id}:${i}`, word, translation, example, exampleTranslation, explanation: SongNotes[item.id].rule }));
     return item.turns.map((turn, i) => ({ ...turn, id: `media:${item.id}:${i}` }));
   }
+  function save(){StudyTools.session('media',{tab,selected,training,showTranslations});}
   function render() {
+    if(!selected && !training){const saved=StudyTools.session('media');if(saved){tab=saved.tab;selected=saved.selected;training=saved.training;showTranslations=saved.showTranslations;$('media-level').hidden=tab==='songs';$('media-topic').hidden=tab==='songs';$('media-dialogues').setAttribute('aria-pressed',String(tab==='dialogues'));$('media-songs').setAttribute('aria-pressed',String(tab==='songs'));}}
     if (training) return practice();
     if (selected) return detail();
     const host = $('media-content'); host.replaceChildren();
@@ -25,8 +27,9 @@ const MediaLibrary = (() => {
     if (!data.length) host.append(el('p','empty','Материалов не найдено. Измените тему, уровень или поиск.'));
   }
   function detail() {
+    save();
     const host = $('media-content'); host.replaceChildren();
-    host.append(button('← К списку',()=>{selected=null;render();}));
+    host.append(button('← К списку',()=>{selected=null;save();render();}));
     const box=el('article','media-reader');host.append(box);
     box.append(el('p','eyebrow',tab==='dialogues' ? selected.level+' · '+selected.topic : 'АНГЛИЙСКИЙ ПО ПЕСНЯМ'),el('h3','training-title',selected.title));
     if (tab==='dialogues') {
@@ -35,7 +38,7 @@ const MediaLibrary = (() => {
         const row=el('div','dialogue-turn '+(turn.speaker==='B'?'speaker-b':''));
         row.append(el('span','speaker',turn.speaker));
         const content=el('div');const english=el('p','',turn.word);english.lang='en';content.append(english);
-        const russian=el('p','example-translation',turn.translation);russian.hidden=!showTranslations;content.append(russian);row.append(content);box.append(row);
+        const russian=el('p','example-translation',turn.translation);russian.hidden=!showTranslations;content.append(russian,StudyTools.favoriteButton({...turn,id:`personal:${selected.id}:${selected.turns.indexOf(turn)}`}));row.append(content);box.append(row);
       }
       box.append(el('h4','','Слова и выражения'));
       const text=' '+Learning.canonical(selected.turns.map(t=>t.word).join(' '))+' ';
@@ -54,7 +57,7 @@ const MediaLibrary = (() => {
       lyrics.append(el('div','lyrics-text',selected.lines.join('\n')));box.append(lyrics);
       box.append(el('h4','','Как это устроено'),el('p','',SongNotes[selected.id].rule),el('h4','','Слова в контексте'),el('p','hint','Ниже — новые учебные примеры, не строки песни.'));
       for(const entry of pairs(selected)) {
-        const row=el('div','song-word');row.append(el('strong','',entry.word),el('p','',entry.translation),el('p','example',entry.example),el('p','example-translation',entry.exampleTranslation));box.append(row);
+        const row=el('div','song-word');row.append(el('strong','',entry.word),el('p','',entry.translation),el('p','example',entry.example),el('p','example-translation',entry.exampleTranslation));row.append(StudyTools.favoriteButton(entry));box.append(row);
       }
     }
     const actions=el('div','learning-actions');actions.append(button(tab==='songs'?'Проверить слова →':'Практика по репликам →',()=>start('meaning'),'primary'));
@@ -68,6 +71,7 @@ const MediaLibrary = (() => {
     training={mode, entries:shuffle(entries).slice(0,8), index:0, correct:0, wrong:[], checked:false};practice();
   }
   function practice() {
+    save();
     const host=$('media-content');host.replaceChildren();host.append(button('← К материалу',()=>{training=null;detail();}));
     const box=el('div','training-box');host.append(box);
     if(training.index===training.entries.length) {
@@ -81,13 +85,13 @@ const MediaLibrary = (() => {
     box.append(el('p','eyebrow',`${selected.title} · ${training.index+1}/${training.entries.length}`));
     const feedback=el('p','feedback',training.checked ? training.feedback : '');feedback.setAttribute('role','status');
     let controls=[];
-    const next=button(training.index+1===training.entries.length?'Результат →':'Следующее →',()=>{training.index++;training.checked=false;practice();},'primary');next.hidden=!training.checked;
+    const next=button(training.index+1===training.entries.length?'Результат →':'Следующее →',()=>{training.index++;training.checked=false;training.draft='';practice();},'primary');next.hidden=!training.checked;
     function answer(correct, actual) {
       if(training.checked)return;training.checked=true;for(const control of controls)control.disabled=true;
       if(correct)training.correct++;else training.wrong.push(entry);
       Learning.record(entry,correct,Date.now(),actual);
       const result=Storage.read('lastQuiz',{})||{};Storage.write('lastQuiz',{...result, mediaResult:{id:selected.id,correct:training.correct,answered:training.index+1,total:training.entries.length}});
-      feedback.textContent=(correct?'Верно. ':`Ответ: ${training.mode==='gap'?entry.word:entry.translation}. `)+Learning.explain(entry);training.feedback=feedback.textContent;next.hidden=false;
+      feedback.textContent=(correct?'Верно. ':`Ответ: ${training.mode==='gap'?entry.word:entry.translation}. `)+Learning.explain(entry);training.feedback=feedback.textContent;next.hidden=false;save();
     }
     if(training.mode==='meaning') {
       box.append(el('h3','training-title',entry.word),el('p','hint','Выберите перевод этой реплики или выражения.'));
@@ -99,15 +103,15 @@ const MediaLibrary = (() => {
       const escaped=entry.word.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
       const prompt=entry.example.replace(new RegExp('\\b'+escaped+'\\b','i'),'_____');
       box.append(el('h3','training-title',prompt),el('p','',entry.exampleTranslation),el('p','hint',`Используйте выражение из разбора: ${entry.translation}.`));
-      const input=el('input','gap-input');input.setAttribute('aria-label','Пропущенное выражение');
+      const input=el('input','gap-input');input.setAttribute('aria-label','Пропущенное выражение');input.value=training.draft||'';input.addEventListener('input',()=>{training.draft=input.value;save();});
       const check=button('Проверить',()=>{if(!input.value.trim()){feedback.textContent='Введите слово.';return;}answer(Learning.accepts(input.value,entry.word),input.value);},'primary');controls=[input,check];input.disabled=training.checked;check.disabled=training.checked;box.append(input,check);
     }
     box.append(feedback,next);
   }
   function init() {
     for(const topic of new Set(dialogues.map(d=>d.topic))){const o=el('option','',topic);o.value=topic;$('media-topic').append(o);}
-    for(const [id,type] of [['media-dialogues','dialogues'],['media-songs','songs']]) $(id).addEventListener('click',()=>{tab=type;selected=null;training=null;$('media-level').hidden=tab==='songs';$('media-topic').hidden=tab==='songs';$('media-dialogues').setAttribute('aria-pressed',String(tab==='dialogues'));$('media-songs').setAttribute('aria-pressed',String(tab==='songs'));render();});
-    for(const id of ['media-level','media-topic','media-search']) $(id).addEventListener(id==='media-search'?'input':'change',()=>{selected=null;training=null;render();});
+    for(const [id,type] of [['media-dialogues','dialogues'],['media-songs','songs']]) $(id).addEventListener('click',()=>{tab=type;selected=null;training=null;$('media-level').hidden=tab==='songs';$('media-topic').hidden=tab==='songs';$('media-dialogues').setAttribute('aria-pressed',String(tab==='dialogues'));$('media-songs').setAttribute('aria-pressed',String(tab==='songs'));save();render();});
+    for(const id of ['media-level','media-topic','media-search']) $(id).addEventListener(id==='media-search'?'input':'change',()=>{selected=null;training=null;save();render();});
   }
-  return { init, render, dialogues, songs, resetAccount(){training=null;} };
+  return { init, render, dialogues, songs, resetAccount(){training=null;selected=null;} };
 })();

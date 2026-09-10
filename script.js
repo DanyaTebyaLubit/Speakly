@@ -76,6 +76,7 @@ const App = (() => {
     state.lesson = null;
     $('#source-select').value = name;
     $('#search').value = '';
+    StudyTools.session('quiz',null); StudyTools.session('cards',null);
     state.limit = 40; state.deck = []; state.quiz = null;
     updateTopics();
     Training.reset();
@@ -195,12 +196,14 @@ const App = (() => {
       });
       toggle.setAttribute('aria-label', `Выучено: ${entry.word}`);
       toggle.setAttribute('aria-pressed', String(known.has(entry.id)));
+      right.append(StudyTools.favoriteButton(entry));
       row.append(left, right, toggle); list.append(row);
     }
     $('#more').hidden = entries.length <= state.limit;
   }
   function startCards() { state.deck = shuffle(filtered()); state.card = 0; cards(); }
   function cards() {
+    StudyTools.session('cards',{ids:state.deck.map(e=>e.id),index:state.card});
     const container = $('#card-content'); container.replaceChildren();
     if (!state.deck.length) return empty(container);
     const study = el('div', 'study');
@@ -255,6 +258,7 @@ const App = (() => {
   function quiz() {
     const container = $('#quiz-content'); container.replaceChildren();
     const session = state.quiz;
+    StudyTools.session('quiz', session);
     if (!session.questions.length) return empty(container, 'Для теста нужно минимум 4 разных перевода. Расширьте поиск или выберите другую тему.');
     const study = el('div', 'study');
     const box = el('div', 'quiz-box');
@@ -277,6 +281,7 @@ const App = (() => {
     for (const option of question.options) {
       const answerButton = button(option, 'answer', () => {
         const correct = option === question.entry.translation;
+        if (session.answers[session.index]) return;
         session.answers.push({ entry: question.entry, selected: option, correct });
         Learning.record(question.entry, correct, Date.now(), option);
         for (const control of answers.children) {
@@ -287,6 +292,7 @@ const App = (() => {
         feedback.textContent = (correct ? 'Верно! ' : `Правильный ответ: ${question.entry.translation}. `) + Learning.explain(question.entry);
         next.hidden = false;
         Storage.write('lastQuiz', { ...Storage.read('lastQuiz', {}), correct: session.answers.filter(answer => answer.correct).length, answered: session.answers.length, total: session.questions.length });
+        StudyTools.session('quiz',session);
         next.focus();
       });
       answers.append(answerButton);
@@ -326,12 +332,13 @@ const App = (() => {
     $('#search').setAttribute('aria-label', state.view === 'rules' ? 'Поиск правила или примера' : 'Поиск слова или перевода');
     if (state.view === 'dictionary') dictionary();
     else if (state.view === 'rules') rules();
-    else if (state.view === 'cards') { if (!state.deck.length) startCards(); else cards(); }
-    else if (state.view === 'quiz') { if (!state.quiz) startQuiz(); else quiz(); }
+    else if (state.view === 'cards') { if(!state.deck.length){const saved=StudyTools.session('cards');if(saved){const entries=new Map(Vocabulary.map(e=>[e.id,e]));state.deck=saved.ids.map(id=>entries.get(id)).filter(Boolean);state.card=saved.index;}} if (!state.deck.length) startCards(); else cards(); }
+    else if (state.view === 'quiz') { state.quiz ||= StudyTools.session('quiz'); if (!state.quiz) startQuiz(); else quiz(); Training.restore(); }
     else if (state.view === 'materials') MediaLibrary.render();
     else if (state.view === 'achievements') Achievements.render();
   }
   function init() {
+    StudyTools.init();
     Training.init(filtered);
     LearningUI.init(navigate);
     MediaLibrary.init();
@@ -381,7 +388,7 @@ const App = (() => {
     function adaptFilters() { $('#study-filters').open = !mobile.matches; }
     adaptFilters();
     mobile.addEventListener?.('change', adaptFilters);
-    function filterChanged() { Training.reset(); state.limit = 40; state.deck = []; state.quiz = null; navigate(state.view); }
+    function filterChanged() { StudyTools.session('quiz',null); StudyTools.session('cards',null); Training.reset(); state.limit = 40; state.deck = []; state.quiz = null; navigate(state.view); }
     $('#search').addEventListener('input', filterChanged);
     $('#search-mode').addEventListener('change', filterChanged);
     $('#level').addEventListener('change', filterChanged); $('#track').addEventListener('change', filterChanged);

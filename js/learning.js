@@ -98,6 +98,17 @@ const Learning = (() => {
 const LearningUI = (() => {
   const $ = id => document.getElementById(id);
   let navigate = () => {}, currentCourse = null, questions = [], index = 0, score = 0;
+  let legacyKind = null, drafts = {}, checked = {};
+  function saveSession(kind) {
+    legacyKind=kind;
+    const done=index >= (kind==='course' ? currentCourse.questions.length : questions.length);
+    StudyTools.session('learning',done ? null : {kind,currentCourse,questions,index,score,drafts,checked});
+  }
+  function resume() { const saved=StudyTools.session('learning');if(!saved)return;
+    ({currentCourse,questions,index,score,drafts,checked}=saved);
+    if(saved.kind==='course')courseQuestion();else if(saved.kind==='error')errorQuestion();else reviewQuestion();
+  }
+  function bindDraft(input) {input.value=drafts[index]||'';input.addEventListener('input',()=>{drafts[index]=input.value;saveSession(legacyKind);});}
   const el = (tag, className, text) => { const node = document.createElement(tag); node.className = className || ''; if (text !== undefined) node.textContent = text; return node; };
   function button(text, action, style = 'secondary') { const node = el('button', style, text); node.type = 'button'; node.addEventListener('click', action); return node; }
   function dashboard() {
@@ -124,6 +135,7 @@ const LearningUI = (() => {
     if (type === 'errors') errorQuestion(); else reviewQuestion();
   }
   function reviewQuestion() {
+    saveSession('review');
     const box = surface();
     if (index >= questions.length) { box.append(el('h3', 'training-title', questions.length ? 'Повторение завершено' : 'На сегодня повторений нет'), el('p', 'hint', 'Отмечайте слова в карточках и выполняйте задания — они появятся в расписании.')); return; }
     const entry = questions[index]; box.append(el('p', 'eyebrow', `ПОВТОРЕНИЕ · ${index + 1} / ${questions.length}`), el('h3', 'training-title', entry.word));
@@ -136,6 +148,7 @@ const LearningUI = (() => {
     }, 'primary'); box.append(reveal);
   }
   function errorQuestion() {
+    saveSession('error');
     const box = surface();
     box.append(button('← Все ошибки', errorList));
     if (index >= questions.length) {
@@ -157,17 +170,18 @@ const LearningUI = (() => {
     else box.append(el('p', 'hint', 'Переведите на английский. Сокращения и полные формы учитываются.'));
     const input = el('input', 'gap-input'); input.setAttribute('aria-label', 'Перевод на английский'); input.autocomplete = 'off'; box.append(input);
     const feedback = el('p', 'feedback'); feedback.setAttribute('role','status');
-    const check = button('Проверить', () => {
+    bindDraft(input);
+    const submit = () => {
       if (!input.value.trim()) { feedback.textContent = 'Введите ответ.'; return; }
       check.disabled = true; input.disabled = true;
       const alternatives = Vocabulary.filter(e => e.translation === entry.translation).map(e => e.word);
-      const correct = entry.exercise ? Learning.accepts(input.value, entry.exercise.answer, entry.exercise.alternatives || []) : Learning.accepts(input.value, entry.word, alternatives);
-      Learning.record(entry, correct, Date.now(), input.value);
+      const correct = checked[index] === 'accepted' || (entry.exercise ? Learning.accepts(input.value, entry.exercise.answer, entry.exercise.alternatives || []) : Learning.accepts(input.value, entry.word, alternatives));
+      if(!checked[index]) { Learning.record(entry, correct, Date.now(), input.value); drafts[index]=input.value;checked[index]=true;saveSession('error'); }
       feedback.textContent = correct ? (Storage.available ? 'Верно. Исправление сохранено. Повторная проверка — в другой день.' : 'Верно. Исправление осталось в памяти вкладки: хранилище браузера недоступно.') : 'Сравните с примером. Если ваш вариант тоже верен, отметьте это ниже.';
       box.append(el('p', 'training-solution', entry.word), el('p', 'hint', Learning.explain(entry)));
-      if (!correct) { const accept = button('Мой вариант тоже верен', () => { accept.disabled = true; Learning.record(entry, true); feedback.textContent = 'Принято по вашей оценке. Проверим ещё раз завтра.'; }); box.append(accept); }
+      if (!correct) { const accept = button('Мой вариант тоже верен', () => { accept.disabled = true; Learning.record(entry, true); checked[index]='accepted';saveSession('error'); feedback.textContent = 'Принято по вашей оценке. Проверим ещё раз завтра.'; }); box.append(accept); }
       box.append(button('Дальше →', () => { index++; errorQuestion(); }, 'primary'));
-    }, 'primary'); box.append(check, feedback);
+    }; const check = button('Проверить', submit, 'primary'); box.append(check, feedback);if(checked[index])submit();
   }
   function later() {
     const box = surface();
@@ -217,7 +231,7 @@ const LearningUI = (() => {
     if (entry.exercise?.hint) box.append(el('p', 'hint', entry.exercise.hint));
     if (original.example) box.append(el('h4', '', 'Пример употребления'), el('p', 'training-solution', original.example));
     if (!entry.explanation && !original.example && !entry.exercise) box.append(el('p', 'hint', 'Для этой записи пока нет отдельного авторского примера. При тренировке вспомните английское выражение по его переводу.'));
-    box.append(button('Потренировать эту ошибку', () => { questions = [entry]; index = 0; errorQuestion(); }, 'primary'));
+    box.append(button('Потренировать эту ошибку', () => { questions = [entry]; index = 0; drafts={};checked={}; errorQuestion(); }, 'primary'));
   }
   function courses() {
     const box = surface(); box.append(el('p', 'eyebrow', 'ПРАВИЛО → ПРИМЕРЫ → 5 ЗАДАНИЙ'), el('h3', 'training-title', 'Короткие уроки'));
@@ -227,11 +241,12 @@ const LearningUI = (() => {
     }
   }
   function introduction(course) {
-    currentCourse = course; index = 0; score = 0;
+    currentCourse = course; index = 0; score = 0; drafts={};checked={};
     const box = surface(); box.append(el('h3', 'training-title', course.title), el('p', '', course.rule), el('p', 'training-solution', course.example));
     box.append(button('Начать 5 заданий →', courseQuestion, 'primary'));
   }
   function courseQuestion() {
+    saveSession('course');
     const box = surface();
     if (index === currentCourse.questions.length) {
       const data = Learning.state(); data.courses[currentCourse.id] = { score, completedAt: Date.now() }; Learning.save(data); dashboard();
@@ -240,15 +255,16 @@ const LearningUI = (() => {
     const q = currentCourse.questions[index]; box.append(el('p','eyebrow',`${currentCourse.title} · ${index+1}/5`), el('h3','training-title',q.prompt), el('p','',q.translation), el('p','hint',q.hint));
     const input = el('input','gap-input'); input.setAttribute('aria-label','Ответ'); box.append(input);
     const feedback = el('p','feedback'); feedback.setAttribute('role','status');
-    const check = button('Проверить', () => {
+    bindDraft(input);
+    const submit = () => {
       if (!input.value.trim()) { feedback.textContent = 'Введите ответ.'; return; }
       check.disabled = true; input.disabled = true;
-      const correct = Learning.accepts(input.value, q.answer, q.alternatives || []); if (correct) score++;
-      Learning.record(q, correct, Date.now(), input.value); feedback.textContent = correct ? 'Верно!' : `Ответ: ${q.answer}`;
+      const correct = Learning.accepts(input.value, q.answer, q.alternatives || []); if (correct && !checked[index]) score++;
+      if(!checked[index]) { Learning.record(q, correct, Date.now(), input.value);drafts[index]=input.value;checked[index]=true;saveSession('course'); } feedback.textContent = correct ? 'Верно!' : `Ответ: ${q.answer}`;
       box.append(el('p','training-solution',q.explanation), button(index === 4 ? 'Итоги урока →' : 'Следующее →', () => { index++; courseQuestion(); },'primary'));
-    },'primary'); box.append(check,feedback);
+    };const check=button('Проверить',submit,'primary');box.append(check,feedback);if(checked[index])submit();
   }
   function init(go) { navigate = go; window.addEventListener('focus', dashboard); $('open-errors').addEventListener('click',()=>open('errors')); $('open-review').addEventListener('click',()=>open('review')); $('open-courses').addEventListener('click',courses); dashboard(); }
   function courseFor(title) { const text = title.toLowerCase(); const pairs = [['present perfect','perfect'], ['present continuous','continuous'], ['present simple','present'], ['past simple','past'], ['am /','be'], ['модаль','modals']]; const pair = pairs.find(([name]) => text.includes(name)); return pair ? Courses.find(course => course.id === pair[1]) : null; }
-  return { init, dashboard, open, introduction, courseFor, surface, resetAccount() { currentCourse = null; questions = []; index = 0; score = 0; $('learning-content').hidden = true; } };
+  return { init, dashboard, open, resume, introduction, courseFor, surface, resetAccount() { currentCourse = null; questions = []; index = 0; score = 0; drafts={};checked={}; $('learning-content').hidden = true; } };
 })();

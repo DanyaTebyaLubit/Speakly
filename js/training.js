@@ -26,13 +26,16 @@ const Training = (() => {
     const stats = Storage.read('lastQuiz', {})?.practiceStats;
     $('practice-summary').textContent = stats ? `Практика: ${stats.correct || 0} верных ответов из ${stats.attempts || 0}. Выберите вид задания.` : 'Короткое занятие до 10 заданий. Выберите вид практики.';
   }
-  function reset() { session = null; if (mode !== 'test') start(); }
+  function reset() { StudyTools.session('training',null);StudyTools.session('training:gap',null);StudyTools.session('training:order',null); session = null; if (mode !== 'test') start(); }
   function choose(next) {
     mode = next;
+    if (next === 'test') StudyTools.session('training',null);
     $('learning-content').hidden = true;
     $('quiz-content').hidden = mode !== 'test'; $('training-content').hidden = mode === 'test';
     for (const id of ['test', 'gap', 'order']) $(`mode-${id}`).setAttribute('aria-pressed', String(id === mode));
-    summary(); if (mode !== 'test') start();
+    const saved = StudyTools.session('training:'+mode);
+    if (saved?.mode === mode) session = saved.session; else session = null;
+    summary(); if (mode !== 'test') { if(session) render(); else start(); }
   }
   function start() { session = { questions: makeQuestions(pool(), mode), index: 0 }; render(); }
   function record(correct, entry, exercise, actual) {
@@ -42,7 +45,9 @@ const Training = (() => {
     Storage.write('lastQuiz', { ...result, practiceStats: { attempts: (Number(stats.attempts) || 0) + 1, correct: (Number(stats.correct) || 0) + Number(correct) } });
     summary();
   }
+  function persist(){StudyTools.session('training',{mode,session});StudyTools.session('training:'+mode,{mode,session});}
   function render() {
+    persist();
     const host = $('training-content'); host.replaceChildren();
     if (!session.questions.length) { host.append(node('p', 'empty', 'В этой выборке нет подходящих предложений. Выберите файл «Предложения A1–C1» или расширьте фильтры.')); return; }
     const box = node('div', 'training-box'); host.append(box);
@@ -61,7 +66,7 @@ const Training = (() => {
     let input;
     if (mode === 'gap') {
       const sentence = node('p', 'gap-sentence', q.tokens.map((word, index) => index === q.gap ? '_____' : word).join(' ')); sentence.lang = 'en'; box.append(sentence);
-      input = node('input', 'gap-input'); input.type = 'text'; input.autocomplete = 'off'; input.spellcheck = false; input.setAttribute('aria-label', 'Пропущенное слово'); input.placeholder = 'Ваш ответ…'; input.value = q.typed; input.disabled = q.checked; box.append(input);
+      input = node('input', 'gap-input'); input.type = 'text'; input.autocomplete = 'off'; input.spellcheck = false; input.setAttribute('aria-label', 'Пропущенное слово'); input.placeholder = 'Ваш ответ…'; input.value = q.typed; input.disabled = q.checked; input.addEventListener('input',()=>{q.typed=input.value;persist();}); box.append(input);
     } else {
       const answer = node('div', 'sentence-answer'); answer.setAttribute('aria-label', 'Ваше предложение');
       if (!q.picked.length) answer.append(node('span', 'hint', 'Здесь появится ваше предложение'));
@@ -100,5 +105,6 @@ const Training = (() => {
     }
   }
   function init(getPool) { pool = getPool; for (const type of ['test', 'gap', 'order']) $(`mode-${type}`).addEventListener('click', () => choose(type)); summary(); }
-  return { init, reset, makeQuestions, normalize, refresh: summary, resetAccount() { session = null; choose('test'); } };
+  function restore(){const saved=StudyTools.session('training');if(saved && saved.mode !== 'test')choose(saved.mode);}
+  return { init, restore, reset, makeQuestions, normalize, refresh: summary, resetAccount() { session = null; mode='test'; $('quiz-content').hidden=false; $('training-content').hidden=true; } };
 })();

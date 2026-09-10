@@ -67,6 +67,67 @@ test('mistake list permits selecting a scheduled error and explains before pract
 });
 
 function descendants(node) { return [node, ...node.children.flatMap(descendants)]; }
+test('placement resumes and applies its provisional recommendation',()=>{
+  let app=setup();app.evaluate('StudyTools.placement()');
+  let input=byClass(app.nodes['learning-content'],'gap-input')[0];input.value='is';input.fire('input');
+  app=setup(app.stored);app.evaluate('StudyTools.placement()');assert.equal(byClass(app.nodes['learning-content'],'gap-input')[0].value,'is');
+  const answers=app.evaluate("['A1','A2','B1','B2','C1'].flatMap(l=>StudyTools.lesson(l).map(q=>q.answer))");
+  for(const answer of answers){byClass(app.nodes['learning-content'],'gap-input')[0].value=answer;descendants(app.nodes['learning-content']).find(n=>n.tagName==='button'&&n.textContent==='Ответить').fire('click');}
+  assert(app.nodes['learning-content'].textContent.includes('Рекомендация: C1'));
+  descendants(app.nodes['learning-content']).find(n=>n.tagName==='button'&&n.textContent==='Применить уровень').fire('click');
+  assert.equal(app.evaluate('StudyTools.level()'),'C1');
+});
+test('backup contains current progress and excludes other accounts and auth data',()=>{
+  const app=setup();app.evaluate("localStorage.setItem('auth-secret','private');Storage.write('known',['guest']);Storage.setAccount('a');Storage.write('known',['mine']);");
+  const backup=app.evaluate('StudyTools.backup()');assert.equal(backup.known[0],'mine');
+  assert(!JSON.stringify(backup).includes('private'));assert(!JSON.stringify(backup).includes('guest'));
+});
+test('song exercise restores draft and the correct media tab after reload',()=>{
+  let app=setup();app.navigate('materials');app.nodes['media-songs'].fire('click');byClass(app.nodes['media-content'],'media-tile')[0].fire('click');
+  descendants(app.nodes['media-content']).find(n=>n.tagName==='button'&&n.textContent.includes('Вставить слово')).fire('click');
+  const input=byClass(app.nodes['media-content'],'gap-input')[0];input.value='song draft';input.fire('input');
+  app=setup(app.stored);app.navigate('materials');assert.equal(byClass(app.nodes['media-content'],'gap-input')[0].value,'song draft');
+  assert.equal(app.nodes['media-songs'].attributes['aria-pressed'],'true');
+});
+test('selected level persists and changes daily grammar and dialogue', () => {
+  const app=setup();app.evaluate('StudyTools.profile()');
+  const select=descendants(app.nodes['learning-content']).find(n=>n.tagName==='select');select.value='B2';select.fire('change');
+  const reloaded=setup(app.stored);
+  assert.equal(reloaded.evaluate('StudyTools.level()'),'B2');
+  assert(reloaded.evaluate('Coach.buildDaily().tasks.filter(t=>t.context).every(t=>t.entry.studyTopic.includes("B2"))'));
+  assert(reloaded.evaluate('Coach.buildDaily().tasks.filter(t=>t.stage === "Правило").every(t=>t.entry.id.startsWith("level:B2"))'));
+});
+test('personal vocabulary persists and launches only saved words',()=>{
+  const app=setup();app.evaluate('StudyTools.favoriteButton(Vocabulary[0])').fire('click');
+  const restored=setup(app.stored);restored.evaluate('StudyTools.personal()');
+  assert(restored.nodes['learning-content'].textContent.includes('Мой словарь · 1'));
+  descendants(restored.nodes['learning-content']).find(n=>n.tagName==='button'&&n.textContent==='Практика моих слов').fire('click');
+  assert.equal(restored.evaluate('StudyTools.session("coach").tasks.length'),1);
+  assert.equal(restored.evaluate('StudyTools.session("coach").tasks[0].entry.id'),restored.evaluate('Vocabulary[0].id'));
+});
+test('diagnosis explains supported grammar mistakes without guessing on unrelated answers',()=>{
+  const app=setup();assert(app.evaluate('StudyTools.diagnosis({word:"She works every day."},"She work every day")').includes('-s'));
+  assert(app.evaluate('StudyTools.diagnosis({word:"I can swim."},"I can swimming")').includes('без to'));
+  assert.equal(app.evaluate('StudyTools.diagnosis({word:"I like tea."},"I love tea")'),'');
+});
+test('ordinary quiz and gap draft resume after reload without another scored answer',()=>{
+  let app=setup();app.navigate('quiz');byClass(app.nodes['quiz-content'],'answer')[0].fire('click');
+  app=setup(app.stored);app.navigate('quiz');assert(byClass(app.nodes['quiz-content'],'answer').every(n=>n.disabled));
+  assert.equal(app.evaluate('StudyTools.session("quiz").answers.length'),1);
+  app.nodes['mode-gap'].fire('click');const input=byClass(app.nodes['training-content'],'gap-input')[0];input.value='unfinished';input.fire('input');
+  app=setup(app.stored);app.navigate('quiz');assert.equal(byClass(app.nodes['training-content'],'gap-input')[0].value,'unfinished');
+});
+test('dialogue written draft and checked course question restore safely',()=>{
+  let app=setup();app.evaluate('Coach.dialogue(MediaLibrary.dialogues[0])');
+  const input=byClass(app.nodes['learning-content'],'gap-input')[0];input.value='My name';input.fire('input');
+  app=setup(app.stored);app.evaluate('Coach.run(null,StudyTools.personal,false,StudyTools.session("coach"))');
+  assert.equal(byClass(app.nodes['learning-content'],'gap-input')[0].value,'My name');
+  app.nodes['open-courses'].fire('click');byClass(app.nodes['learning-content'],'course-tile')[0].fire('click');byClass(app.nodes['learning-content'],'primary')[0].fire('click');
+  byClass(app.nodes['learning-content'],'gap-input')[0].value='am';byClass(app.nodes['learning-content'],'primary')[0].fire('click');
+  app=setup(app.stored);app.evaluate('LearningUI.resume()');
+  assert(byClass(app.nodes['learning-content'],'gap-input')[0].disabled);
+  assert.equal(app.evaluate('StudyTools.session("learning").score'),1);
+});
 test('achievements is a separate navigation section with selected menu state', () => {
   const app = setup();
   const tab = app.nav.find(n => n.dataset.view === 'achievements');

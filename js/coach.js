@@ -37,7 +37,7 @@ const Coach = (() => {
     const saved = today?.date === dayKey();
     row.append(el('div', '', saved ? `План на сегодня · ${today.index}/${today.tasks.length}` : '10–15 минут · повторение, слова, правило и диалог'));
     const actions = el('div', 'learning-actions');
-    actions.append(button(saved && today.index < today.tasks.length ? 'Продолжить занятие' : 'Занятие на день', daily, 'primary'), button('Мои темы и слабые места', mastery), button('✦ Прогресс и достижения', () => Achievements.open())); row.append(actions); host.append(row);
+    actions.append(button(saved && today.index < today.tasks.length ? 'Продолжить занятие' : 'Занятие на день', daily, 'primary'), button('Мои темы и слабые места', mastery), button('✦ Прогресс и достижения', () => Achievements.open())); row.append(actions); host.append(row); StudyTools.dashboard(host);
   }
   function mastery() {
     const box = LearningUI.surface(), data = Learning.state().mastery;
@@ -70,6 +70,8 @@ const Coach = (() => {
       diff.append(el('p', 'answer-before', `В ответе: ${a.slice(start,endA).join(' ') || '(пропущено)'}`), el('p', 'answer-after', `В образце: ${b.slice(start,endB).join(' ') || '(лишняя часть)'}`)); box.append(diff);
       box.append(el('p', 'hint', 'Выделено текстовое отличие от образца. Другой вариант может быть допустимым: это не автоматический диагноз грамматической ошибки.'));
     } else box.append(el('p', 'hint', 'Старый ответ не сохранился. Сравнение появится после следующей попытки.'));
+    const diagnosis = StudyTools.diagnosis(entry,item.actual);
+    if (diagnosis) box.append(el('p','training-solution',diagnosis));
     const c = course(entry);
     if (c) box.append(el('h4', '', c.title), el('p', '', c.rule), el('p', 'training-solution', c.example));
     const drills = related(entry);
@@ -106,13 +108,13 @@ const Coach = (() => {
     const saved = Learning.state();
     const reviews = Learning.cleanEntries(Learning.due(now)).slice(0,3);
     const known = new Set(Storage.read('known', []));
-    const fresh = Learning.cleanEntries(Vocabulary).filter(e => !known.has(e.id) && !saved.reviews[e.id] && e.word.split(/\s+/).length <= 3).slice(0,3);
-    const weakest = Courses.find(c => saved.mastery[c.title]?.weak) || Courses.find(c => status(saved.mastery[c.title] || { days: [], items: [] }) !== 'Освоено') || Courses[0];
-    const tasks = [...reviews.map(e => task(e, 'Повторение')), ...fresh.map(e => task(e, 'Новые слова', { introduction: `${e.word} — ${e.translation}${e.example ? '\n' + e.example : ''}` })), ...weakest.questions.slice(0,2).map(q => task(q, 'Правило', { rule: weakest.rule }))];
+    const fresh = Learning.cleanEntries(Vocabulary).filter(e => !known.has(e.id) && !saved.reviews[e.id] && (!Catalog.levels(e).length || Catalog.levels(e).includes(StudyTools.level())) && e.word.split(/\s+/).length <= 3).slice(0,3);
+    const tasks = [...reviews.map(e => task(e, 'Повторение')), ...fresh.map(e => task(e, 'Новые слова', { introduction: `${e.word} — ${e.translation}${e.example ? '\n' + e.example : ''}` })), ...StudyTools.lesson().map(q => task(q, 'Правило', { rule: q.explanation }))];
     const dayNumber = Math.floor(now / 86400000);
-    const scenes = MediaLibrary.dialogues.filter(d => d.level === 'A1');
+    const selectedLevel = StudyTools.level();
+    const scenes = MediaLibrary.dialogues.filter(d => d.level === selectedLevel);
     tasks.push(...dialogueTasks(scenes[dayNumber % scenes.length]).slice(0,2));
-    return { date: dayKey(now), tasks, index: 0, responses: {}, startedAt: now };
+    return { date: dayKey(now), level: selectedLevel, tasks, index: 0, responses: {}, startedAt: now };
   }
   function daily() {
     let data = Learning.state();
@@ -123,16 +125,17 @@ const Coach = (() => {
       const count = plan.tasks.filter(t => t.stage === stage).length;
       box.append(el('p', '', `${stage} · ${count} задания`));
     }
-    box.append(el('p', 'hint', `Пройдено ${plan.index} из ${plan.tasks.length}. Можно закрыть страницу и продолжить позже. Диалог дневного маршрута — A1; другие уровни доступны в библиотеке диалогов.`));
+    box.append(el('p', 'hint', `Пройдено ${plan.index} из ${plan.tasks.length}. Можно закрыть страницу и продолжить позже. Уровень диалога: ${plan.level || 'A1'}.`));
     if (plan.index < plan.tasks.length) box.append(button(plan.index ? 'Продолжить занятие' : 'Начать занятие', () => run(plan.tasks, daily, true), 'primary'));
     else box.append(button('Посмотреть прогресс по темам', mastery, 'primary'));
   }
   // Общий экран письменных заданий; ежедневная очередь и ответы переживают reload.
-  function run(tasks, back, isDaily = false) {
-    let index = isDaily ? Learning.state().daily.index : 0;
-    const responses = isDaily ? Learning.state().daily.responses : {};
+  function run(tasks, back = mastery, isDaily = false, saved = null) {
+    if (saved) tasks = saved.tasks;
+    let index = isDaily ? Learning.state().daily.index : (saved?.index || 0);
+    const responses = isDaily ? Learning.state().daily.responses : (saved?.responses || {});
     function persist() {
-      if (!isDaily) return;
+      if (!isDaily) { StudyTools.session('coach',index < tasks.length ? {tasks,index,responses} : null); return; }
       const data = Learning.state(); data.daily.index = index; data.daily.responses = responses;
       if (index === tasks.length) Achievements.completePlan(data);
       Learning.save(data);
@@ -171,7 +174,7 @@ const Coach = (() => {
         box.append(button(index+1 === tasks.length ? 'Завершить' : 'Следующее →', () => { index++; persist(); LearningUI.dashboard(); render(); }, 'primary'));
       }
     }
-    render();
+    persist(); render();
   }
   return { track, topic, status, dayKey, dashboard, mastery, explainMistake, related, dialogueTasks, dialogue, buildDaily, daily, run };
 })();

@@ -9,7 +9,7 @@ const Account = (() => {
     const value = Storage.read('pending', {});
     return value && typeof value === 'object' && !Array.isArray(value) ? value : {};
   };
-  const status = text => { $('account-status').textContent = text; };
+  const status = text => { $('account-status').textContent = text; const visible=$('save-status'); if(visible)visible.textContent=text; };
   function render() {
     $('account-name').textContent = user ? (user.email || 'Ваш аккаунт') : 'Гостевой режим';
     $('google-login').hidden = Boolean(user);

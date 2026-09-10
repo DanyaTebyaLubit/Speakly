@@ -34,6 +34,7 @@
   <script src="js/media.js" defer></script>
   <script src="js/coach.js" defer></script>
   <script src="js/achievements.js" defer></script>
+  <script src="js/study-tools.js" defer></script>
   <script src="script.js" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="js/account.js" defer></script>
@@ -80,7 +81,8 @@
         <div><span class="stat-icon green">✓</span><div><strong id="known">0</strong><span>уже выучено</span></div></div>
         <div class="progress-stat"><div><strong id="percent">0%</strong><span>вашей коллекции</span></div><progress id="progress" max="100" value="0" aria-label="Доля выученных слов"></progress></div>
       </section>
-      <div class="section-heading"><div><p class="eyebrow" id="section-kicker">ВАША КОЛЛЕКЦИЯ</p><h2 id="section-title">Словарь</h2></div><span class="local-label"><i></i> Сохраняется на устройстве</span></div>
+      <div class="section-heading"><div><p class="eyebrow" id="section-kicker">ВАША КОЛЛЕКЦИЯ</p><h2 id="section-title">Словарь</h2></div></div>
+      <div class="save-strip"><span id="save-status" role="status">Прогресс сохраняется на устройстве</span><button id="export-progress" class="secondary" type="button">Экспорт прогресса</button></div>
       <div id="source-summary" class="source-summary"></div>
       <details id="study-filters" class="study-filters" open>
         <summary>Файл и фильтры <span aria-hidden="true">⌄</span></summary>
