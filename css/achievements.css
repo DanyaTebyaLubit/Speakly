@@ -33,3 +33,15 @@
 @media(max-width:1000px) { .achievement-stat { padding:16px; }.badge-card { padding:18px; }.insight-panel { padding:18px; } }
 @media(max-width:700px) { .achievement-hero { grid-template-columns:1fr; padding:24px; gap:24px; }.achievement-ring { width:128px; grid-row:1; }.ring-inside strong { font-size:28px; }.achievement-stats { grid-template-columns:repeat(2,minmax(0,1fr)); }.achievement-charts { grid-template-columns:1fr; }.badge-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.badge-card { padding:16px; }.badge-card h4 { font-size:15px; }.achievement-heading { align-items:flex-start; flex-direction:column; }.topic-insight { grid-template-columns:1fr; }.topic-insight progress { grid-column:auto; }.activity-day { min-height:44px; }.achievement-hero .primary { width:100%; }.achievements-screen { gap:18px; } }
 @media(max-width:360px) { .badge-grid { grid-template-columns:1fr; } }
+/* Шесть самостоятельных разделов: на телефоне — две строки крупных кнопок. */
+@media(min-width:701px) and (max-width:1200px) {
+  .header { flex-wrap: wrap; }
+  .header .nav { order: 3; width: 100%; justify-content: center; }
+  .header .nav button { flex: 1; padding: 10px 8px; }
+}
+@media(max-width:700px) {
+  .nav { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .nav button { min-height: 48px; font-size: 11px; }
+  .nav button > span { font-size: 18px; }
+  main { padding-bottom: calc(140px + env(safe-area-inset-bottom)); }
+}

@@ -307,17 +307,17 @@ const App = (() => {
   }
   function navigate(view) {
     if (view === 'learning' && state.view !== 'learning') learningOrigin = state.view;
-    state.view = ['dictionary', 'rules', 'cards', 'quiz', 'learning', 'materials'].includes(view) ? view : 'dictionary';
+    state.view = ['dictionary', 'rules', 'cards', 'quiz', 'learning', 'materials', 'achievements'].includes(view) ? view : 'dictionary';
     document.body.dataset.view = state.view;
-    for (const id of ['dictionary', 'rules', 'cards', 'quiz', 'learning', 'materials']) $(`#${id}`).hidden = id !== state.view;
+    for (const id of ['dictionary', 'rules', 'cards', 'quiz', 'learning', 'materials', 'achievements']) $(`#${id}`).hidden = id !== state.view;
     for (const item of document.querySelectorAll('[data-view]')) {
       const active = item.dataset.view === state.view; item.classList.toggle('active', active);
       if (active) item.setAttribute('aria-current', 'page'); else item.removeAttribute('aria-current');
     }
-    const labels = { dictionary: ['ВАША КОЛЛЕКЦИЯ', 'Словарь'], rules: ['ОТ ПРАВИЛА К ПРАКТИКЕ', 'Правила и примеры'], cards: ['ВСПОМНИТЬ И ЗАПОМНИТЬ', 'Карточки'], quiz: ['ИСПОЛЬЗУЙТЕ АНГЛИЙСКИЙ', 'Практика'], learning: ['ВАШ ПЛАН ОБУЧЕНИЯ', 'Повторение и уроки'], materials: ['АНГЛИЙСКИЙ В КОНТЕКСТЕ', 'Диалоги и песни'] };
+    const labels = { achievements: ['ВАША АКТИВНОСТЬ', 'Достижения и серия'], dictionary: ['ВАША КОЛЛЕКЦИЯ', 'Словарь'], rules: ['ОТ ПРАВИЛА К ПРАКТИКЕ', 'Правила и примеры'], cards: ['ВСПОМНИТЬ И ЗАПОМНИТЬ', 'Карточки'], quiz: ['ИСПОЛЬЗУЙТЕ АНГЛИЙСКИЙ', 'Практика'], learning: ['ВАШ ПЛАН ОБУЧЕНИЯ', 'Повторение и уроки'], materials: ['АНГЛИЙСКИЙ В КОНТЕКСТЕ', 'Диалоги и песни'] };
     $('#section-kicker').textContent = labels[state.view][0]; $('#section-title').textContent = labels[state.view][1];
-    $('#study-filters').hidden = ['learning', 'materials'].includes(state.view);
-    $('#source-summary').hidden = !state.source || ['learning', 'materials'].includes(state.view);
+    $('#study-filters').hidden = ['learning', 'materials', 'achievements'].includes(state.view);
+    $('#source-summary').hidden = !state.source || ['learning', 'materials', 'achievements'].includes(state.view);
     $('#catalog-filters').hidden = state.view === 'rules';
     $('#learning-back').textContent = '← Назад: ' + (labels[learningOrigin]?.[1] || 'Словарь');
     $('#topic-filter').hidden = state.view === 'rules'; $('#status-filter').hidden = state.view === 'rules';
@@ -329,6 +329,7 @@ const App = (() => {
     else if (state.view === 'cards') { if (!state.deck.length) startCards(); else cards(); }
     else if (state.view === 'quiz') { if (!state.quiz) startQuiz(); else quiz(); }
     else if (state.view === 'materials') MediaLibrary.render();
+    else if (state.view === 'achievements') Achievements.render();
   }
   function init() {
     Training.init(filtered);
@@ -393,7 +394,7 @@ const App = (() => {
     if (progressOwner !== Storage.accountId) {
       progressOwner = Storage.accountId; state.quiz = null; state.deck = []; state.card = 0;
       Training.resetAccount(); LearningUI.resetAccount(); MediaLibrary.resetAccount();
-      if (state.view === 'learning') navigate('dictionary');
+      if (state.view === 'learning' || state.view === 'achievements') navigate('dictionary');
     }
     known.clear(); readLessons.clear();
     const words = Storage.read('known', []);

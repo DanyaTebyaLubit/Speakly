@@ -47,6 +47,7 @@
       <button data-view="rules"><span aria-hidden="true">≡</span>Правила</button>
       <button data-view="cards"><span aria-hidden="true">▱</span>Карточки</button>
       <button data-view="quiz"><span aria-hidden="true">✓</span>Практика</button>
+      <button data-view="achievements"><span aria-hidden="true">✦</span>Достижения</button>
       <button data-view="materials"><span aria-hidden="true">♫</span>Диалоги / песни</button>
     </nav>
     <div class="header-actions">
@@ -95,6 +96,7 @@
       <section id="dictionary" aria-label="Словарь"><div id="learning-dashboard" class="learning-dashboard"></div><div class="list-meta"><span id="count" role="status"></span><span>ENGLISH <span class="meta-arrow">↔</span> РУССКИЙ</span></div><div id="word-list" class="word-list"></div><button id="more" class="secondary more" hidden>Показать ещё</button></section>
       <section id="rules" aria-label="Правила и примеры" hidden><div class="rules-layout"><div class="lesson-index"><label class="lesson-picker-label" for="lesson-picker">Выберите урок</label><select id="lesson-picker" aria-label="Урок"></select><div id="lesson-count" class="list-meta" role="status"></div><div id="lesson-list"></div></div><article id="lesson-reader" class="lesson-reader" aria-label="Учебный урок"></article></div></section>
       <section id="cards" aria-label="Флеш-карточки" hidden><div id="card-content"></div></section>
+      <section id="achievements" hidden aria-label="Достижения и серия дней"></section>
       <section id="learning" hidden aria-label="Обучение"><button id="learning-back" class="secondary">← Назад</button><div id="learning-content"></div></section>
       <section id="materials" hidden aria-label="Диалоги и песни"><div class="media-tabs"><button id="media-dialogues" class="secondary" aria-pressed="true">Диалоги</button><button id="media-songs" class="secondary" aria-pressed="false">Песни</button></div><div class="media-filters"><input id="media-search" type="search" placeholder="Найти материал…" aria-label="Поиск материала"><select id="media-level" aria-label="Уровень диалогов"><option value="">Все уровни</option><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option></select><select id="media-topic" aria-label="Тема диалога"><option value="">Все темы</option></select></div><div id="media-content"></div></section>
       <section id="quiz" aria-label="Тест" hidden><div class="learning-actions"><button id="open-errors" class="secondary">Разобрать ошибки</button><button id="open-review" class="secondary">Повторить по расписанию</button><button id="open-courses" class="secondary">Короткие уроки</button></div><div class="practice-modes" aria-label="Вид задания"><button id="mode-test" class="secondary" aria-pressed="true">Выбрать перевод</button><button id="mode-gap" class="secondary" aria-pressed="false">Вставить слово</button><button id="mode-order" class="secondary" aria-pressed="false">Собрать фразу</button></div><p id="practice-summary" class="hint"></p><div id="quiz-content"></div><div id="training-content" hidden></div></section>

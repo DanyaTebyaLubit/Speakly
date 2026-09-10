@@ -27,7 +27,7 @@ class Element {
 function setup(saved = {}, mobile = false) {
   const nodes = Object.fromEntries([...html.matchAll(/id="([^"]+)"/g)].map(match => [match[1], new Element()]));
   nodes.status.value = 'all';
-  const nav = ['dictionary', 'rules', 'cards', 'quiz'].map(view => { const item = new Element('button'); item.dataset.view = view; return item; });
+  const nav = ['dictionary', 'rules', 'cards', 'quiz', 'achievements', 'materials'].map(view => { const item = new Element('button'); item.dataset.view = view; return item; });
   const document = { querySelector: selector => nodes[selector.slice(1)], getElementById: id => nodes[id], querySelectorAll: () => nav, createElement: tag => new Element(tag), body: new Element('body'), documentElement: new Element('html') };
   const events = {};
   const stored = { ...saved };
@@ -67,6 +67,19 @@ test('mistake list permits selecting a scheduled error and explains before pract
 });
 
 function descendants(node) { return [node, ...node.children.flatMap(descendants)]; }
+test('achievements is a separate navigation section with selected menu state', () => {
+  const app = setup();
+  const tab = app.nav.find(n => n.dataset.view === 'achievements');
+  tab.fire('click');
+  assert.equal(app.nodes.achievements.hidden, false);
+  assert.equal(app.nodes.dictionary.hidden, true);
+  assert.equal(app.nodes['study-filters'].hidden, true);
+  assert.equal(tab.attributes['aria-current'], 'page');
+  assert.equal(byClass(app.nodes.achievements, 'badge-card').length, 12);
+  app.navigate('dictionary');
+  assert.equal(app.nodes.achievements.hidden, true);
+  assert.equal(tab.attributes['aria-current'], undefined);
+});
 test('corrected errors retain their status after reload', () => {
   const app = setup();
   app.evaluate(`Learning.record({id:'persist-error',word:'hello',translation:'привет'},false); Learning.record({id:'persist-error',word:'hello',translation:'привет'},true,Date.now(),'hello');`);
@@ -134,18 +147,18 @@ test('streak spans local calendar dates, expires, and earned badges remain', () 
 
 test('progress screen renders real empty charts, badges, and interactive days', () => {
   const app = setup();app.evaluate('Achievements.open()');
-  assert.equal(byClass(app.nodes['learning-content'],'activity-day').length,28);
-  assert.equal(byClass(app.nodes['learning-content'],'week-column').length,7);
-  assert.equal(byClass(app.nodes['learning-content'],'badge-card').length,12);
-  assert(app.nodes['learning-content'].textContent.includes('0/12'));
-  byClass(app.nodes['learning-content'],'activity-day')[0].fire('click');
-  assert(app.nodes['learning-content'].textContent.includes('0 заданий, 0 верных'));
-  descendants(app.nodes['learning-content']).find(n=>n.tagName==='button' && n.textContent==='Открытые').fire('click');
-  assert.equal(byClass(app.nodes['learning-content'],'badge-card').length,0);
+  assert.equal(byClass(app.nodes.achievements,'activity-day').length,28);
+  assert.equal(byClass(app.nodes.achievements,'week-column').length,7);
+  assert.equal(byClass(app.nodes.achievements,'badge-card').length,12);
+  assert(app.nodes.achievements.textContent.includes('0/12'));
+  byClass(app.nodes.achievements,'activity-day')[0].fire('click');
+  assert(app.nodes.achievements.textContent.includes('0 заданий, 0 верных'));
+  descendants(app.nodes.achievements).find(n=>n.tagName==='button' && n.textContent==='Открытые').fire('click');
+  assert.equal(byClass(app.nodes.achievements,'badge-card').length,0);
   app.evaluate("Storage.write('known',Array.from({length:10},(_,i)=>'word'+i)); Achievements.open();");
-  assert.equal(byClass(app.nodes['learning-content'],'is-earned').length,1);
+  assert.equal(byClass(app.nodes.achievements,'is-earned').length,1);
   app.evaluate("Storage.write('known',[]); Achievements.open();");
-  assert.equal(byClass(app.nodes['learning-content'],'is-earned').length,1);
+  assert.equal(byClass(app.nodes.achievements,'is-earned').length,1);
 });
 test('daily plan finishes all stages, stays completed, and is isolated by account', () => {
   const app = setup(); app.evaluate('Coach.daily()');

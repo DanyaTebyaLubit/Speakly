@@ -59,10 +59,11 @@ const Achievements = (() => {
     const day = data.achievements.days[key] ||= { ids: [], correct: 0, independent: 0, replies: 0, plan: false };
     day.plan = true; unlock(data,now);
   }
-  function open() {
+  function open() { App.navigate('achievements'); }
+  function render() {
     const data = Learning.state(); unlock(data); Learning.save(data);
     const values = metrics(data), days = data.achievements.days, today = Coach.dayKey();
-    const box = LearningUI.surface(); box.className = 'achievements-screen';
+    const box = document.getElementById('achievements'); box.replaceChildren(); box.className = 'achievements-screen';
     document.getElementById('section-title').textContent = 'Ваш прогресс';
     document.getElementById('section-kicker').textContent = 'МАЛЕНЬКИЕ ШАГИ. ЗАМЕТНЫЙ РЕЗУЛЬТАТ.';
     const hero = el('section','achievement-hero');
@@ -107,5 +108,5 @@ const Achievements = (() => {
     box.append(filters,grid,el('p','achievement-footnote','Календарь учитывает новые ответы после добавления статистики. В каждом дне считается первая попытка на каждое задание; повторы и самооценка не увеличивают счётчик. Отметки слов и уроков учитывают прежний прогресс.'));
     renderBadges('all');
   }
-  return { record, completePlan, metrics, streak, unlock, reconcile, open, badges };
+  return { record, completePlan, metrics, streak, unlock, reconcile, open, render, badges };
 })();
