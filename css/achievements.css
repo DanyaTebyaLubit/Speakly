@@ -56,3 +56,29 @@
   .nav button > span { font-size: 18px; }
   main { padding-bottom: calc(140px + env(safe-area-inset-bottom)); }
 }
+
+/* Compact phone navigation and keyboard-aware notebook. */
+#nav-more { display:none; }
+.more-menu[hidden] { display:none; }
+.more-menu { position:fixed; bottom:90px; right:12px; left:12px; z-index:44; background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); padding:12px; }
+.more-menu button { display:block; width:100%; min-height:48px; text-align:left; padding:12px; border:0; border-radius:8px; background:var(--surface); color:var(--text); }
+.save-strip { flex-wrap:wrap; }.save-strip span { flex:1 1 240px; }.save-strip button { flex:0 1 auto; }
+@media(max-width:700px) {
+ .nav { grid-template-columns:repeat(4,minmax(0,1fr)); }
+ .nav button[data-view='rules'],.nav button[data-view='cards'],.nav button[data-view='materials'] { display:none; }
+ .nav #nav-more { display:flex; }
+ .nav button { min-height:52px; }
+ .workspace main { padding-bottom:calc(144px + env(safe-area-inset-bottom)); }
+ .notebook-toggle { bottom:calc(84px + env(safe-area-inset-bottom)); }
+ .notebook-panel { top:calc(var(--visual-top,0px) + 8px); bottom:auto; height:calc(var(--visual-height,100dvh) - 16px); z-index:50; }
+ .notebook-panel textarea { min-height:100px; resize:none; }
+ .notebook-panel input,.notebook-panel select { padding:9px; }
+ .notebook-panel #notebook-context { max-height:80px; overflow:auto; }
+ .keyboard-open .nav,.keyboard-open .notebook-toggle,.keyboard-open .more-menu { display:none; }
+ .save-strip { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+ .save-strip span { grid-column:1/-1; }.save-strip button { font-size:11px; padding:8px 3px; overflow-wrap:anywhere; }
+ .word-row,.dialogue-turn,.learning-actions { min-width:0; }
+ .dialogue-turn p,.training-title { overflow-wrap:anywhere; }
+}
+
+@media(max-width:700px) { .notebook-toggle { display:none; } .workspace main { padding-bottom:calc(96px + env(safe-area-inset-bottom)); } }

@@ -97,7 +97,7 @@ const Coach = (() => {
   function dialogueTasks(dialogue) {
     return dialogue.turns.flatMap((turn, i) => {
       if (turn.speaker !== 'B') return [];
-      const variants = replyVariants[Learning.canonical(turn.word)] || [];
+      const variants = [...(replyVariants[Learning.canonical(turn.word)] || []), ...(turn.alternatives || [])];
       const alternatives = [...new Set([...variants, ...[turn.word.replace(/\bI am\b/g, "I'm"), turn.word.replace(/\bI'm\b/g, 'I am')]])].filter(t => t !== turn.word);
       const entry = { ...turn, id: `reply:${dialogue.id}:${i}`, studyTopic: `Диалог · ${dialogue.level} · ${dialogue.topic}`, explanation: `Смысл реплики: «${turn.translation}». Ответьте на предыдущую реплику собеседника и сохраните этот смысл.` };
       return [task(entry, 'Ваша реплика', { prompt: `Ответьте по смыслу: ${turn.translation}`, alternatives, context: dialogue.turns.slice(0,i), dialogue: dialogue.title })];
@@ -112,7 +112,7 @@ const Coach = (() => {
     const tasks = [...reviews.map(e => task(e, 'Повторение')), ...fresh.map(e => task(e, 'Новые слова', { introduction: `${e.word} — ${e.translation}${e.example ? '\n' + e.example : ''}` })), ...StudyTools.lesson().map(q => task(q, 'Правило', { rule: q.explanation }))];
     const dayNumber = Math.floor(now / 86400000);
     const selectedLevel = StudyTools.level();
-    const scenes = MediaLibrary.dialogues.filter(d => d.level === selectedLevel);
+    const scenes = MediaLibrary.dialogues.filter(d => d.level === selectedLevel && d.reviewed);
     tasks.push(...dialogueTasks(scenes[dayNumber % scenes.length]).slice(0,2));
     return { date: dayKey(now), level: selectedLevel, tasks, index: 0, responses: {}, startedAt: now };
   }

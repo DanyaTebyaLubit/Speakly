@@ -1,6 +1,6 @@
 {
-  "originalEntries": 4852,
-  "studyEntries": 4339,
+  "originalEntries": 4891,
+  "studyEntries": 4377,
   "corrections": [
     {
       "id": "[\"i'd like to question this project in more detail.\",\"я хотел бы подробнее поставить под сомнение этот проект.\"]",
@@ -676,6 +676,26 @@
       "id": "[\"i've been working on advanced english for 174 minutes without taking a break.\",\"я занимаюсь продвинутым английским уже 174 минут без перерыва.\"]",
       "before": "Я занимаюсь продвинутым английским уже 174 минут без перерыва.",
       "after": "Я занимаюсь продвинутым английским уже 174 минуты без перерыва."
+    },
+    {
+      "id": "[\"do you like school?\",\"тебе это нравится?\"]",
+      "before": "Тебе это нравится?",
+      "after": "Тебе нравится школа?"
+    },
+    {
+      "id": "[\"do you like work?\",\"тебе это нравится?\"]",
+      "before": "Тебе это нравится?",
+      "after": "Тебе нравится работать?"
+    },
+    {
+      "id": "[\"do you like english?\",\"тебе это нравится?\"]",
+      "before": "Тебе это нравится?",
+      "after": "Тебе нравится английский?"
+    },
+    {
+      "id": "[\"do you like programming?\",\"тебе это нравится?\"]",
+      "before": "Тебе это нравится?",
+      "after": "Тебе нравится программирование?"
     }
   ],
   "excluded": [
@@ -1217,6 +1237,12 @@
       "id": "[\"we need to question our assumptions before proceeding before we move forward.\",\"нам нужно поставить под сомнение наши предположения, прежде чем продолжать прежде чем двигаться дальше.\"]",
       "english": "We need to question our assumptions before proceeding before we move forward.",
       "translation": "Нам нужно поставить под сомнение наши предположения, прежде чем продолжать прежде чем двигаться дальше.",
+      "reason": "Неестественная шаблонная формулировка: требуется редакторская проверка."
+    },
+    {
+      "id": "[\"do you like a project?\",\"тебе это нравится?\"]",
+      "english": "Do you like a project?",
+      "translation": "Тебе это нравится?",
       "reason": "Неестественная шаблонная формулировка: требуется редакторская проверка."
     }
   ]

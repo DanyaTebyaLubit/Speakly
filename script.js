@@ -312,6 +312,7 @@ const App = (() => {
     study.append(meta, box); container.append(study);
   }
   function navigate(view) {
+    MobileUX.close();
     if (view === 'learning' && state.view !== 'learning') learningOrigin = state.view;
     state.view = ['dictionary', 'rules', 'cards', 'quiz', 'learning', 'materials', 'achievements'].includes(view) ? view : 'dictionary';
     document.body.dataset.view = state.view;
@@ -340,6 +341,7 @@ const App = (() => {
   function init() {
     StudyTools.init();
     Notebook.init();
+    BackupImport.init(); MobileUX.init();
     Training.init(filtered);
     LearningUI.init(navigate);
     MediaLibrary.init();
@@ -417,6 +419,7 @@ const App = (() => {
     Training.refresh();
     if (state.view === 'quiz' && !state.quiz) { startQuiz(); }
   }
-  return { init, reloadProgress, navigate };
+  function resetSessions(){state.quiz=null;state.deck=[];state.card=0;Training.resetAccount();MediaLibrary.resetAccount();}
+  return { init, reloadProgress, navigate, resetSessions };
 })();
 App.init();

@@ -26,7 +26,7 @@ function isHeading(lines, index, source) {
 /** Принимает «слово - перевод - пример», а также длинное тире и сленг. */
 function parseText(text, source = 'Мои слова', adapted = false) {
   if (!adapted && source === 'Диалоги') {
-    const converted = parseDialogues(text).map((item, index) => `${index + 1}. ${item.level} · ${item.topic}\n----------------\n${item.turns.map(turn => `${turn.word} — ${turn.translation}`).join('\n')}`).join('\n');
+    const converted = [...parseDialogues(text, false), ...parseDialogues(text).filter(item => item.editorial)].map((item, index) => `${index + 1}. ${item.level} · ${item.topic}\n----------------\n${item.turns.map(turn => `${turn.word} — ${turn.translation}`).join('\n')}`).join('\n');
     return parseText(converted, source, true);
   }
   if (!adapted && source === 'Песни') {

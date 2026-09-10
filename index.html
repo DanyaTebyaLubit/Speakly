@@ -23,6 +23,7 @@
   <script src="data/english_sentences_3000.js" defer></script>
   <script src="data/english_dialogues.js" defer></script>
   <script src="data/english_songs.js" defer></script>
+  <script src="data/dialogue-edits.js" defer></script>
   <script src="js/media-data.js" defer></script>
   <script src="js/parser.js" defer></script>
   <script src="data/guides.js" defer></script>
@@ -36,6 +37,8 @@
   <script src="js/achievements.js" defer></script>
   <script src="js/study-tools.js" defer></script>
   <script src="js/notebook.js" defer></script>
+  <script src="js/backup-import.js" defer></script>
+  <script src="js/mobile-ux.js" defer></script>
   <script src="script.js" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="js/account.js" defer></script>
@@ -51,6 +54,7 @@
       <button data-view="quiz"><span aria-hidden="true">✓</span>Практика</button>
       <button data-view="achievements"><span aria-hidden="true">✦</span>Достижения</button>
       <button data-view="materials"><span aria-hidden="true">♫</span>Диалоги / песни</button>
+      <button id="nav-more" type="button" aria-controls="more-menu" aria-expanded="false"><span aria-hidden="true">•••</span>Ещё</button>
     </nav>
     <div class="header-actions">
     <details class="account-menu">
@@ -83,7 +87,8 @@
         <div class="progress-stat"><div><strong id="percent">0%</strong><span>вашей коллекции</span></div><progress id="progress" max="100" value="0" aria-label="Доля выученных слов"></progress></div>
       </section>
       <div class="section-heading"><div><p class="eyebrow" id="section-kicker">ВАША КОЛЛЕКЦИЯ</p><h2 id="section-title">Словарь</h2></div></div>
-      <div class="save-strip"><span id="save-status" role="status">Прогресс сохраняется на устройстве</span><button id="export-progress" class="secondary" type="button">Экспорт прогресса</button></div>
+      <input id="import-file" type="file" accept=".json,application/json" hidden>
+      <div class="save-strip"><span id="save-status" role="status">Прогресс сохраняется на устройстве</span><button id="import-progress-file" class="secondary" type="button">Импорт</button><button id="undo-import" class="secondary" type="button">Отменить импорт</button><button id="export-progress" class="secondary" type="button">Экспорт прогресса</button></div>
       <div id="source-summary" class="source-summary"></div>
       <details id="study-filters" class="study-filters" open>
         <summary>Файл и фильтры <span aria-hidden="true">⌄</span></summary>
@@ -107,6 +112,7 @@
       <footer><span class="footer-brand">speakly.</span><span>По одному слову ближе к цели.</span></footer>
     </main>
   </div>
+  <div id="more-menu" class="more-menu" hidden aria-label="Другие разделы"><button type="button" data-target="rules">Правила</button><button type="button" data-target="cards">Карточки</button><button type="button" data-target="materials">Диалоги и песни</button><button type="button" id="mobile-notebook">Блокнот</button></div>
   <button id="notebook-toggle" class="primary notebook-toggle" type="button" aria-controls="notebook-panel" aria-expanded="false">✎ Блокнот</button>
   <aside id="notebook-panel" class="notebook-panel" aria-label="Учебный блокнот" hidden>
     <div class="notebook-heading"><h2>Блокнот</h2><button id="notebook-close" class="secondary" type="button" aria-label="Закрыть блокнот">✕</button></div>

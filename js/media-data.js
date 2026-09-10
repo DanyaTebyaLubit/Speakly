@@ -1,5 +1,5 @@
 // Разбираем только содержимое пользовательских файлов.
-function parseDialogues(text) {
+function parseDialogues(text, applyEdits = true) {
   const result = []; let level = '', current = null;
   const lines = text.replace(/\r/g, '').split('\n');
   for (let i = 0; i < lines.length; i++) {
@@ -12,6 +12,12 @@ function parseDialogues(text) {
       const translation = (lines[i + 1] || '').trim();
       if (/[а-яё]/i.test(translation)) { current.turns.push({ speaker: turn[1], word: turn[2], translation }); i++; }
     }
+  }
+  for (const item of result) {
+    const edit = !applyEdits || typeof DialogueEdits === 'undefined' ? null : DialogueEdits[Number(item.id.split('-')[1])];
+    if (edit) item.turns = edit.map(([word,translation,alternatives],i)=>({speaker:i%2?'B':'A',word,translation,alternatives:alternatives||[]}));
+    item.reviewed = Boolean(edit) || !item.title.includes('— пример');
+    item.editorial = Boolean(edit);
   }
   return result.filter(item => item.turns.length);
 }

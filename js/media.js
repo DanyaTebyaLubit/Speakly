@@ -33,6 +33,7 @@ const MediaLibrary = (() => {
     const box=el('article','media-reader');host.append(box);
     box.append(el('p','eyebrow',tab==='dialogues' ? selected.level+' · '+selected.topic : 'АНГЛИЙСКИЙ ПО ПЕСНЯМ'),el('h3','training-title',selected.title));
     if (tab==='dialogues') {
+      box.append(el('p','hint',selected.editorial ? 'Редакторская версия: уточнены ситуация и переводы.' : selected.reviewed ? 'Диалог из основной подборки.' : 'Повторяющийся шаблон из исходника. Для дневных занятий используем основную подборку.'));
       box.append(button(showTranslations ? 'Скрыть переводы' : 'Показать переводы',()=>{showTranslations=!showTranslations;detail();}));
       for(const turn of selected.turns) {
         const row=el('div','dialogue-turn '+(turn.speaker==='B'?'speaker-b':''));

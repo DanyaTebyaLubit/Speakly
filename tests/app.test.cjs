@@ -67,6 +67,45 @@ test('mistake list permits selecting a scheduled error and explains before pract
 });
 
 function descendants(node) { return [node, ...node.children.flatMap(descendants)]; }
+test('failed restore rolls back writes before notifying sync subscribers',()=>{
+  const app=setup();app.evaluate("Storage.write('known',['old']);Storage.write('lessons',['old-lesson']);Storage.write('lastQuiz',{old:true});const setter=localStorage.setItem;let failed=false;localStorage.setItem=(key,value)=>{if(key==='speakly.lastQuiz'&&!failed){failed=true;throw new Error('quota');}setter(key,value);};let imports=0;Storage.subscribe(()=>imports++);");
+  assert.throws(()=>app.evaluate("Storage.replaceProgress({known:['new'],lessons:[],lastQuiz:{new:true}})"));
+  assert.equal(app.evaluate("Storage.read('known',[])[0]"),'old');
+  assert.equal(app.evaluate("Storage.read('lessons',[])[0]"),'old-lesson');
+  assert.equal(app.evaluate('imports'),0);
+});
+test('import preview is read-only, replacement is explicit, and rollback is retained',()=>{
+  const app=setup();app.evaluate("Storage.write('known',[Vocabulary[0].id]);");
+  const initial=JSON.stringify(app.stored);
+  app.evaluate("const incoming={format:'speakly-progress',version:1,known:[],lessons:[],lastQuiz:{notebook:{sample:{title:'Note',text:'Imported',context:''}}}};BackupImport.preview(BackupImport.validate(JSON.stringify(incoming)),'test.json');");
+  assert.equal(JSON.stringify(app.stored),initial);
+  descendants(app.nodes['learning-content']).find(n=>n.tagName==='button'&&n.textContent==='Восстановить эту копию').fire('click');
+  assert.equal(app.evaluate("Storage.read('known',[]).length"),0);
+  assert.equal(app.evaluate("Storage.read('preImport',{}).known.length"),1);
+  assert.equal(app.evaluate("Storage.read('lastQuiz',{}).notebook.sample.text"),'Imported');
+  app.nodes['undo-import'].fire('click');descendants(app.nodes['learning-content']).find(n=>n.tagName==='button'&&n.textContent==='Восстановить эту копию').fire('click');
+  assert.equal(app.evaluate("Storage.read('known',[]).length"),1);
+});
+test('import rejects malformed and polluted backups and stale previews',()=>{
+  const app=setup();const validate=app.evaluate('BackupImport.validate');
+  assert.throws(()=>validate('{invalid'));assert.throws(()=>validate('{"format":"speakly-progress","version":1,"known":[],"lessons":[],"__proto__":{}}'));
+  assert.throws(()=>validate(JSON.stringify({format:'speakly-progress',version:1,known:[],lessons:[],lastQuiz:{learning:{reviews:{bad:{entry:{},due:0}}}}})));
+  app.evaluate('BackupImport.preview(StudyTools.backup())');app.evaluate("Storage.write('known',[Vocabulary[0].id]);");
+  descendants(app.nodes['learning-content']).find(n=>n.tagName==='button'&&n.textContent==='Восстановить эту копию').fire('click');
+  assert(app.nodes['learning-content'].textContent.includes('Прогресс изменился'));
+  assert.equal(app.evaluate("Storage.read('known',[]).length"),1);
+});
+test('current exported sessions and notes pass backup validation',()=>{
+  const app=setup();app.navigate('quiz');app.nodes['mode-gap'].fire('click');app.evaluate('Coach.daily();Notebook.open();');
+  assert(app.evaluate('BackupImport.validate(JSON.stringify(StudyTools.backup())).lastQuiz.learning.daily'));
+});
+test('edited dialogues preserve raw vocabulary ids and supply accepted alternatives',()=>{
+  const app=setup();assert.equal(app.evaluate('MediaLibrary.dialogues.filter(d=>d.editorial).length'),10);
+  assert.equal(app.evaluate('MediaLibrary.dialogues.find(d=>d.id === "dialogue-8").turns[0].word'),'Is your project ready?');
+  assert(app.evaluate('Vocabulary.some(e=>e.word === "Do you like a project?" && e.qualityIssue)'));
+  assert(app.evaluate('Coach.dialogueTasks(MediaLibrary.dialogues.find(d=>d.id === "dialogue-7"))[0].alternatives.includes("I work at a shop.")'));
+  assert(app.evaluate('MediaLibrary.dialogues.filter(d=>d.reviewed).length >= 20'));
+});
 test('notebook saves across reload without leaving current exercise',()=>{
   let app=setup();app.navigate('quiz');app.nodes['notebook-toggle'].fire('click');
   assert.equal(app.nodes.quiz.hidden,false);assert.equal(app.nodes['notebook-panel'].hidden,false);
