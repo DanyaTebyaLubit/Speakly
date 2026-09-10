@@ -71,9 +71,10 @@ test('corrected errors retain their status after reload', () => {
   const app = setup();
   app.evaluate(`Learning.record({id:'persist-error',word:'hello',translation:'привет'},false); Learning.record({id:'persist-error',word:'hello',translation:'привет'},true,Date.now(),'hello');`);
   const reloaded = setup(app.stored); reloaded.evaluate("LearningUI.open('errors')");
-  assert(reloaded.nodes['learning-content'].textContent.includes('Нужно исправить: 0'));
-  assert(reloaded.nodes['learning-content'].textContent.includes('✓ Исправлено'));
-  assert.equal(reloaded.evaluate("Learning.state().errors['persist-error'].correctedAnswer"),'hello');
+  assert(reloaded.nodes['learning-content'].textContent.includes('Мои ошибки · 0'));
+  assert.equal(reloaded.evaluate("Learning.state().reviews['persist-error'].corrected"),true);
+  reloaded.evaluate("LearningUI.open('later')");
+  assert(reloaded.nodes['learning-content'].textContent.includes('hello'));
 });
 test('denied browser writes keep a scoped in-memory copy and display a warning', () => {
   const app = setup();
@@ -95,7 +96,7 @@ test('error session summary distinguishes remaining, deferred and cleared mistak
     byClass(app.nodes['learning-content'], 'primary').at(-1).fire('click');
     const text = app.nodes['learning-content'].textContent;
     assert(!text.includes('Ошибки разобраны'));
-    if (scenario === 'cleared') assert(text.includes('Ошибок в журнале не осталось'));
+    if (scenario !== 'wrong') assert(text.includes('Ошибок в журнале не осталось'));
     else {
       assert(text.includes('В журнале ошибок: 1'));
       assert(text.includes(scenario === 'wrong' ? 'сейчас: 1' : 'на позже: 1'));
@@ -458,9 +459,12 @@ test('mistake is rehearsed now and verified again tomorrow', () => {
   assert.equal(app.evaluate('Learning.errors(1000).length'), 1);
   app.evaluate('Learning.record(Vocabulary[0], true, 2000)');
   assert.equal(app.evaluate('Learning.errors(2000).length'), 0);
-  assert.equal(app.evaluate('Learning.errors(86401000).length'), 1);
+  assert.equal(app.evaluate('Learning.errors(86402000).length'), 0);
+  assert.equal(app.evaluate('Learning.due(86402000).length'), 1);
   app.evaluate('Learning.record(Vocabulary[0], true, 86401000)');
   assert.equal(app.evaluate('Object.keys(Learning.state().errors).length'), 0);
+  app.evaluate('Learning.record(Vocabulary[0], false, 86403000)');
+  assert.equal(app.evaluate('Learning.errors(86403000).length'), 1);
 });
 
 test('answer checking accepts safe variants but rejects meaning-changing changes', () => {

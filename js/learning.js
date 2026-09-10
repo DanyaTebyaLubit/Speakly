@@ -21,7 +21,15 @@ const Learning = (() => {
   function accepts(actual, expected, alternatives = []) { return [expected, ...alternatives].some(text => forms(text).has(canonical(actual))); }
   function state() {
     const value = Storage.read('lastQuiz', {})?.learning;
-    return { reviews: value?.reviews || {}, errors: value?.errors || {}, courses: value?.courses || {}, mastery: value?.mastery || {}, daily: value?.daily || null, achievements: value?.achievements || { days: {}, earned: {} } };
+    const result = { reviews: value?.reviews || {}, errors: value?.errors || {}, courses: value?.courses || {}, mastery: value?.mastery || {}, daily: value?.daily || null, achievements: value?.achievements || { days: {}, earned: {} } };
+    // Переносим исправленные записи, сохранённые старыми версиями.
+    for (const [id, error] of Object.entries(result.errors)) {
+      if (error.lastResult === 'correct' || error.lastResult === 'self-rated' || (!error.lastResult && error.due > error.wrongAt)) {
+        result.reviews[id] = { ...result.reviews[id], entry: error.entry, due: error.due, corrected: true };
+        delete result.errors[id];
+      }
+    }
+    return result;
   }
   function save(value) { Storage.write('lastQuiz', { ...(Storage.read('lastQuiz', {}) || {}), learning: value }); }
   function schedule(previous, rating, now = Date.now()) {
@@ -49,9 +57,9 @@ const Learning = (() => {
     data.reviews[entry.id] = { ...schedule(data.reviews[entry.id], correct ? 'good' : 'again', now), entry };
     if (!correct) data.errors[entry.id] = { entry, actual, wrongAt: now, due: now, lastResult: 'wrong', lastAttemptAt: now, attempts: (data.errors[entry.id]?.attempts || 0) + 1 };
     else if (data.errors[entry.id]) {
-      const error = data.errors[entry.id];
-      if (now >= error.wrongAt + DAY) delete data.errors[entry.id];
-      else { error.due = error.wrongAt + DAY; error.lastResult = 'correct'; error.lastAttemptAt = now; error.correctedAnswer = actual; data.reviews[entry.id].due = error.due; }
+      delete data.errors[entry.id];
+      data.reviews[entry.id].due = now + DAY;
+      data.reviews[entry.id].corrected = true;
     }
     save(data); refresh();
   }
@@ -61,9 +69,8 @@ const Learning = (() => {
     const data = state();
     data.reviews[entry.id] = { ...schedule(data.reviews[entry.id], rating, now), entry };
     if (rating !== 'again' && data.errors[entry.id]) {
-      const error = data.errors[entry.id];
-      if (now >= error.wrongAt + DAY) delete data.errors[entry.id];
-      else { error.due = error.wrongAt + DAY; error.lastResult = 'self-rated'; error.lastAttemptAt = now; data.reviews[entry.id].due = error.due; }
+      delete data.errors[entry.id];
+      data.reviews[entry.id].corrected = true;
     }
     save(data); refresh();
   }
@@ -100,7 +107,8 @@ const LearningUI = (() => {
     const actions = el('div', 'learning-actions');
     actions.append(button(`Повторить сегодня · ${Learning.due().length}`, () => open('review'), 'primary'), button(`Разобрать ошибки · ${Object.keys(Learning.state().errors).length}`, () => open('errors')), button('Короткий урок →', () => open('courses')));
     host.append(actions);
-    host.append(el('p', 'hint', 'Ошибки возвращаются завтра. Интервал повторения зависит от того, насколько легко вы вспомнили ответ.'));
+    host.append(button(`Повторить позже · ${Object.values(Learning.state().reviews).filter(item => item.due > Date.now()).length}`, later));
+    host.append(el('p', 'hint', 'Исправленные ошибки переходят в повторения. В ошибках остаются только неверные ответы.'));
     if (typeof Coach !== 'undefined') Coach.dashboard(host);
   }
   function surface() {
@@ -109,6 +117,7 @@ const LearningUI = (() => {
     const box = el('div', 'training-box'); $('learning-content').append(box); return box;
   }
   function open(type) {
+    if (type === 'later') return later();
     if (type === 'courses') return courses();
     if (type === 'errors') return errorList();
     questions = (type === 'errors' ? Learning.errors() : Learning.due()).slice(0, 20); index = 0;
@@ -137,9 +146,9 @@ const LearningUI = (() => {
       box.append(el('h3', 'training-title', remaining.length ? 'Тренировка завершена' : 'Ошибок в журнале не осталось'));
       if (remaining.length) {
         box.append(el('p', '', `В журнале ошибок: ${remaining.length}. Доступно для повторения сейчас: ${ready}. Запланировано на позже: ${later}.`));
-        box.append(el('p', 'hint', 'Завершение этой тренировки не закрывает остальные ошибки. Исправленные сегодня записи остаются в журнале до успешной проверки в другой день.'));
+        box.append(el('p', 'hint', 'Завершение этой тренировки не закрывает остальные ошибки. Исправленные записи перенесены в повторения.'));
         box.append(button('Выбрать следующую ошибку', errorList, 'primary'));
-      } else box.append(el('p', 'hint', 'Все записи прошли повторную проверку. Новые ошибки из заданий появятся здесь.'));
+      } else box.append(el('p', 'hint', 'Неисправленных ошибок нет. Исправленные записи сохранены в расписании повторений.'));
       return;
     }
     const entry = questions[index];
@@ -160,12 +169,17 @@ const LearningUI = (() => {
       box.append(button('Дальше →', () => { index++; errorQuestion(); }, 'primary'));
     }, 'primary'); box.append(check, feedback);
   }
+  function later() {
+    const box = surface();
+    const items = Object.values(Learning.state().reviews).filter(item => item.due > Date.now()).sort((a,b) => a.due - b.due);
+    box.append(el('h3', 'training-title', `Повторить позже · ${items.length}`), el('p', 'hint', 'Запланированные повторения, а не ошибки. Можно потренироваться заранее.'));
+    for (const item of items) box.append(button(`${item.entry.word} · ${new Date(item.due).toLocaleString('ru-RU')}`, () => { questions = [item.entry]; index = 0; reviewQuestion(); }, 'course-tile'));
+    if (!items.length) box.append(el('p', '', 'Отложенных повторений пока нет.'));
+  }
   function errorList() {
     const box = surface();
     const errors = Object.values(Learning.state().errors).sort((a, b) => b.wrongAt - a.wrongAt);
-    const corrected = errors.filter(item => item.lastResult === 'correct' || item.lastResult === 'self-rated' || (!item.lastResult && item.due > item.wrongAt)).length;
-    box.append(el('h3', 'training-title', `Мои ошибки · ${errors.length}`), el('p', 'hint', 'Выберите ошибку: сначала разбор и пример, затем тренировка. Повторения на завтра тоже остаются в списке.'));
-    if (errors.length) box.append(el('p', 'error-status-summary', `Нужно исправить: ${errors.length - corrected}. Исправлено, ожидает проверки памяти: ${corrected}.`));
+    box.append(el('h3', 'training-title', `Мои ошибки · ${errors.length}`), el('p', 'hint', 'Только неисправленные ошибки. После правильного ответа запись перейдёт в повторения.'));
     if (!errors.length) box.append(el('p', '', 'Ошибок пока нет. Здесь появятся ошибки из ваших заданий.'));
     const list = el('div', 'mistake-list');
     for (const item of errors) {
