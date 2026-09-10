@@ -67,6 +67,26 @@ test('mistake list permits selecting a scheduled error and explains before pract
 });
 
 function descendants(node) { return [node, ...node.children.flatMap(descendants)]; }
+test('error session summary distinguishes remaining, deferred and cleared mistakes', () => {
+  for (const scenario of ['wrong', 'deferred', 'cleared']) {
+    const app = setup();
+    app.evaluate(`Learning.record({id:'summary-error',word:'hello',translation:'привет'}, false, Date.now() - ${scenario === 'cleared' ? 172800000 : 0}); LearningUI.open('errors');`);
+    byClass(app.nodes['learning-content'], 'mistake-tile')[0].fire('click');
+    byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+    byClass(app.nodes['learning-content'], 'gap-input')[0].value = scenario === 'wrong' ? 'bye' : 'hello';
+    byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+    byClass(app.nodes['learning-content'], 'primary').at(-1).fire('click');
+    const text = app.nodes['learning-content'].textContent;
+    assert(!text.includes('Ошибки разобраны'));
+    if (scenario === 'cleared') assert(text.includes('Ошибок в журнале не осталось'));
+    else {
+      assert(text.includes('В журнале ошибок: 1'));
+      assert(text.includes(scenario === 'wrong' ? 'сейчас: 1' : 'на позже: 1'));
+      byClass(app.nodes['learning-content'], 'primary')[0].fire('click');
+      assert.equal(byClass(app.nodes['learning-content'], 'mistake-tile').length, 1);
+    }
+  }
+});
 test('achievement counters deduplicate same-day answers and exclude self assessment', () => {
   const app = setup();
   app.evaluate(`const atime = new Date(2026,8,10,12).getTime();

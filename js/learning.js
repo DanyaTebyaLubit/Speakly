@@ -129,7 +129,19 @@ const LearningUI = (() => {
   function errorQuestion() {
     const box = surface();
     box.append(button('← Все ошибки', errorList));
-    if (index >= questions.length) { box.append(el('h3', 'training-title', questions.length ? 'Ошибки разобраны' : 'Ошибок к разбору нет'), el('p', 'hint', 'Исправленные сегодня ошибки вернутся завтра для проверки памяти.')); return; }
+    if (index >= questions.length) {
+      const remaining = Object.values(Learning.state().errors);
+      const now = Date.now();
+      const ready = remaining.filter(item => item.due <= now).length;
+      const later = remaining.length - ready;
+      box.append(el('h3', 'training-title', remaining.length ? 'Тренировка завершена' : 'Ошибок в журнале не осталось'));
+      if (remaining.length) {
+        box.append(el('p', '', `В журнале ошибок: ${remaining.length}. Доступно для повторения сейчас: ${ready}. Запланировано на позже: ${later}.`));
+        box.append(el('p', 'hint', 'Завершение этой тренировки не закрывает остальные ошибки. Исправленные сегодня записи остаются в журнале до успешной проверки в другой день.'));
+        box.append(button('Выбрать следующую ошибку', errorList, 'primary'));
+      } else box.append(el('p', 'hint', 'Все записи прошли повторную проверку. Новые ошибки из заданий появятся здесь.'));
+      return;
+    }
     const entry = questions[index];
     box.append(el('p', 'eyebrow', `РАЗБОР ОШИБОК · ${index + 1} / ${questions.length}`), el('p', '', entry.translation));
     if (entry.exercise) box.append(el('h3', 'training-title', entry.exercise.prompt), el('p', 'hint', entry.exercise.hint || 'Вставьте пропущенное слово.'));
